@@ -1,0 +1,74 @@
+/* Reset default browser styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Root styles and variables */
+:root {
+  --primary-color: #166DFC;
+  --secondary-color: #666;
+  --bg-color: #f5f5f5;
+  --font-family: 'Arial', sans-serif;
+}
+
+/* Global styles */
+body {
+    font-family: 'Merriweather', serif; 
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.btn-subscribe {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-weight: bolder;
+}
+.btn-subscribe:hover {
+  background-color: rgb(73, 73, 243)
+}
+
+.btn-signin{
+  background: none;
+  color:rgb(17 17 17);
+  border-radius: 50%;
+  padding:5px;
+  border: none;
+}
+
+/* Header container styles */
+.header-container {
+  height: 12vh;  /* Adjusted height to fit the 20% overall height */
+  width: 40%;  /* Reduced width by 60% */
+  margin: 0 auto; /* Center the container */
+  justify-content: center;
+}
+
+.header-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Image size reduction */
+.img-reduced {
+  width: 100%; /* Ensure images scale to fit container width */
+  height: auto;
+}
+
+
+
