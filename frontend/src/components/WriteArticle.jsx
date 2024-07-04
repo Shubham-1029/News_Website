@@ -22,21 +22,6 @@ const WriteArticle = () => {
     if (formData.image) {
       articleData.append('image', formData.image);
     }
-
-  //   try {
-  //     const response = await axios.post(`${API_URL}/articles/`, articleData, {
-  //       headers: {
-  //         Authorization: `Token ${token}`,
-  //         'Content-Type': 'multipart/form-data', 
-  //       },
-  //     });
-  //     console.log(response.data);
-  //     alert('Article posted successfully!');
-  //     setFormData({ title: '', content: '', image: null });
-  //   } catch (error) {
-  //     console.error('Failed to post article', error);
-  //     alert('Failed to post article');
-  //   }
   try {
     const response = await axios.post(`${API_URL}/articles/`, articleData, {
       headers: {

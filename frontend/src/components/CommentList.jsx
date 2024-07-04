@@ -19,7 +19,7 @@ const CommentList = ({ articleId }) => {
       {comments.map((comment) => (
         <div key={comment.id}>
           <p>{comment.content}</p>
-          <small>By {comment.user_name}</small>
+          <small>By {comment.user}</small>
         </div>
       ))}
     </div>

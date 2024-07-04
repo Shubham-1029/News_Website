@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticleDetail, postComment } from '../api';
+import { getArticleDetail, postComment, updateArticleTags } from '../api';
 import CommentList from './CommentList';
+import TagInput from './TagInput'; // Import TagInput component
 
 const ArticleDetail = () => {
   const { id } = useParams(); // useParams hook to get the article id
   const [article, setArticle] = useState(null);
   const [comment, setComment] = useState('');
+  const [tags, setTags] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchArticle = async () => {
       const response = await getArticleDetail(id);
       setArticle(response.data);
+      setTags(response.data.tags || []);
     };
     fetchArticle();
   }, [id]);
@@ -32,21 +35,39 @@ const ArticleDetail = () => {
     }
   };
 
+  const handleTagsUpdate = async () => {
+    try {
+      await updateArticleTags(id, { tags }, token);
+      alert('Tags updated successfully!');
+    } catch (error) {
+      console.error('Failed to update tags', error);
+    }
+  };
+
   if (!article) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>{article.title}</h1>
-      <p>{article.content}</p>
-      {article.image && <img src={article.image} alt={article.title} />}
+    <div className="container article-detail">
+      <h1 className="text-uppercase text-center my-4">{article.title}</h1>
+      <h6 className="text-muted">-By {article.user}</h6>
+      {article.image && <img className="img-fluid article-image mb-3" src={article.image} alt={article.title} />}
+      <p className="article-content">{article.content}</p>
+      <TagInput tags={tags} setTags={setTags} />
+      <button onClick={handleTagsUpdate} className="btn btn-secondary mt-2">Save Tags</button>
       <CommentList articleId={id} />
-      <form onSubmit={handleCommentSubmit}>
-        <textarea value={comment} onChange={handleCommentChange} placeholder="Write a comment"></textarea>
-        <button type="submit">Post Comment</button>
+      <form onSubmit={handleCommentSubmit} className="comment-form mt-4">
+        <div className="form-group">
+          <textarea 
+            className="form-control" 
+            value={comment} 
+            onChange={handleCommentChange} 
+            placeholder="Write a comment"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary mt-2">Post Comment</button>
       </form>
     </div>
   );
 };
 
 export default ArticleDetail;
-  

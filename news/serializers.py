@@ -20,7 +20,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class ArticleSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.id')
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Article

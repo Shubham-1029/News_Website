@@ -17,9 +17,7 @@ function login(formData) {
   });
 }
 
-export {login}
-
-
+export { login }
 
 // Get Articles
 export const getArticles = async () => {
@@ -44,7 +42,7 @@ export const getComments = async (articleId) => {
 
 // Post Comment
 export const postComment = async (articleId, commentData, token) => {
-  return await axios.post(`${API_URL}/comments/`, commentData, {
+  return await axios.post(`${API_URL}/articles/${articleId}/comments/`, commentData, {
     headers: { Authorization: `Token ${token}` }
   });
 };
@@ -56,12 +54,6 @@ export const writeArticle = async (articleData, token) => {
   });
 };
 
-// Edit Article
-/* export const editArticle = async (articleId, articleData, token) => {
-  return await axios.put(`${API_URL}/articles/${articleId}/`, articleData, {
-    headers: { Authorization: `Token ${token}` }
-  });
-}; */
 export const editArticle = async (articleId, articleData, token) => {
   try {
     const response = await axios.put(`${API_URL}/articles/${articleId}/`, articleData, {
@@ -74,3 +66,15 @@ export const editArticle = async (articleId, articleData, token) => {
   }
 };
 
+// Update Article Tags
+export const updateArticleTags = async (articleId, tagData, token) => {
+  return await axios.post(`${API_URL}/articles/${articleId}/tags/`, tagData, {
+    headers: { Authorization: `Token ${token}` }
+  });
+};
+
+export const getLatestArticles = (token) => {
+  return axios.get(`${API_URL}/latest-articles/`, {
+    headers: { Authorization: `Token ${token}` }
+  }).then(response => response.data);
+};

@@ -1,4 +1,5 @@
 /* Reset default browser styles */
+@import 'bootstrap/dist/css/bootstrap.min.css';
 * {
   box-sizing: border-box;
   margin: 0;
@@ -64,11 +65,132 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Image size reduction */
-.img-reduced {
-  width: 100%; /* Ensure images scale to fit container width */
-  height: auto;
+
+.article-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
+.article-container {
+  width: 300px;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+}
 
+.article-image {
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  max-height: 400px;
+}
 
+.article-image-list {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.article-title {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.article-detail {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.comment-form textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.comment-form .btn {
+  width: 100%;
+}
+
+.text-muted {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 10px;
+}
+.list{
+  list-style-type: none;
+  display: flex;
+
+}
+/* Add this to your CSS file */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-250px);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #ccc;
+}
+
+.navbar-toggler {
+  border: none;
+  background-color: transparent;
+  padding: 10px 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar-toggler:hover {
+  background-color: #c52626;
+}
+/* Add this to your CSS file */
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  content: "";
+  background: no-repeat center center;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}

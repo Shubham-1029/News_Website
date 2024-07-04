@@ -1,15 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.db import models
+from django.contrib.auth import get_user_model
+from django.utils.timezone import now
 
 class User(AbstractUser):
     is_author = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group, related_name='news_user_groups', blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name='news_user_permissions', blank=True)
-
-from django.db import models
-from django.contrib.auth import get_user_model
-from django.utils.timezone import now
-
 User = get_user_model()
 
 class Article(models.Model):
