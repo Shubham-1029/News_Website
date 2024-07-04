@@ -3,20 +3,18 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api';  // Adjust the URL as per your backend setup
 
 // Register
-export const register = async (userData) => {
-  return await axios.post(`${API_URL}/register/`, userData);
-};
+function register (formData){
+  return axios.post(`${API_URL}/register/`, formData).then(response => response.data).catch(error =>{
+    throw error;
+  });
+}
+export {register}
 
-// Login
-/* export const login = async (userData) => {
-  return await axios.post(`${API_URL}/login/`, userData);
-}; */
 function login(formData) {
   return axios.post(`${API_URL}/login/`, formData).then(response => response.data).catch(error => {
     throw error;
   });
 }
-
 export { login }
 
 // Get Articles

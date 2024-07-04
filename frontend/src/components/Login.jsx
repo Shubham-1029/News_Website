@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom'; // Import Navigate from react-router-dom
+import { Navigate } from 'react-router-dom'; 
 import { login } from '../api';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
-  const [loggedIn, setLoggedIn] = useState(false); // State to track login status
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,10 +14,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login(formData);
-      console.log(response); // Log the entire response object
       if (response && response.token) {
         localStorage.setItem('token', response.token);
-        setLoggedIn(true); // Update login state to true on successful login
+        setLoggedIn(true);
       } else {
         console.error('Token not found in response');
         alert('Invalid credentials');
@@ -28,17 +27,43 @@ const Login = () => {
     }
   };
 
-  // Redirect to home page if logged in
   if (loggedIn) {
     return <Navigate to="/" />;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-      <button type="submit">Login</button>
-    </form>
+    <div className="login-container">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group mb-3 mt-5 mx-3">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="form-group mb-3 mt-5 mx-3">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary mx-5">Login</button>
+      </form>
+    </div>
   );
 };
 

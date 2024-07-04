@@ -1,60 +1,76 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, onLogout }) => {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/login');
+    setSidebarOpen(false);
+  };
+
+  const handleSidebarLinkClick = () => {
+    setSidebarOpen(false);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/politics">Politics</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/opinions">Opinions</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/style">Style</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/investigations">Investigations</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/climate">Climate</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/well-being">Well+Being</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/tech">Tech</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/world">World</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dc-md-va">D.C., Md. & Va.</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/sports">Sports</Link>
-            </li>
-          </ul>
-          <button className='btn-subscribe'>Subscribe</button>
-          <Link className="nav-link" to="/login">
-          <button className='btn-signin'>Sign in</button> </Link>
+    <header>
+      <nav className={`navbar ${sidebarOpen ? 'open' : ''}`}>
+        <div className="container-fluid">
+          {isLoggedIn && (
+            <button
+              className="navbar-toggler"
+              type="button"
+              onClick={handleToggleSidebar}
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          )}
+          <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/" onClick={handleSidebarLinkClick}>
+                  Home
+                </Link>
+              </li>
+              {isLoggedIn ? (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/write" onClick={handleSidebarLinkClick}>
+                      Write Article
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <button className="btn-nav btn-link nav-link" onClick={handleLogoutClick}>
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login" onClick={handleSidebarLinkClick}>
+                    Login
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
+};
+
+Navbar.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  onLogout: PropTypes.func,
 };
 
 export default Navbar;

@@ -5,7 +5,7 @@ import ArticleDetail from './components/ArticleDetail';
 import WriteArticle from './components/WriteArticle';
 import EditArticle from './components/EditArticle';
 import Login from './components/Login';
-import Header from './components/Header';
+import Navbar from './components/Navbar';
 import Home from './components/Pages/Home';
 import '../src/components/css/styles.css';
 import './index.css';
@@ -14,19 +14,17 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const App = () => {
   const token = localStorage.getItem('token');
+  const isLoggedIn = !!token; // Set isLoggedIn to false if token is null or undefined
 
   const handleLogout = () => {
-    // Handle logout logic here
     localStorage.removeItem('token');
-    // Navigate to login or home page after logout
-    // Example: navigate('/login');
   };
 
   return (
     <Router>
-      <Header isLoggedIn={!!token} onLogout={handleLogout} />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        {token ? (
+        {isLoggedIn ? (
           <>
             <Route path="/" element={<Home />} />
             <Route path="/articles/:id/edit" element={<EditArticle />} />
@@ -37,8 +35,7 @@ const App = () => {
           <>
             <Route path="/register" element={<AuthForm type="register" />} />
             <Route path="/login" element={<Login />} />
-            {/* Navigate to login or register page */}
-            {/* Example: navigate('/login'); */}
+            <Route path="*" element={<Navigate to="/login" />} />
           </>
         )}
       </Routes>
@@ -47,3 +44,4 @@ const App = () => {
 };
 
 export default App;
+

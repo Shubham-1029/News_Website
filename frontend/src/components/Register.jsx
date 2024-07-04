@@ -11,7 +11,13 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(formData);
+      const response = await register(formData);
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+      } else {
+        console.error('Token not found in response');
+        alert('Invalid credentials');
+      }
       alert('Registration successful! You can now login.');
     } catch (error) {
       console.error('Failed to register', error);
