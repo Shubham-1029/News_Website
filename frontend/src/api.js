@@ -3,12 +3,19 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api';  // Adjust the URL as per your backend setup
 
 // Register
-function register (formData){
-  return axios.post(`${API_URL}/register/`, formData).then(response => response.data).catch(error =>{
-    throw error;
-  });
-}
-export {register}
+
+export const register = async (formData) => {
+  try {
+    const response = await axios.post(`${API_URL}/register/`, formData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error; // Ensure error is thrown for proper handling in Register.jsx
+  }
+};
 
 function login(formData) {
   return axios.post(`${API_URL}/login/`, formData).then(response => response.data).catch(error => {
@@ -52,10 +59,11 @@ export const writeArticle = async (articleData, token) => {
   });
 };
 
+//Edit Articles
 export const editArticle = async (articleId, articleData, token) => {
   try {
     const response = await axios.put(`${API_URL}/articles/${articleId}/`, articleData, {
-      headers: { Authorization: `Bearer ${token}` } // Update this line
+      headers: { Authorization: `Token ${token}` } // Update this line
     });
     return response.data;
   } catch (error) {
@@ -71,8 +79,14 @@ export const updateArticleTags = async (articleId, tagData, token) => {
   });
 };
 
-export const getLatestArticles = (token) => {
-  return axios.get(`${API_URL}/latest-articles/`, {
-    headers: { Authorization: `Token ${token}` }
-  }).then(response => response.data);
+export const getLatestArticles = async (token) => {
+  try {
+    const response = await axios.get(`${API_URL}/latest-articles/`, {
+      headers: { Authorization: `Token ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
+

@@ -11,6 +11,7 @@ import '../src/components/css/styles.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import MainContent from './components/LatestArticle';
 
 const App = () => {
   const token = localStorage.getItem('token');
@@ -26,7 +27,7 @@ const App = () => {
       <Routes>
         {isLoggedIn ? (
           <>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<MainContent/>} />
             <Route path="/articles/:id/edit" element={<EditArticle />} />
             <Route path="/articles/:id" element={<ArticleDetail />} />
             <Route path="/write" element={<WriteArticle />} />

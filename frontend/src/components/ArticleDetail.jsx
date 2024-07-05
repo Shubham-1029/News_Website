@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getArticleDetail, postComment, updateArticleTags } from '../api';
 import CommentList from './CommentList';
-import TagInput from './TagInput'; // Import TagInput component
+import TagInput from './TagInput'; // 
 
 const ArticleDetail = () => {
   const { id } = useParams(); // useParams hook to get the article id

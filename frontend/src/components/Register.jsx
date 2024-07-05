@@ -12,13 +12,12 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await register(formData);
-      if (response && response.token) {
-        localStorage.setItem('token', response.token);
+      if (response) {
+        alert('Registration successful! You can now login.');
       } else {
-        console.error('Token not found in response');
-        alert('Invalid credentials');
+        console.error('Registration failed');
+        alert('Registration failed');
       }
-      alert('Registration successful! You can now login.');
     } catch (error) {
       console.error('Failed to register', error);
       alert('Registration failed');
@@ -35,4 +34,4 @@ const Register = () => {
   );
 };
 
-export default Register
+export default Register;

@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Article, Tag, Comment
 from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, TagSerializer, CommentSerializer
 
@@ -14,6 +14,7 @@ User = get_user_model()
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes= [AllowAny]
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -92,6 +93,7 @@ class LoginView(APIView):
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def latest_articles(request):
     articles = Article.objects.order_by('-created_at')[:5]  
     serializer = ArticleSerializer(articles, many=True)
