@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
+import '../components/css/WriteArticle.css'
 
 const API_URL = 'http://localhost:8000/api';
 
 const WriteArticle = () => {
-  const [formData, setFormData] = useState({ title: '', content: '', image: null });
+  const [formData, setFormData] = useState({ title: '', content: '', image: null, tags: '' });
   const token = localStorage.getItem('token');
 
   const handleChange = (e) => {
@@ -23,6 +24,8 @@ const WriteArticle = () => {
     if (formData.image) {
       articleData.append('image', formData.image);
     }
+    articleData.append('tags', formData.tags);
+
     try {
       const response = await axios.post(`${API_URL}/articles/`, articleData, {
         headers: {
@@ -33,7 +36,7 @@ const WriteArticle = () => {
       console.log('Request headers:', response.config.headers);
       console.log(response.data);
       alert('Article posted successfully!');
-      setFormData({ title: '', content: '', image: null });
+      setFormData({ title: '', content: '', image: null, tags: '' });
     } catch (error) {
       console.error('Failed to post article', error);
       alert('Failed to post article');
@@ -57,6 +60,7 @@ const WriteArticle = () => {
             required
           />
         </div>
+        <hr />
         <div className="form-group mb-3">
           <label htmlFor="content" className="form-label">Content</label>
           <textarea
@@ -70,6 +74,7 @@ const WriteArticle = () => {
             required
           ></textarea>
         </div>
+        <hr />
         <div className="form-group mb-3">
           <label htmlFor="image" className="form-label">Image</label>
           <input
@@ -80,7 +85,20 @@ const WriteArticle = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary w-100">Post Article</button>
+        <hr />
+        <div className="form-group mb-3">
+          <label htmlFor="tags" className="form-label">Tags</label>
+          <input
+            type="text"
+            name="tags"
+            id="tags"
+            className="form-control"
+            placeholder="Enter tags separated by commas"
+            value={formData.tags}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-secondary w-100">Post Article</button>
       </form>
     </div>
   );

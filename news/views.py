@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -8,13 +8,14 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Article, Tag, Comment
 from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, TagSerializer, CommentSerializer
+from django.db.models import Count
 
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-    permission_classes= [AllowAny]
+    permission_classes = [AllowAny]
 
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
@@ -39,6 +40,27 @@ class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({'error': 'You do not have permission to edit this article.'}, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
 
+    def destroy(self, request, *args, **kwargs):
+        article = self.get_object()
+        if request.user != article.user and not request.user.is_staff:
+            return Response({'error': 'You do not have permission to delete this article.'}, status=status.HTTP_403_FORBIDDEN)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UserArticlesView(generics.ListAPIView):
+    serializer_class = ArticleSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        articles = Article.objects.filter(user=user)
+        is_admin = user.is_staff
+        serialized_articles = self.get_serializer(articles, many=True)
+        return Response({
+            "is_admin": is_admin,
+            "articles": serialized_articles.data
+        })
+
 class CommentListView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -58,28 +80,6 @@ class GrantAuthorView(generics.UpdateAPIView):
         user.save()
         return Response({'status': 'author privileges granted'})
 
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def add_tags(request, article_id):
-    try:
-        article = Article.objects.get(id=article_id)
-    except Article.DoesNotExist:
-        return Response({"error": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    tags = request.data.get('tags', [])
-    if not isinstance(tags, list):
-        return Response({"error": "Tags should be a list"}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Clear existing tags
-    article.tags.all().delete()
-
-    # Add new tags
-    for tag_name in tags:
-        Tag.objects.create(name=tag_name, article=article)
-
-    return Response({"success": "Tags updated successfully"}, status=status.HTTP_200_OK)
-
 class LoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -92,12 +92,58 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
+class TagListCreateView(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class TagDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def latest_articles(request):
-    articles = Article.objects.order_by('-created_at')[:5]  
+    articles = Article.objects.order_by('-created_at')[:5]
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
+class UpdateTagsView(APIView):
+    permission_classes = [IsAuthenticated]
 
-# Create your views here.
+    def put(self, request, article_id):
+        try:
+            article = Article.objects.get(id=article_id)
+        except Article.DoesNotExist:
+            return Response({'error': 'Article not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if article.user != request.user:
+            return Response({'error': 'You do not have permission to edit this article.'}, status=status.HTTP_403_FORBIDDEN)
+
+        tags = request.data.get('tags')
+        if tags is not None:
+            article.tags.clear()  # Clear existing tags
+            for tag_name in tags:
+                tag, created = Tag.objects.get_or_create(name=tag_name)
+                article.tags.add(tag)
+
+        return Response({'message': 'Tags updated successfully!'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def popular_tags(request):
+    tags = Tag.objects.annotate(num_articles=Count('articles')).order_by('-num_articles')[:10]
+    serializer = TagSerializer(tags, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def articles_by_tag(request):
+    tag_name = request.GET.get('tag')
+    if not tag_name:
+        return Response({"error": "Tag parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+    tag = get_object_or_404(Tag, name=tag_name)
+    articles = Article.objects.filter(tags__in=[tag])
+    serializer = ArticleSerializer(articles, many=True)
+    return Response(serializer.data)

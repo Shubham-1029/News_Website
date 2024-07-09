@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom'; 
 import { login } from '../api';
+import '../components/css/Login.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -61,7 +62,7 @@ const Login = () => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary mx-5">Login</button>
+        <button type="submit" className="btn btn-secondary my-5 text-center">Login</button>
       </form>
     </div>
   );

@@ -3,7 +3,6 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api';  // Adjust the URL as per your backend setup
 
 // Register
-
 export const register = async (formData) => {
   try {
     const response = await axios.post(`${API_URL}/register/`, formData, {
@@ -22,7 +21,7 @@ function login(formData) {
     throw error;
   });
 }
-export { login }
+export { login };
 
 // Get Articles
 export const getArticles = async () => {
@@ -45,13 +44,6 @@ export const getComments = async (articleId) => {
   }
 };
 
-// Post Comment
-export const postComment = async (articleId, commentData, token) => {
-  return await axios.post(`${API_URL}/articles/${articleId}/comments/`, commentData, {
-    headers: { Authorization: `Token ${token}` }
-  });
-};
-
 // Write Article
 export const writeArticle = async (articleData, token) => {
   return await axios.post(`${API_URL}/articles/`, articleData, {
@@ -59,11 +51,11 @@ export const writeArticle = async (articleData, token) => {
   });
 };
 
-//Edit Articles
+// Edit Article
 export const editArticle = async (articleId, articleData, token) => {
   try {
     const response = await axios.put(`${API_URL}/articles/${articleId}/`, articleData, {
-      headers: { Authorization: `Token ${token}` } // Update this line
+      headers: { Authorization: `Token ${token}` }
     });
     return response.data;
   } catch (error) {
@@ -72,13 +64,7 @@ export const editArticle = async (articleId, articleData, token) => {
   }
 };
 
-// Update Article Tags
-export const updateArticleTags = async (articleId, tagData, token) => {
-  return await axios.post(`${API_URL}/articles/${articleId}/tags/`, tagData, {
-    headers: { Authorization: `Token ${token}` }
-  });
-};
-
+// Get Latest Articles
 export const getLatestArticles = async (token) => {
   try {
     const response = await axios.get(`${API_URL}/latest-articles/`, {
@@ -90,3 +76,75 @@ export const getLatestArticles = async (token) => {
   }
 };
 
+// Get Tags
+export const getTags = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/tags/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    throw error;
+  }
+};
+
+// Create Tag
+export const createTag = async (tagData, token) => {
+  try {
+    const response = await axios.post(`${API_URL}/tags/`, tagData, {
+      headers: { Authorization: `Token ${token}`, 'Content-Type': 'application/json' }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating tag:', error);
+    throw error;
+  }
+};
+
+// Update Tags for Article
+export const updateArticleTags = async (articleId, tags, token) => {
+  try {
+    const response = await axios.put(`${API_URL}/articles/${articleId}/tags/`, { tags }, {
+      headers: { Authorization: `Token ${token}`, 'Content-Type': 'application/json' }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating tags for article:', error);
+    throw error;
+  }
+};
+
+// Delete Tag
+export const deleteTag = async (tagId, token) => {
+  try {
+    await axios.delete(`${API_URL}/tags/${tagId}/`, {
+      headers: { Authorization: `Token ${token}` }
+    });
+  } catch (error) {
+    console.error('Error deleting tag:', error);
+    throw error;
+  }
+};
+
+export const getPopularTags = async () => {
+  const response = await axios.get(`${API_URL}/tags/popular/`);
+  return response.data;
+};
+
+export const getArticlesByTag = async (tag) => {
+  const response = await axios.get(`${API_URL}/articles/by-tag/?tag=${tag}`);
+  console.log(tag)
+  return response.data;
+};
+
+// delete articles
+export const deleteArticle = async (articleId, token) => {
+  try {
+    const response = await axios.delete(`http://localhost:8000/api/articles/${articleId}/`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+  } catch (error) {
+    throw error; // Throw the error for handling in the component
+  }
+};

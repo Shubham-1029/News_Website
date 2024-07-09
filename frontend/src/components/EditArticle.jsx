@@ -78,16 +78,15 @@ EditArticle.propTypes = {
 };
  
 export default EditArticle;
-*/
-import { useEffect, useState } from 'react';
+*/import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EditArticle = () => {
   const { id } = useParams();
-  const [article, setArticle] = useState({ title: '', content: '' });
+  const [article, setArticle] = useState({ title: '', content: '', image: null, tags: [] });
+  const [tagInput, setTagInput] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -105,18 +104,58 @@ const EditArticle = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
+    if (name === 'image') {
+      setArticle((prevArticle) => ({
+        ...prevArticle,
+        image: files[0],
+      }));
+    } else {
+      setArticle((prevArticle) => ({
+        ...prevArticle,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleTagChange = (e) => {
+    setTagInput(e.target.value);
+  };
+
+  const addTag = (e) => {
+    e.preventDefault();
+    if (tagInput.trim() !== '' && !article.tags.includes(tagInput.trim())) {
+      setArticle((prevArticle) => ({
+        ...prevArticle,
+        tags: [...prevArticle.tags, tagInput.trim()],
+      }));
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
     setArticle((prevArticle) => ({
       ...prevArticle,
-      [name]: value,
+      tags: prevArticle.tags.filter((tag) => tag !== tagToRemove),
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', article.title);
+    formData.append('content', article.content);
+    if (article.image) {
+      formData.append('image', article.image);
+    }
+    formData.append('tags', JSON.stringify(article.tags));
+
     try {
-      await axios.put(`http://localhost:8000/api/articles/${id}/`, article, {
-        headers: { Authorization: `Token ${token}` }
+      await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
       alert('Article updated successfully!');
       navigate(`/articles/${id}`);
@@ -157,6 +196,37 @@ const EditArticle = () => {
                 required
               />
             </div>
+            <div className="mb-3">
+              <label htmlFor="image" className="form-label">Image</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="tags" className="form-label">Tags</label>
+              <div className="d-flex">
+                <input
+                  type="text"
+                  id="tags"
+                  value={tagInput}
+                  onChange={handleTagChange}
+                  className="form-control me-2"
+                  placeholder="Enter a tag"
+                />
+                <button className="btn btn-secondary" onClick={addTag}>Add Tag</button>
+              </div>
+              <div className="mt-2">
+                {article.tags.map((tag, index) => (
+                  <span key={index} className="badge bg-primary me-1">
+                    {tag} <button type="button" className="btn-close btn-close-white btn-sm ms-1" onClick={() => removeTag(tag)}></button>
+                  </span>
+                ))}
+              </div>
+            </div>
             <button type="submit" className="btn btn-primary w-100">Update Article</button>
           </form>
         </div>
@@ -165,11 +235,8 @@ const EditArticle = () => {
   );
 };
 
-EditArticle.propTypes = {
-  id: PropTypes.string,
-};
-
 export default EditArticle;
+
 /* import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';

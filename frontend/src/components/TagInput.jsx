@@ -24,9 +24,7 @@ const TagInput = ({ tags, setTags }) => {
         {tags.map((tag, index) => (
           <li key={index} className="tag">
             {tag}
-            <button type="button" className="tag-remove-btn" onClick={() => removeTag(index)}>
-              &times;
-            </button>
+            <button type="button" onClick={() => removeTag(index)}>x</button>
           </li>
         ))}
       </ul>
@@ -45,5 +43,4 @@ TagInput.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   setTags: PropTypes.func.isRequired,
 };
-
 export default TagInput;
