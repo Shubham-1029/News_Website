@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { getPopularTags } from './api'; // adjust the path if necessary
-import NavBar from './components/NavBar';
+import NavBar from './components/Navbar';
 import SideBar from './components/SideBar';
 import Header from './components/Header'; // Include Header component
 import AuthForm from './components/Register';
@@ -45,11 +45,11 @@ const App = () => {
             <NavBar tags={tags} onTagSelect={(tagName) => console.log(`Selected tag: ${tagName}`)} /> {/* Include NavBar */}
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-1">
-                        <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> {/* Include SideBar */}
+                    <div className="sidebar">
+                       {/*  <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> */} {/* Include SideBar */}
                     </div>
                     <Header /> {/* Include Header component */}
-                    <div className="col-lg-11">
+                    <div className="content">
                         <Routes>
                             {isLoggedIn ? (
                                 <>

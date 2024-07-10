@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import ArticleList from '../ArticleList';
-import NavBar from '../NavBar';
-import Footer from '../Footer';
 import LatestArticle from '../LatestArticle';
+import Footer from '../Footer'
 import { getArticlesByTag, getArticles } from '../../api';
 import './Home.css';
-import Header from '../Header';
-import SideBar from '../SideBar';
 
 function Home() {
     const [articles, setArticles] = useState([]);
@@ -18,11 +15,10 @@ function Home() {
                 let articlesData = [];
 
                 if (selectedTags.length > 0) {
-                    // Construct an array of tag names
                     const tagNames = selectedTags.map(tag => tag.name);
                     articlesData = await getArticlesByTag(tagNames);
                 } else {
-                    articlesData = await getArticles(); // Fetch latest articles or all articles
+                    articlesData = await getArticles();
                 }
 
                 setArticles(articlesData);
@@ -36,26 +32,25 @@ function Home() {
 
     const handleTagSelect = (tag) => {
         console.log('Tag selected:', tag);
-        setSelectedTags([...selectedTags, tag]); // Add selected tag to the array
+        setSelectedTags([...selectedTags, tag]);
     };
 
     return (
         <div className="home">
-            <SideBar />
             <main className="main-content">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="latest-articles col-md-10">
                             <LatestArticle articles={articles} />
                         </div>
-                        <div className="col-md-4">
+                        <div className="article-list col-md-2">
                             <h2 className="sidebar-title text-center">Other Articles</h2>
                             <ArticleList articles={articles} />
                         </div>
                     </div>
                 </div>
             </main>
-            <Footer />
+            <Footer/>
         </div>
     );
 }

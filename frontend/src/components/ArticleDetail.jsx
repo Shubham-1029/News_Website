@@ -75,7 +75,7 @@ const ArticleDetail = () => {
       </div>
       <p className="article-content">{article.content}</p>
       <div className="tags-section">
-        <h5>Tags</h5>
+        {/* <h5>Tags</h5> */}
         <ul className="tags-list">
           {tags.map(tag => (
             <li key={tag} className="tag-item">
@@ -93,8 +93,8 @@ const ArticleDetail = () => {
             onChange={handleTagChange}
           />
           <button className="btn btn-primary mt-2 mx-3" onClick={handleAddTag}>Add Tag</button>
-          <button className="btn btn-primary mt-2 mx-3" onClick={getTags}>View Tags</button> 
-          <button className="btn btn-danger mt-2 mx-3" onClick={handleDelete}>Delete Article</button>
+          <button className="btn btn-primary mt-2 mx-3" onClick={getTags}>View Tags</button>  
+          {/* <button className="btn btn-danger mt-2 mx-3" onClick={handleDelete}>Delete Article</button> */}
         </div>
       </div>
     </div>

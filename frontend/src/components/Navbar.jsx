@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getPopularTags, getArticlesByTag } from '../api';
+import '../components/css/NavBar.css'
 
 const NavBar = ({ onTagSelect }) => {
     const [tags, setTags] = useState([]);
@@ -54,12 +55,12 @@ const NavBar = ({ onTagSelect }) => {
                             </li>
                         ))}
                     </ul>
+                    <a className="btn-subscribe">Subscribe</a>
                     {isLoggedIn ? (
-                        <button className="button-85" onClick={handleLogout}>Log Out</button>
+                        <button className="btn-signin" onClick={handleLogout}>Sign Out</button>
                     ) : (
-                        <button className="button-85" onClick={handleLogin}>Log In</button>
+                        <button className="btn-signin" onClick={handleLogin}>Sign In</button>
                     )}
-                    <button className="button-22 mx-3 py-3">Subscribe</button>
                 </div>
             </div>
         </nav>

@@ -109,7 +109,7 @@ def latest_articles(request):
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
-class UpdateTagsView(APIView):
+""" class UpdateTagsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, article_id):
@@ -128,7 +128,20 @@ class UpdateTagsView(APIView):
                 tag, created = Tag.objects.get_or_create(name=tag_name)
                 article.tags.add(tag)
 
-        return Response({'message': 'Tags updated successfully!'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Tags updated successfully!'}, status=status.HTTP_200_OK) """
+"""Working"""
+class UpdateTagsView(APIView):    
+    def get(self, request):
+        queryset = Tag.objects.all()
+        serializer = TagSerializer(queryset, many=True)
+        return Response (serializer.data)
+    def post(self, request):
+        serializer = TagSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response (serializer.data)
+        return Response (serializer.errors)
+    
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

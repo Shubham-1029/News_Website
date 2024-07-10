@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getArticles } from '../api';
 import { Link } from 'react-router-dom';
+import '../components/css/ArticleList.css'; // Import the CSS file
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
@@ -21,9 +22,11 @@ const ArticleList = () => {
             <Link to={`/articles/${article.id}`}>
               <img src={article?.image} alt={article.title} className="img-fluid article-image-list" />
             </Link>
-            <Link to={`/articles/${article.id}`}>
-              <h2 className="article-title">{article.title}</h2>
-            </Link>
+            <div className="article-content-list">
+              <Link className="article-link" to={`/articles/${article.id}`}>
+                <h2 className="article-title">{article.title}</h2>
+              </Link>
+            </div>
           </li>
         ))}
       </ul>

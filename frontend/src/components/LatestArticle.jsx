@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getLatestArticles } from '../api';
-import ArticleList from './ArticleList';
+import '../components/css/LatestArticle.css'; // Import the CSS file
 
 const LatestArticle = () => {
   const [articles, setArticles] = useState([]);
@@ -23,18 +23,18 @@ const LatestArticle = () => {
     fetchLatestArticles();
   }, []);
 
-  const IMG_BASE_URL = `http://localhost:8000` 
+  const IMG_BASE_URL = `http://localhost:8000`; 
 
   return (
     <div className="latest-articles">
-      <h1>Latest Articles</h1>
       {articles?.map(article => (
         <div key={article.id} className="latest-article">
           {article.image && (
-            <img src={ IMG_BASE_URL + article?.image}/>
+            <Link to={`/articles/${article.id}`}><img src={IMG_BASE_URL + article.image} alt={article.title} className="article-image" /></Link>
           )}
-          <h5>{article.title}</h5>
-          <Link to={`/articles/${article.id}`} className="btn btn-primary">Read more</Link>
+          <div className="article-content">
+            <Link to={`/articles/${article.id}`} className="article-link"><h5>{article.title}</h5></Link>
+          </div>
         </div>
       ))}
       <hr />

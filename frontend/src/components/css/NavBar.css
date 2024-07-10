@@ -1,0 +1,38 @@
+.navbar {
+    position: fixed !important;
+    top: 0px;
+    width: 100%;
+    border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.btn-subscribe {
+    background-color: #166DFC;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 40px;
+    margin-right: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-subscribe:hover {
+    cursor: pointer;
+    background-color: rgb(19 102 179);
+}
+
+.btn-signin {
+    border: none;
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 40px;
+}
+
+.btn-signin:hover{
+    background-color:grey;
+    border-radius: 40px;
+}
+.nav-item{
+    font-weight: bolder;
+    color: black;
+}

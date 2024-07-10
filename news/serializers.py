@@ -5,7 +5,6 @@ from .models import Article, Tag, Comment
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
- # Make sure 'source' matches the model field name
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'is_staff']
@@ -39,21 +38,27 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'image', 'user', 'created_at', 'updated_at', 'tags', 'tag_names']
 
     def create(self, validated_data):
-        tag_names = validated_data.pop('tag_names', [])
-        article = Article.objects.create(**validated_data)
-        for tag_name in tag_names:
-            tag, created = Tag.objects.get_or_create(name=tag_name)
-            article.tags.add(tag)
+        tag =self.initial_data['tags']
+        tagInstances =[]
+        for tags in tag:
+            tagInstances.append(Tag.objects.get(pk = tags['id']))
+        article =Article.objects.create(**validated_data)
+        article.tags.set(tagInstances)
         return article
 
+
     def update(self, instance, validated_data):
-        tag_names = validated_data.pop('tag_names', [])
-        instance = super().update(instance, validated_data)
-        if tag_names:
-            instance.tags.clear()
-            for tag_name in tag_names:
-                tag, created = Tag.objects.get_or_create(name=tag_name)
-                instance.tags.add(tag)
+        try: # handling if not getting genre from frontend client
+            tag = self.initial_data['tags']
+            tagInstances = []
+            for tags in tag:
+                tagInstances.append(Tag.objects.get(pk = tags['id']))
+            instance.tag.set(tagInstances)
+        except:
+            pass
+        for k, v in validated_data.items():
+            setattr(instance, k, v)
+        instance.save()
         return instance
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -10,6 +10,8 @@
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    border: none;
+    box-shadow: none;
 }
 
 .row {
@@ -37,3 +39,6 @@
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
+
+
+
