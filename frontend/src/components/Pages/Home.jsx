@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import ArticleList from '../ArticleList';
 import LatestArticle from '../LatestArticle';
-import Footer from '../Footer'
+import Footer from '../Footer';
 import { getArticlesByTag, getArticles } from '../../api';
 import './Home.css';
+import { assets } from '../../assets/asset';
 
 function Home() {
     const [articles, setArticles] = useState([]);
@@ -38,19 +39,22 @@ function Home() {
     return (
         <div className="home">
             <main className="main-content">
-                <div className="container">
-                    <div className="row">
-                        <div className="latest-articles col-md-10">
+                <div className="ad-placeholder">
+                    <img className= "ad-placeholder-img" src={assets.image6} alt="Ad gif" />
+                </div>
+                
+                <div className="container-xxl content">
+                    <div className="row main-container ">
+                        <div className="latest-articles col-md-8">
                             <LatestArticle articles={articles} />
                         </div>
-                        <div className="article-list col-md-2">
-                            <h2 className="sidebar-title text-center">Other Articles</h2>
+                        <div className="article-list col-md-4">
+                            <h2 className="sidebar-title">Latest from the Post</h2>
                             <ArticleList articles={articles} />
                         </div>
                     </div>
                 </div>
             </main>
-            <Footer/>
         </div>
     );
 }

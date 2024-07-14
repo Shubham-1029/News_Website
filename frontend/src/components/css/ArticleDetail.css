@@ -1,7 +1,12 @@
 img{
-    height:400px;
+    height:400vh;
 }
 
-.article-detail{
-    background-color: red;
-}
+.article-detail {
+    padding: 20px;
+    background-color: rgba(255,255,251);
+  }
+  
+  .article-list-container {
+    padding: 20px;
+  }

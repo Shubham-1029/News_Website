@@ -6,6 +6,12 @@ import '../components/css/LatestArticle.css'; // Import the CSS file
 const LatestArticle = () => {
   const [articles, setArticles] = useState([]);
 
+  const truncateText = (text, maxLength) => {
+    if (!text) return '';
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
+
   useEffect(() => {
     const fetchLatestArticles = async () => {
       const token = localStorage.getItem('token');
@@ -34,6 +40,9 @@ const LatestArticle = () => {
           )}
           <div className="article-content">
             <Link to={`/articles/${article.id}`} className="article-link"><h5>{article.title}</h5></Link>
+            <p className="article-excerpt">{article.excerpt || truncateText(article.content, 100)}</p>
+            <br />
+            <p></p>
           </div>
         </div>
       ))}

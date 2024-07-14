@@ -17,18 +17,20 @@ const ArticleList = () => {
   return (
     <div className="article-list-container">
       <ul className="article-list">
-        {articles.map(article => (
-          <li key={article.id} className="article-container">
-            <Link to={`/articles/${article.id}`}>
-              <img src={article?.image} alt={article.title} className="img-fluid article-image-list" />
-            </Link>
-            <div className="article-content-list">
-              <Link className="article-link" to={`/articles/${article.id}`}>
-                <h2 className="article-title">{article.title}</h2>
+        <div className="article-cont">
+          {articles.map(article => (
+            <li key={article.id} className="article-container">
+              <Link to={`/articles/${article.id}`}>
+                <img src={article?.image} alt={article.title} className="article-image-list" />
               </Link>
-            </div>
-          </li>
-        ))}
+              <div className="article-content-list">
+                <Link className="article-link" to={`/articles/${article.id}`}>
+                  <h2 className="article-title">{article.title}</h2>
+                </Link>
+              </div>
+            </li>
+          ))}
+        </div>
       </ul>
     </div>
   );

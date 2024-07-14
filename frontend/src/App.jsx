@@ -1,35 +1,27 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { getPopularTags } from './api'; // adjust the path if necessary
-import NavBar from './components/Navbar';
+import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
-import Header from './components/Header'; // Include Header component
+import Header from './components/Header';
 import AuthForm from './components/Register';
 import ArticleDetail from './components/ArticleDetail';
 import WriteArticle from './components/WriteArticle';
 import EditArticle from './components/EditArticle';
 import Login from './components/Login';
+import Home from './components/Pages/Home';
+import UserComponent from './components/UserComponent'; // Import UserComponent
+import ArticleList from './components/ArticleList';
 import './components/css/styles.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Home from './components/Pages/Home';
+import Footer from './components/Footer';
+import ArticlePage from './components/Pages/ArticlePage';
+
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-    const [tags, setTags] = useState([]);
-
-    useEffect(() => {
-        const fetchTags = async () => {
-            try {
-                const popularTags = await getPopularTags();
-                setTags(popularTags);
-            } catch (error) {
-                console.error('Error fetching popular tags', error);
-            }
-        };
-        fetchTags();
-    }, []);
+    const [articles, setArticles] = useState([]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -40,16 +32,20 @@ const App = () => {
         setIsLoggedIn(true);
     };
 
+    const handleTagSelect = (selectedArticles) => {
+        setArticles(selectedArticles || []); // Ensure articles is always an array
+    };
+
     return (
         <Router>
-            <NavBar tags={tags} onTagSelect={(tagName) => console.log(`Selected tag: ${tagName}`)} /> {/* Include NavBar */}
+            <NavBar onTagSelect={handleTagSelect} /> 
             <div className="container-fluid">
-                <div className="row">
-                    <div className="sidebar">
-                       {/*  <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> */} {/* Include SideBar */}
+                <div className="row h-100">
+                    <div className="sidebar col-2">
+                        <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> 
                     </div>
-                    <Header /> {/* Include Header component */}
-                    <div className="content">
+                    <Header /> 
+                    <div className="content col-12">
                         <Routes>
                             {isLoggedIn ? (
                                 <>
@@ -57,6 +53,8 @@ const App = () => {
                                     <Route path="/articles/:id/edit" element={<EditArticle />} />
                                     <Route path="/articles/:id" element={<ArticleDetail />} />
                                     <Route path="/write" element={<WriteArticle />} />
+                                    <Route path="/user" element={<UserComponent />} /> {/* Add UserComponent route */}
+                                    <Route path="/articles" element={<ArticleList articles={articles} />} /> {/* Render ArticleList */}
                                 </>
                             ) : (
                                 <>
@@ -67,6 +65,7 @@ const App = () => {
                             )}
                         </Routes>
                     </div>
+                    <Footer/>
                 </div>
             </div>
         </Router>

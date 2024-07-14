@@ -1,0 +1,86 @@
+.user-component {
+    padding: 20px;
+}
+
+.user-articles {
+    list-style: none;
+    padding: 0;
+}
+
+.user-article {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.user-article h4 {
+    margin: 0;
+}
+
+.user-article button, .user-article a {
+    margin-right: 10px;
+}
+
+/* UserComponent.css */
+
+.user-component {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.user-component h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.user-component h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.user-articles {
+    list-style: none;
+    padding: 0;
+}
+
+.user-article {
+    border-bottom: 1px solid #eaeaea;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-article h4 {
+    font-size: 1.25rem;
+    color: #333;
+    margin: 0;
+}
+
+.user-article h4:hover {
+    color: #0073e6;
+}
+
+.user-article button, .user-article a {
+    background: none;
+    border: none;
+    color: #0073e6;
+    cursor: pointer;
+    font-size: 0.875rem;
+    margin-left: 15px;
+}
+
+.user-article button:hover, .user-article a:hover {
+    text-decoration: underline;
+}
+
+.user-article-actions {
+    display: flex;
+    align-items: center;
+}
+

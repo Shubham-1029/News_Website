@@ -27,6 +27,7 @@ class TagSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     tags = TagSerializer(many=True, read_only=True)
+    
     tag_names = serializers.ListField(
         child=serializers.CharField(max_length=50),
         write_only=True,

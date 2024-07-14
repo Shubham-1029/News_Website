@@ -1,38 +1,106 @@
 .navbar {
-    position: fixed !important;
-    top: 0px;
-    width: 100%;
-    border-bottom: 1px solid rgb(227, 227, 227);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 10px 20px;
 }
 
-.btn-subscribe {
-    background-color: #166DFC;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 40px;
-    margin-right: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
+.navbar .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
+
+.navbar-left, .navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.navbar-toggler {
+    display: none;
+    border: none;
+    background: none;
+}
+
+.navbar-toggler-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    display: inline-block;
+    position: relative;
+}
+
+.navbar-toggler-icon::before, 
+.navbar-toggler-icon::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+}
+
+.navbar-toggler-icon::before {
+    top: 8px;
+}
+
+.navbar-toggler-icon::after {
+    bottom: 8px;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.nav-item {
+    margin: 0 10px;
+    font-weight: 700;
+}
+
+.nav-link {
+    font-size: 16px;
+    color: #000;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+
 
 .btn-subscribe:hover {
-    cursor: pointer;
-    background-color: rgb(19 102 179);
+    background-color: #0056b3;
 }
 
 .btn-signin {
+    display: flex;
+    background: none;
+    color: #000;
     border: none;
-    background-color: white;
-    padding: 8px 16px;
-    border-radius: 40px;
-}
-
-.btn-signin:hover{
-    background-color:grey;
-    border-radius: 40px;
-}
-.nav-item{
-    font-weight: bolder;
-    color: black;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    flex-direction: row;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
+    gap: 0.5rem;
 }

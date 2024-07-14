@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Article, Tag, Comment
 from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, TagSerializer, CommentSerializer
 from django.db.models import Count
+from rest_framework.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -17,9 +18,17 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-class UserListView(generics.ListAPIView):
+""" class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+ """
+class UserDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 class ArticleListView(generics.ListCreateAPIView):
     queryset = Article.objects.all()
@@ -46,6 +55,32 @@ class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({'error': 'You do not have permission to delete this article.'}, status=status.HTTP_403_FORBIDDEN)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+""" class ArticleDetailView(APIView): 
+    def get_object(self,pk):
+        try:
+            return Article.objects.get(pk=pk)
+        except:
+            raise ValidationError({'msg':'Article Doesnot exist'})
+    
+    def get(self,request,pk):
+        article = self.get_object(pk)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
+    
+    def put(self,request,pk):
+        article = self.get_object(pk=pk)
+        serializer = ArticleSerializer(article,data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+    def delete(self,request,pk):
+        article = self.get_object(pk=pk)
+        article.delete()
+        return Response({"msg":"Article Deleted"})
+         """
 
 class UserArticlesView(generics.ListAPIView):
     serializer_class = ArticleSerializer
@@ -109,7 +144,7 @@ def latest_articles(request):
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
-""" class UpdateTagsView(APIView):
+""" class UpdateTagsView(APIView):    Not Working
     permission_classes = [IsAuthenticated]
 
     def put(self, request, article_id):
@@ -141,6 +176,7 @@ class UpdateTagsView(APIView):
             serializer.save()
             return Response (serializer.data)
         return Response (serializer.errors)
+    
     
 
 @api_view(['GET'])

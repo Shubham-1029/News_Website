@@ -64,6 +64,20 @@ export const editArticle = async (articleId, articleData, token) => {
   }
 };
 
+export const getUserDetails = async () => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${API_URL}/user/`, {
+      headers: { Authorization: `Token ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user details:', error.response);
+    throw error;
+  }
+};
+
+
 // Get Latest Articles
 export const getLatestArticles = async (token) => {
   try {
@@ -136,15 +150,25 @@ export const getArticlesByTag = async (tag) => {
   return response.data;
 };
 
+export const getUserArticles = async () => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${API_URL}/user/articles/`, {
+      headers: { Authorization: `Token ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user articles:', error.response);
+    throw error;  
+  }
+};
+
 // delete articles
 export const deleteArticle = async (articleId, token) => {
-  try {
-    const response = await axios.delete(`http://localhost:8000/api/articles/${articleId}/`, {
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    });
-  } catch (error) {
-    throw error; // Throw the error for handling in the component
-  }
+  const response = await axios.delete(`http://localhost:8000/api/articles/${articleId}/`, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+  return response; 
 };

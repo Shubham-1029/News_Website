@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getArticleDetail, updateArticleTags, getTags, deleteArticle } from '../api';
+import { getArticleDetail, updateArticleTags, deleteArticle } from '../api';
 import '../components/css/ArticleDetail.css'
 
 const ArticleDetail = () => {
@@ -74,8 +74,8 @@ const ArticleDetail = () => {
         {article.image && <img className="img-fluid article-image mb-3" src={article.image} alt={article.title} />}
       </div>
       <p className="article-content">{article.content}</p>
-      <div className="tags-section">
-        {/* <h5>Tags</h5> */}
+{/*       <div className="tags-section">
+        <h5>Tags</h5>
         <ul className="tags-list">
           {tags.map(tag => (
             <li key={tag} className="tag-item">
@@ -94,9 +94,9 @@ const ArticleDetail = () => {
           />
           <button className="btn btn-primary mt-2 mx-3" onClick={handleAddTag}>Add Tag</button>
           <button className="btn btn-primary mt-2 mx-3" onClick={getTags}>View Tags</button>  
-          {/* <button className="btn btn-danger mt-2 mx-3" onClick={handleDelete}>Delete Article</button> */}
+          <button className="btn btn-danger mt-2 mx-3" onClick={handleDelete}>Delete Article</button> 
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

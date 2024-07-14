@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import '../components/css/SideBar.css';
 
 const SideBar = ({ isLoggedIn, onLogout }) => {
   const navigate = useNavigate();
@@ -22,53 +23,52 @@ const SideBar = ({ isLoggedIn, onLogout }) => {
 
   return (
     <header>
-      <nav className={`navbar ${sidebarOpen ? 'open' : ''}`}>
+      <nav className="custom-sidebar-navbar">
         <div className="container-fluid">
           {isLoggedIn && (
             <button
-              className="navbar-toggler"
+              className="custom-sidebar-toggler"
               type="button"
               onClick={handleToggleSidebar}
             >
-              <span className="navbar-toggler-icon"></span>
+              <span className="custom-sidebar-toggler-icon">☰</span>
             </button>
           )}
-          <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={handleSidebarLinkClick}>
-                  Home
-                </Link>
-              </li>
-              {isLoggedIn ? (
-                <>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/write" onClick={handleSidebarLinkClick}>
-                      Write Article
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/edit" onClick={handleSidebarLinkClick}>
-                      Edit Article
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <button className="btn-nav btn-link nav-link" onClick={handleLogoutClick}>
-                      Logout
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login" onClick={handleSidebarLinkClick}>
-                    Login
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
         </div>
       </nav>
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/" onClick={handleSidebarLinkClick}>
+              Home
+            </Link>
+          </li>
+          {isLoggedIn ? (
+            <>
+              <Link className="nav-link" to="/write" onClick={handleSidebarLinkClick}>
+                Write Article
+              </Link>
+              <br />
+              <Link className='nav-link' to="/user">View Your Article</Link>
+              <br />
+              <Link className="nav-link" to="/edit" onClick={handleSidebarLinkClick}>
+                Edit Article
+              </Link>
+              <br />
+              <button className="btn-nav btn-link nav-link" onClick={handleLogoutClick}>
+                Logout
+              </button>
+              <br />
+            </>
+          ) : (
+            <li className="nav-item">
+              <Link className="nav-link" to="/login" onClick={handleSidebarLinkClick}>
+                Login
+              </Link>
+            </li>
+          )}
+        </ul>
+      </div>
     </header>
   );
 };

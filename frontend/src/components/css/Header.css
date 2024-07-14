@@ -3,6 +3,17 @@
 }
 
 .header-second{
-    font-family: 16px Georgia, 'Times New Roman', serif;
-    color: #595959;
+    font-family: georgia, 'Times New Roman', serif;
+    font-style: italic;
+    color: rgb(89 89 89);
+    font-size: 1rem;
+    line-height: 1.1;
+}
+
+header{
+   text-align: center; 
+   background-color: #fff;
+}
+.logo{
+    margin-top: 14px;
 }
