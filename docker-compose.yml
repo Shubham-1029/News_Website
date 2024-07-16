@@ -1,0 +1,51 @@
+version: "3.8"
+ services:
+    db:
+      container_name: postgres_container
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root
+        POSTGRES_DB: test_db
+      ports:
+        - "5432:5432"
+    pgadmin:
+      container_name: pgadmin4_container
+      image: dpage/pgadmin4
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: root
+      ports:
+        - "5050:80"
+      depends_on:
+        - db
+
+      web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+      # volumes:
+      #   - backend_postgres_data:/var/data/posgresql/data
+  #   pgadmin:
+  #     container_name: pgadmin
+  #     image: dpage/pgadmin4
+  #     restart: always
+  #     env_file:
+  #       - ./news_website/dev.env
+  #     ports:
+  #       - "5050:80"
+  #   news_wesite_redis:
+  #     container_name: redis
+  #     image: redis:7.0-alpine
+  # volumes:
+  #   backend_postgres_data:

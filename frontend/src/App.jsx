@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Footer from './components/Footer';
 import ArticlePage from './components/Pages/ArticlePage';
+import LatestArticle from './components/LatestArticle'
 
 
 const App = () => {
@@ -41,9 +42,9 @@ const App = () => {
             <NavBar onTagSelect={handleTagSelect} /> 
             <div className="container-fluid">
                 <div className="row h-100">
-                    <div className="sidebar col-2">
+                    {/* <div className="sidebar col-2">
                         <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> 
-                    </div>
+                    </div> */}
                     <Header /> 
                     <div className="content col-12">
                         <Routes>
@@ -55,6 +56,7 @@ const App = () => {
                                     <Route path="/write" element={<WriteArticle />} />
                                     <Route path="/user" element={<UserComponent />} /> {/* Add UserComponent route */}
                                     <Route path="/articles" element={<ArticleList articles={articles} />} /> {/* Render ArticleList */}
+                                    <Route path="/latest-articles" element={<LatestArticle articles={articles} />} /> 
                                 </>
                             ) : (
                                 <>

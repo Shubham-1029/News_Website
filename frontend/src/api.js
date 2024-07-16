@@ -93,10 +93,15 @@ export const getLatestArticles = async (token) => {
 // Get Tags
 export const getTags = async () => {
   try {
-    const response = await axios.get(`${API_URL}/tags/`);
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Token ${token}`,
+    };
+
+    const response = await axios.get(`${API_URL}/tags/`, { headers });
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching tags:', error.response? error.response.data : error.message);
     throw error;
   }
 };
@@ -145,9 +150,18 @@ export const getPopularTags = async () => {
 };
 
 export const getArticlesByTag = async (tag) => {
-  const response = await axios.get(`${API_URL}/articles/by-tag/?tag=${tag}`);
-  console.log(tag)
-  return response.data;
+  try {
+    const token = localStorage.getItem('token'); // Replace with your actual token
+    const response = await axios.get(`${API_URL}/articles/by-tag/?tag=${tag}`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    console.log(tag)
+    return response.data;
+  } catch (error) {
+    console.log('An error occurred:', error);
+  }
 };
 
 export const getUserArticles = async () => {

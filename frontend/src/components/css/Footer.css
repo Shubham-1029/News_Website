@@ -1,0 +1,29 @@
+.footer-area{
+    border: none !important; 
+    /* background-color: white; */
+}
+
+.bg-light{
+    background-color: white !important;
+}
+.footer-content{
+    border-top: 1px solid rgb(233, 233, 233);
+}
+.footer-title{
+    font-weight:700;
+    color: rgba(42, 42, 42, 1);
+    margin-top: 1.5rem;
+    font-size:0.875rem;
+    line-height:1.75;
+    font-family: Franklin, Arial, sans-serif;
+}
+.list-unstyled{
+    font-size:14px;
+}
+
+@media(max-width:768px){
+ .footer-content{
+    display:flex;
+    justify-content: center;
+ }  
+}

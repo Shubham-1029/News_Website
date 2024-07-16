@@ -5,18 +5,21 @@
 .article-list {
   list-style: none;
   padding: 0;
+  border-left: 1px solid rgb(248, 232, 232);
+  
 }
 
 .article-container {
   display: flex;
   align-items: flex-start;
   margin-bottom: 20px;
+  border-bottom: 2px solid #f8f9fa;
   flex-direction: row-reverse;
   margin-right: 10px;
 }
 
 .article-image-list {
-  width: 150px !important;
+  width: 64px !important;
   height: auto;
   margin-left: 10px; /* Reduced margin */
 }
@@ -28,8 +31,15 @@
 .article-title {
   margin: 0 0 10px 0;
   font-size: 1.25rem;
+  font-family: "EB Garamond", serif;
   color: #000;
   text-decoration: none;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.article-list h1{
+  border-top: 1px solid rgb(248, 232, 232);
 }
 
 .article-title:hover {
@@ -38,4 +48,12 @@
 
 .article-cont {
   margin-left: 10px; /* Reduced margin */
+}
+.article-time{
+  color: rgba(89, 89, 89, 1);
+  font-size: 0.75rem;
+}
+
+@media(max-width:768px) {
+
 }

@@ -5,11 +5,11 @@ import '../components/css/Footer.css'
 function Footer() {
   return (
     <footer className="bg-light py-4">
-      <div className="container">
-        <div className="row">
+      <div className="container-xxl footer-area">
+        <div className="row footer-content">
           {/* Company Section */}
-          <div className="col-md-3 mb-3">
-            <h5>Company</h5>
+          <div className="col-md-3 mb-3 footer-item">
+            <h5 className="footer-title">Company</h5>
             <ul className="list-unstyled">
               <li><Link to="https://www.washingtonpost.com/about-the-post/" className="text-dark">About The Post</Link></li>
               <li><Link to="https://www.washingtonpost.com/policies-and-standards/" className="text-dark">Newsroom Policies & Standards</Link></li>
@@ -24,7 +24,7 @@ function Footer() {
 
           {/* Get The Post Section */}
           <div className="col-md-3 mb-3">
-            <h5>Get The Post</h5>
+            <h5 className="footer-title">Get The Post</h5>
             <ul className="list-unstyled">
               <li><Link to="https://subscribe.washingtonpost.com/acquisition/?p=s_v&s_l=ONSITE_FOOTER_DIGITAL" className="text-dark">Become a Subscriber</Link></li>
               <li><Link to="https://subscribe.washingtonpost.com/acquisition/?p=g_v&s_l=ONSITE_FOOTER_GIFT" className="text-dark">Gift Subscriptions</Link></li>
@@ -42,7 +42,7 @@ function Footer() {
 
           {/* Contact Us Section */}
           <div className="col-md-3 mb-3">
-            <h5>Contact Us</h5>
+            <h5 className="footer-title">Contact Us</h5>
             <ul className="list-unstyled">
               <li><Link to="https://helpcenter.washingtonpost.com/hc/en-us/articles/360002940991-Leadership-of-The-Washington-Post-newsroom" className="text-dark">Contact the Newsroom</Link></li>
               <li><Link to="https://helpcenter.washingtonpost.com/hc/en-us/" className="text-dark">Contact Customer Care</Link></li>
@@ -57,7 +57,7 @@ function Footer() {
 
           {/* Terms of Use Section */}
           <div className="col-md-3 mb-3">
-            <h5>Terms of Use</h5>
+            <h5 className="footer-title">Terms of Use</h5>
             <ul className="list-unstyled">
               <li><Link to="https://www.washingtonpost.com/information/2022/06/17/terms-sale-digital-products/" className="text-dark">Digital Products Terms of Sale</Link></li>
               <li><Link to="https://www.washingtonpost.com/information/2020/11/20/terms-sale-print-products/" className="text-dark">Print Products Terms of Sale</Link></li>

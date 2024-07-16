@@ -1,0 +1,52 @@
+.articles-by-tag {
+    margin: 20px;
+    border-bottom: 1px solid black;
+}
+
+.articles-by-tag h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.articles-by-tag p {
+    font-size: .75rem;
+    color: rgba(89, 89, 89, 1);
+}
+
+.articles-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.article-card {
+    width: calc(25% - 20px);
+    border-right: 1px solid #eee;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.article-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.article-content {
+    padding: 10px 0;
+}
+
+.article-link h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #2A2A2A !important;
+    font-weight:700;
+}
+
+.article-author {
+    font-size: 14px;
+    color: #595959;
+}

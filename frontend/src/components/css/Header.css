@@ -1,5 +1,6 @@
 .header-first{
     margin-top:50px;
+    position: sticky;
 }
 
 .header-second{
@@ -15,5 +16,5 @@ header{
    background-color: #fff;
 }
 .logo{
-    margin-top: 14px;
+    margin-top: 80px;
 }

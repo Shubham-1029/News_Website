@@ -9,7 +9,10 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, a {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif, Franklin;
   line-height: 1.6;
   background-color: #f8f9fa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
