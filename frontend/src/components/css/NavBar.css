@@ -1,4 +1,4 @@
- .navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,166 +6,106 @@
     border-bottom: 1px solid #e9ecef;
     padding-top: 100px;
     z-index: 100;
+    margin-bottom: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
-.navbar-nav button{
-    display:flex ;
-    justify-content: center;
-    flex: 1 1 0px;
-    max-width: fit-content;
-    padding-left: 1rem;
-    align-items: center;
-    display: flex;
-    --wpds--navHeight: 60px;
-    line-height: 60px;
-    height: 40px;
-    max-height: 2.5rem;
-    text-decoration: none;
-    padding-bottom: 1.5rem;
-    background: none;
-    color: black;
-    border: none;
-    /* border-radius: 9999px; */
-    width: 30px;
-    margin-left: 15px;
-}
-.navbar-nav button svg{
-    height: 25px;
-    width: 25px;
-    display: block;
-    text-align: center;
-    align-items: center;
-}
-.navbar-nav button:hover{
-    
-}
-.navbar .navbar-container {
+.navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
+    width: 100%;
 }
-.navbar-left{
+
+.navbar-left {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    height: fit-content;
+    flex: 1;
+}
+
+.navbar-left button {
+    color: rgba(17, 17, 17, 1);
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    font-size: 0;
+    max-height: 2.5rem;
+    text-decoration: none;
+    line-height: 0;
     border-radius: 9999px;
     cursor: pointer;
 }
 
- .navbar-left button{
-    color: rgba(17, 17, 17, 1);
-    background: none;
-    border: none;
-    padding-top:0.5rem;
-    padding-bottom:0.5rem;
-    padding-left:0.5rem;
-    padding-right:0.5rem;
-    font-size: 0px;
-    max-height: 2.5rem;
-    text-decoration: none;
-    line-height: 0;
-    gap: 0px;
-    max-width: fit-content;
-    border-radius: 9999px;
-    
-} 
-.navbar-left button:hover{
-    background-color: gray;
+.navbar-left button:hover {
+    background-color: rgba(233,233,233,1);
 }
-.navbar-left {
-    display: flex;
-    align-items: center;
 
-}
-.navbar-left svg{
+.navbar-left svg {
     height: 25px;
     width: 25px;
 }
 
 .navbar-center {
     display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-}
-
-.navbar-brand {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000;
-}
-
-
-.navbar .navbar-nav {
-    flex: 14 1 0%;
-    --wpds--navHeight: 60px;
-    height: 40px;
-    line-height: 60px;
-    white-space: nowrap;
-    flex-wrap: wrap;
-    align-items: center;
-    opacity: 1;
-    width: 100%;
-    display: flex;
-    margin-left: 8px;
-    padding: 0px;
     justify-content: center;
+    flex: 2;
 }
 
-.navbar .navbar-collapse {
-    margin-left: 20px;
+.navbar-nav {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .nav-item {
-    margin:0 30px;
+    margin: 0 15px;
     font-weight: 700;
     border-radius: 9999px;
-}
-.nav-item:hover{
-    background-color: gray;
+    text-align: center;
 }
 
-.navbar .nav-link {
-    font-size: 14px;
-    color: #000;
+.nav-item:hover {
+    background-color: rgba(233,233,233,1);
+}
+
+.nav-link {
+    font-size: 0.875rem;
+    color: black !important;
     cursor: pointer;
+    font-weight: 700;
     transition: color 0.3s;
     padding: 2px;
 }
 
-.navbar .nav-link:hover {
-    background-color: rgb(247, 241, 241);
-    border-radius: 9999px
+.nav-link:hover {
+    color: grey;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex: 1;
 }
 
 .btn-subscribe {
     background-color: #166dfc;
     color: #fff;
-    padding: 8px 15px;
-    transition: background-color 0.3s;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding: 0.5em 1rem;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    height: fit-content;
     border-radius: 9999px;
     cursor: pointer;
     border: none;
-    appearance: none;
-    padding-left: 1rem;
-    padding-right: 1rem;
     font-family: 'Franklin', Arial, sans-serif;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1;
-    gap: 0.5rem;
     margin-right: 10px;
     transition: background-color 0.2s cubic-bezier(.4, 0, .2, 1);
-
 }
 
 .btn-subscribe:hover {
@@ -173,49 +113,27 @@
 }
 
 .btn-signin {
-    display: flex;
     background: none;
     color: #000;
     border: none;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    flex-direction: row;
+    padding: 0.5em;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1;
-    gap: 0.5rem;
     margin-right: 10px;
+    white-space: nowrap;
+    border-radius: 9999px;
 }
-.navbar--fixed{
-    position: fixed;
-    top: 0px;
-    padding-bottom: 10px;
-    padding-top: 30px;
+.btn-signin:hover{
+    background-color: rgba(233,233,233,1);
 }
-.navbar-right{
-    margin-left: 280px;
-} */
-.navbar {
-    margin-bottom: 20px;
-    position: fixed;
-    top: 0;
-  }
-  
-  .nav-link {
-    color: #000 !important; /* Adjust as needed */
-  }
-  
-  .nav-link:hover {
-    color: grey;
-  }
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  @media (max-width: 768px) {
-  .navbar-nav {
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
-  }
-
-  .navbar-toggler {
-    margin-left: auto; /* Push the toggle button to the right */
-  }
+    .navbar-toggler {
+        margin-left: auto;
+    }
 }

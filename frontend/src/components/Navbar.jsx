@@ -79,7 +79,7 @@ const NavBar = ({ onTagSelect }) => {
                         </button>
                     </div>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav">
                             {tags.map(tag => (
                                 <li className="nav-item" key={tag.id}>
                                     <button className="nav-link" onClick={() => handleTagClick(tag.name)}>{tag.name}</button>
@@ -89,9 +89,9 @@ const NavBar = ({ onTagSelect }) => {
                         <div className="d-flex align-items-center">
                             <a className="btn-subscribe">Subscribe</a>
                             {isLoggedIn ? (
-                                <button className="btn-signin" onClick={handleLogout}>Sign Out</button>
+                                <button className="btn-signin" onClick={handleLogout}>Sign out</button>
                             ) : (
-                                <button className="btn-signin" onClick={handleLogin}>Sign In</button>
+                                <button className="btn-signin" onClick={handleLogin}>Sign in</button>
                             )}
                         </div>
                     </div>

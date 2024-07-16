@@ -144,7 +144,7 @@ def latest_articles(request):
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
-""" class UpdateTagsView(APIView):    Not Working
+""" class UpdateTagsView(APIView):    Not Working !!!!!!!!!!!!!!!!!!!
     permission_classes = [IsAuthenticated]
 
     def put(self, request, article_id):
