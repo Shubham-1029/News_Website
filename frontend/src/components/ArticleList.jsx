@@ -46,7 +46,7 @@ const ArticleList = () => {
           {articles.map(article => (
             <li key={article.id} className="article-container">
               <Link to={`/articles/${article.id}`}>
-                <img src={article?.image} alt={article.title} className="article-image-list" />
+                <img src={article?.image} alt={article.title} className="image-responsive article-image-list" />
               </Link>
               <div className="article-content-list">
                 <Link className="article-link" to={`/articles/${article.id}`}>

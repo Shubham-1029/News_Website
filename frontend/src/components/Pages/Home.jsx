@@ -49,9 +49,6 @@ function Home() {
     return (
         <div className="home">
             <main className="main-content">
-                <div className="ad-placeholder">
-                    <img className="ad-placeholder-img" src={assets.image6} alt="Ad gif" />
-                </div>
                 
                 <div className={`container-xxl content ${isSmallScreen ? '' : 'container-class'}`}>
                     {isSmallScreen ? (

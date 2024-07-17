@@ -51,5 +51,12 @@
     color: #595959;
 }
 @media (max-width: 768px) {
-    
+    .articles-container{
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .article-card{
+        width: 100%;
+        /* border-bottom: 2px solid #2A2A2A; */
+    }
 }

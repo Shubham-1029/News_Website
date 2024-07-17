@@ -57,6 +57,7 @@ const App = () => {
                                     <Route path="/user" element={<UserComponent />} /> {/* Add UserComponent route */}
                                     <Route path="/articles" element={<ArticleList articles={articles} />} /> {/* Render ArticleList */}
                                     <Route path="/latest-articles" element={<LatestArticle articles={articles} />} /> 
+                                    
                                 </>
                             ) : (
                                 <>

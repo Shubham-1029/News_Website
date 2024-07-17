@@ -19,7 +19,7 @@
 }
 
 .article-image-list {
-  width: 64px !important;
+  width: 64px;
   height: auto;
   margin-left: 10px; /* Reduced margin */
 }
@@ -39,7 +39,11 @@
 }
 
 .article-list h1{
-  border-top: 1px solid rgb(248, 232, 232);
+  border-top: 1px solid black;
+  cursor: pointer;
+}
+.article-list h1:{
+  color: gray;
 }
 
 .article-title:hover {
@@ -54,6 +58,3 @@
   font-size: 0.75rem;
 }
 
-@media(max-width:768px) {
-
-}

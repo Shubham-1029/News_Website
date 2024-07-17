@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getLatestArticles } from '../api';
 import '../components/css/LatestArticle.css'; // Import the CSS file
 
-const LatestArticle = () => {
+const LatestArticle = ({tags}) => {
   const [articles, setArticles] = useState([]);
 
   const truncateText = (text, maxLength) => {

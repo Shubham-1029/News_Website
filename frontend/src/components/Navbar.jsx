@@ -59,7 +59,7 @@ const NavBar = ({ onTagSelect }) => {
                         aria-controls="navbarNav"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
-                        onClick={toggleSidebar} // Toggle sidebar on button click
+                     // Toggle sidebar on button click
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
