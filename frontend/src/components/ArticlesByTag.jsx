@@ -1,57 +1,56 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getArticlesByTag } from '../api';
 import PropTypes from 'prop-types';
-import '../components/css/ArticleByTag.css';
+import { Link, useParams } from 'react-router-dom';
+import { getArticlesByTag } from '../api';
+import '../components/css/ArticlesByTag.css';  // Import the CSS file
 
-const ArticlesByTag = ({ tag }) => {
-    const [articles, setArticles] = useState([]);
+const ArticlesByTag = () => {
+  const { tag } = useParams();
+  const [articles, setArticles] = useState([]);
 
-    useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const response = await getArticlesByTag(tag);
-                setArticles(response.slice(0, 4)); // Display only the first 4 articles
-            } catch (error) {
-                console.error(`Failed to fetch articles for tag ${tag}`, error);
-            }
-        };
+  useEffect(() => {
+    const fetchArticles = async () => {
+      if (tag) {
+        try {
+          const articlesData = await getArticlesByTag(tag);
+          setArticles(articlesData);
+        } catch (error) {
+          console.error('Failed to fetch articles by tag', error);
+        }
+      }
+    };
 
-        fetchArticles();
-    }, [tag]);
+    fetchArticles();
+  }, [tag]);
 
-    const IMG_BASE_URL = `http://localhost:8000`;
+  const IMG_BASE_URL = `http://localhost:8000`;
 
-    return (
-        <section className="articles-by-tag">
-            <h2>{tag} &gt;</h2>
-            <div className="articles-container">
-                {articles.map(article => (
-                    <div key={article.id} className="article-card">
-                        {article.image && (
-                            <Link to={`/articles/${article.id}`}>
-                                <img
-                                    src={IMG_BASE_URL + article.image}
-                                    alt={article.title}
-                                    className="article-image"
-                                />
-                            </Link>
-                        )}
-                        <div className="article-content">
-                            <Link to={`/articles/${article.id}`} className="article-link">
-                                <h3>{article.title}</h3>
-                            </Link>
-                            <p className="article-author">By {article.user}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
+  return (
+    <div className="articles-by-tag container-xxl">
+      {articles.length === 0 && <p>No articles found for the tag: {tag}</p>}
+      {articles.map(article => (
+        <div key={article.id} className="article">
+          {article.image && (
+            <Link to={`/articles/${article.id}`}>
+              <img src={IMG_BASE_URL + article.image} alt={article.title} className="article-image" />
+            </Link>
+          )}
+          <div className="article-content">
+            <Link to={`/articles/${article.id}`} className="article-link">
+              <h5>{article.title}</h5>
+            </Link>
+            <p className="article-excerpt">{article.excerpt || article.content.substring(0, 100) + '...'}</p>
+            <p className="article-author">By {article.user}</p>
+            <p className="article-time">{new Date(article.updated_at).toLocaleDateString()}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 ArticlesByTag.propTypes = {
-    tag: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
 };
 
 export default ArticlesByTag;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import SideBar from './components/SideBar';
+/* import SideBar from './components/SideBar'; */
 import Header from './components/Header';
 import AuthForm from './components/Register';
 import ArticleDetail from './components/ArticleDetail';
@@ -18,11 +18,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Footer from './components/Footer';
 import ArticlePage from './components/Pages/ArticlePage';
 import LatestArticle from './components/LatestArticle'
+import ArticlesByTag from './components/ArticlesByTag';
 
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const [articles, setArticles] = useState([]);
+    const [selectedTag, setSelectedTag] = useState('')
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -33,8 +35,8 @@ const App = () => {
         setIsLoggedIn(true);
     };
 
-    const handleTagSelect = (selectedArticles) => {
-        setArticles(selectedArticles || []); // Ensure articles is always an array
+    const handleTagSelect = (tag) => {
+        setSelectedTag(tag); // Ensure articles is always an array
     };
 
     return (
@@ -50,13 +52,14 @@ const App = () => {
                         <Routes>
                             {isLoggedIn ? (
                                 <>
-                                    <Route path="/" element={<Home />} />
+                                    <Route path="/" element={<Home selectedTag= {selectedTag} />} />
                                     <Route path="/articles/:id/edit" element={<EditArticle />} />
                                     <Route path="/articles/:id" element={<ArticleDetail />} />
                                     <Route path="/write" element={<WriteArticle />} />
                                     <Route path="/user" element={<UserComponent />} /> {/* Add UserComponent route */}
                                     <Route path="/articles" element={<ArticleList articles={articles} />} /> {/* Render ArticleList */}
                                     <Route path="/latest-articles" element={<LatestArticle articles={articles} />} /> 
+                                    <Route path="/tags/:tag" element={<ArticlesByTag/>} />
                                     
                                 </>
                             ) : (

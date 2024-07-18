@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getPopularTags, getArticlesByTag } from '../api';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar'; // Import the Sidebar component
 import '../components/css/NavBar.css';
 
@@ -9,6 +9,7 @@ const NavBar = ({ onTagSelect }) => {
     const [tags, setTags] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar
+    const navigate= useNavigate()
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -34,13 +35,10 @@ const NavBar = ({ onTagSelect }) => {
         localStorage.removeItem('token');
     };
 
-    const handleTagClick = async (tag) => {
-        try {
-            const articles = await getArticlesByTag(tag);
-            onTagSelect(articles);
-        } catch (error) {
-            console.error('Error fetching articles by tag', error);
-        }
+    const handleTagClick =  (tag) => {
+        onTagSelect(tag);
+        navigate(`/tags/${tag}`)
+
     };
 
     const toggleSidebar = () => {

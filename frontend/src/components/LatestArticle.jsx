@@ -64,7 +64,7 @@ const LatestArticle = ({tags}) => {
             <Link to={`/articles/${article.id}`}><img src={IMG_BASE_URL + article.image} alt={article.title} className="article-image" /></Link>
           )}
           <div className="article-content">
-            <Link to={`/articles/${article.id}`} className="article-link"><h5>{article.title}</h5></Link>
+            <Link to={`/articles/${article.id}`} className="article-link"><span>{article.title}</span></Link>
             <p className="article-excerpt">{article.excerpt || truncateText(article.content, 100)}</p>
             <p className='article-author'>By {article.user}</p>
             <p className='article-time'>{timeSince(article.updated_at)}</p> {/* Display the time since updated */}
@@ -76,7 +76,8 @@ const LatestArticle = ({tags}) => {
   );
 };
 
-const MainContent = () => {
+export default LatestArticle
+/* const MainContent = () => {
   return (
     <div className="main-content">
       <div className="latest-articles-right">
@@ -86,4 +87,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export default MainContent; */

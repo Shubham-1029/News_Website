@@ -15,7 +15,7 @@
 }
 
 .article-image {
-  width: 500px; /* Adjusted width */
+  width: 35vw; /* Adjusted width */
   height: auto;
   margin-right: 10px; /* Reduced margin */
   margin-bottom: 30px;
@@ -25,13 +25,13 @@
   flex: 1;
 }
 
-.article-content h5 {
+/* .article-content h5 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   margin-right: 5px;
-}
+} */
 
 .article-author {
   font-family: 'Franklin Gothic Medium', Arial, sans-serif;
@@ -45,6 +45,16 @@
 
 .article-link {
   text-decoration: none;
+  font-family: 'Playfair Display',Garamond, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #2A2A2A;
+}
+.article-excerpt{
+  font-family: 'Libre Franklin', sans-serif, Arial, Helvetica;
+  color: rgba(89, 89, 89, 1);
+  font-weight: 300;
 }
 
 .article-content .btn {
@@ -77,5 +87,6 @@
   .latest-article {
     margin-left: 0; /* Remove left margin */
     align-items: center; /* Center items horizontally */
+    border: none;
   }
 }

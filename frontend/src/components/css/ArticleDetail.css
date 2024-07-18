@@ -50,6 +50,9 @@ img {
 .article-contents{
   white-space:pre-wrap;
 }
+.ad-placeholder-side{
+  background-color:gray
+}
 .listen-button{
   font-family: Franklin, Arial, Helvetica, sans-serif;
 	font-size: 16px;
@@ -180,5 +183,8 @@ img {
   }
   .about-article{
     width: 100%;
+  }
+  .ad-placeholder-side{
+    display: none;
   }
 }

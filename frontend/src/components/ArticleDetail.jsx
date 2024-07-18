@@ -127,7 +127,7 @@ const ArticleDetail = () => {
             </div>
           </div>
         </div>
-        <div className="ad-placeholder col-3">
+        <div className="ad-placeholder-side col-3">
           {/* Placeholder for advertisements */}
         </div>
       </div>
