@@ -1,0 +1,53 @@
+.articles-by-tag-homepage {
+    margin: 20px;
+    border-bottom: 1px solid black;
+}
+
+.articles-by-tag-homepage h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.articles-by-tag-homepage p {
+    font-size: .75rem;
+    color: rgba(89, 89, 89, 1);
+}
+
+.articlestag-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.article-card1 {
+    width: calc(25% - 20px);
+    border-right: 1px solid #eee;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.article-card1 img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.article-content1 {
+    padding: 10px 0;
+}
+
+.article-link1 h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #2A2A2A !important;
+    font-weight: 700;
+}
+
+.article-author1 {
+    font-family: Franklin,Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    color: #595959;
+}

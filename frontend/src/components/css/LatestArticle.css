@@ -1,5 +1,4 @@
 .latest-articles {
-  margin: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center; /* Center items horizontally */

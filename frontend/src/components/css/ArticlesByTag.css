@@ -1,9 +1,5 @@
 .articles-by-tag {
     margin: 20px;
-    border-bottom: 1px solid black;
-}
-.content{
-    background-color: white 
 }
 
 .articles-by-tag h2 {
@@ -12,54 +8,89 @@
 }
 
 .articles-by-tag p {
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: rgba(89, 89, 89, 1);
+}
+.article-tag-image{
+    width: 220px;
+    height: 146px;
+}
+.article-full-container{
+    border-right: 1px solid #eee;
+}
+.article-tag2 {
+    font-weight: 700;
+    font-size: 3.5rem;
+    font-family: 'Playfair Display', Garamond, serif;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .articles-container {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     flex-wrap: wrap;
+    margin-left: 39.6px;
 }
 
-.article-card {
-    width: calc(25% - 20px);
-    border-right: 1px solid #eee;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.article-card img {
+.article-card2 {
     width: 100%;
-    height: auto;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.article-card2:last-of-type{
+    border-bottom: none;
+}
+
+.article-card2 img {
     display: block;
 }
 
-.article-content {
+.article2-content {
     padding: 10px 0;
 }
 
-.article-link h3 {
-    font-size: 18px;
+.article-link2 h3 {
+    font-size:1.5rem;
     margin: 10px 0;
     color: #2A2A2A !important;
-    font-weight:700;
+    font-weight: 700;
 }
 
-.article-author {
-    font-size: 14px;
-    color: #595959;
+.article-excerpt2 {
+    color: rgba(89, 89, 89, 1);
+    font-weight: 300;
 }
+
+.article-author2,
+.article-time2 {
+    font-size: 12px;
+    color: #595959;
+    font-family: Franklin, Arial, Helvetica, sans-serif;;
+}
+
+.article-by-tag-title {
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
 @media (max-width: 768px) {
-    .articles-container{
+    .articles-container {
         flex-direction: column;
         max-width: 100%;
     }
-    .article-card{
+    .article-card2 {
         width: 100%;
-        /* border-bottom: 2px solid #2A2A2A; */
+    }
+    .article-tag-image{
+        width: 130px;
+        height: 86.78px;
+    }
+    .ad-placeholder{
+        display: none;
     }
 }

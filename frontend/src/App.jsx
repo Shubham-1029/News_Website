@@ -48,7 +48,7 @@ const App = () => {
                         <SideBar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> 
                     </div> */}
                     <Header /> 
-                    <div className="content col-12">
+                    <div className="content col-12" style={{background: "white"}}>
                         <Routes>
                             {isLoggedIn ? (
                                 <>

@@ -64,6 +64,8 @@
     font-weight: 700;
     border-radius: 9999px;
     text-align: center;
+    font-family: Franklin, arial, sans-serif;
+    font-size: 0.9rem;
 }
 
 .nav-item:hover {
