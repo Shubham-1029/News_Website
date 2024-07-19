@@ -214,8 +214,24 @@ img {
   }
   .about-article{
     width: 100%;
+	margin-left: 0;
   }
   .ad-placeholder-side{
     display: none;
+  }
+  .article-detail-title{
+	width: 100%;
+	margin: 0;
+	text-align: center;
+  }
+  .article-actions-bar{
+	margin-left: 0;
+  }
+  .article-detail-image{
+	margin-left: 0;
+	width: 100%;
+  }
+  .image-caption{
+	margin-left: 0;
   }
 }
