@@ -1,6 +1,14 @@
 img {
   height: 400vh;
 }
+.image-caption{
+	font-size:0.875rem;
+	font-family: Franklin, arial, sans-serif;
+    line-height: 1.25;
+	color: rgba(89, 89, 89, 1);
+	text-align: left;
+	margin-left: 5rem;
+}
 
 .article-detail {
   padding: 20px;
@@ -10,7 +18,8 @@ img {
 
 .article-detail-title {
   font-size: 3.5rem;
-  font-family: 'Times New Roman', Times, serif
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 10rem;
 }
 
 .article-detail-author {
@@ -27,12 +36,33 @@ img {
 }
 
 .article-detail-image-container {
-  text-align: center;
-  
+  margin-bottom: 16px; /* Space below the image container */
 }
-.article-detail-image{
-  width: 140vh;
+
+.image-wrapper {
+  position: relative;
+  display: inline-block; /* Ensure the image and caption are aligned together */
 }
+
+.article-detail-image {
+  display: block;
+  width: 105vh;
+  height: auto;
+  margin-left: 10rem;
+}
+
+.image-caption {
+  margin-top: 8px; /* Space above the caption */
+  margin-left: 10rem;
+  color: #555; /* Color of the caption text */
+  font-size: 14px; /* Adjust the font size */
+  text-align: left; /* Align text to the left */
+  font-family: Arial, sans-serif; /* Adjust font family as needed */
+  width: 100%; /* Make sure caption takes the full width of the image */
+  box-sizing: border-box; /* Ensure padding and border do not affect the width */
+}
+
+
 .about-article{
   margin-left: 9rem;
 }
@@ -137,6 +167,7 @@ img {
   display: flex;
   justify-content: flex-start;
   padding-bottom: 2rem;
+  margin-left: 7rem;
 }
 .article-actions-bar button{
   background: none;

@@ -36,7 +36,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'title', 'content', 'image', 'user', 'created_at', 'updated_at', 'tags', 'tag_names']
+        fields = ['id', 'title', 'content', 'image', 'image_caption', 'user', 'created_at', 'updated_at', 'tags', 'tag_names']
 
     def create(self, validated_data):
         tag =self.initial_data['tags']

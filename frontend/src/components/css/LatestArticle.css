@@ -54,6 +54,7 @@
   font-family: 'Libre Franklin', sans-serif, Arial, Helvetica;
   color: rgba(89, 89, 89, 1);
   font-weight: 300;
+  padding-top: 8px;
 }
 
 .article-content .btn {

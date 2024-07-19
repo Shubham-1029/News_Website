@@ -43,6 +43,7 @@
     text-transform: uppercase;
     text-align: left;
     padding-top: 0.5rem;
+    font-family: Franklin, Franklin-fallback, sans-serif;
 }
 
 .main-container{

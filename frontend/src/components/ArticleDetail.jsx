@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getArticleDetail, updateArticleTags, deleteArticle } from '../api';
 import '../components/css/ArticleDetail.css';
+import { assets } from '../assets/asset';
 
 const ArticleDetail = () => {
   const { id } = useParams(); // useParams hook to get the article id
@@ -82,7 +83,7 @@ const ArticleDetail = () => {
     <div className="container-xxl article-detail">
       <div className="row">
         <div className="col-9">
-          <h1 className="article-detail-title mx-5 my-4">{article.title}</h1>
+          <h1 className="article-detail-title my-4">{article.title}</h1>
           <div className="article-actions-bar">
             <div className="listen-article">
               <div role="button" tabIndex="0" className="listen-button">
@@ -112,11 +113,14 @@ const ArticleDetail = () => {
           </div>
           <div className="article-detail-image-container mb-4">
             {article.image && (
-              <img
-                className="img-fluid article-detail-image"
-                src={article.image}
-                alt={article.title}
-              />
+              <div className="image-wrapper">
+                <img
+                  className="img-fluid article-detail-image"
+                  src={article.image}
+                  alt={article.title}
+                />
+                <p className="image-caption">{article.image_caption}</p>
+              </div>
             )}
           </div>
           <div className="about-article">
@@ -128,7 +132,6 @@ const ArticleDetail = () => {
           </div>
         </div>
         <div className="ad-placeholder-side col-3">
-          {/* Placeholder for advertisements */}
         </div>
       </div>
       <p className="article-contents">{article.content}</p>

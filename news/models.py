@@ -19,6 +19,7 @@ class Article(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     image = models.ImageField(upload_to='articles/', null=True, blank=True)
+    image_caption = models.CharField(max_length=255, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
     tags = models.ManyToManyField(Tag, related_name='articles', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
