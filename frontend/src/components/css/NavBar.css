@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -39,7 +43,7 @@
 }
 
 .navbar-left button:hover {
-    background-color: rgba(233,233,233,1);
+    background-color: rgba(233, 233, 233, 1);
 }
 
 .navbar-left svg {
@@ -64,12 +68,12 @@
     font-weight: 700;
     border-radius: 9999px;
     text-align: center;
-    font-family: Franklin, arial, sans-serif;
+    font-family: Franklin, Arial, sans-serif;
     font-size: 0.9rem;
 }
 
 .nav-item:hover {
-    background-color: rgba(233,233,233,1);
+    background-color: rgba(233, 233, 233, 1);
 }
 
 .nav-link {
@@ -126,8 +130,65 @@
     white-space: nowrap;
     border-radius: 9999px;
 }
-.btn-signin:hover{
-    background-color: rgba(233,233,233,1);
+
+.btn-signin:hover {
+    background-color: rgba(233, 233, 233, 1);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 9999px;
+}
+.dropbtn:hover{
+    background-color:rgba(233,233,233, 1)
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    right: 0; /* Align dropdown to the right */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-content p {
+    margin: 5px 0;
+    color: grey;
+    font-weight: normal;
+}
+
+.show {
+    display: block;
 }
 @media (max-width: 768px) {
     .navbar-nav {
@@ -137,6 +198,5 @@
 
     .navbar-toggler {
         margin-right: auto;
-        
     }
 }

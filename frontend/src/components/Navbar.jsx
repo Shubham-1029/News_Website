@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getPopularTags, getArticlesByTag } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { getPopularTags, getUserDetails } from '../api';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar'; // Import the Sidebar component
 import '../components/css/NavBar.css';
 
@@ -9,7 +9,9 @@ const NavBar = ({ onTagSelect }) => {
     const [tags, setTags] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar
-    const navigate= useNavigate()
+    const [user, setUser] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -22,27 +24,55 @@ const NavBar = ({ onTagSelect }) => {
         };
         fetchTags();
 
-        setIsLoggedIn(!!localStorage.getItem('token'));
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token);
+        
+        if (token) {
+            const fetchUser = async () => {
+                try {
+                    const userDetails = await getUserDetails();
+                    setUser(userDetails);
+                } catch (error) {
+                    console.error('Error fetching user', error);
+                }
+            };
+            fetchUser();
+        }
     }, []);
 
     const handleLogin = () => {
         setIsLoggedIn(true);
         localStorage.setItem('token', 'yourAuthTokenHere');
+        // Fetch user details after login
+        getUserDetails().then(userDetails => {
+            setUser(userDetails);
+        }).catch(error => {
+            console.error('Error fetching user', error);
+        });
     };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('token');
+        setUser(null);
     };
 
-    const handleTagClick =  (tag) => {
+    const handleTagClick = (tag) => {
         onTagSelect(tag);
-        navigate(`/tags/${tag}`)
-
+        navigate(`/tags/${tag}`);
+        closeSidebar(); // Close the sidebar when a tag is clicked
     };
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar state
+    };
+
+    const closeSidebar = () => {
+        setIsSidebarOpen(false); // Close the sidebar
+    };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     };
 
     return (
@@ -57,7 +87,6 @@ const NavBar = ({ onTagSelect }) => {
                         aria-controls="navbarNav"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
-                     // Toggle sidebar on button click
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -84,10 +113,20 @@ const NavBar = ({ onTagSelect }) => {
                                 </li>
                             ))}
                         </ul>
-                        <div className="d-flex align-items-center">
-                            <a className="btn-subscribe">Subscribe</a>
+                        <div className="d-flex align-items-center ms-auto">
+                            <button className="btn-subscribe">Subscribe</button>
                             {isLoggedIn ? (
-                                <button className="btn-signin" onClick={handleLogout}>Sign out</button>
+                                <div className="dropdown">
+                                    <button className="dropbtn" onClick={toggleDropdown}>
+                                        {user ? user.username : 'Loading...'}
+                                    </button>
+                                    <div className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
+                                        <button className="btn-subscribe">Subscribe</button>
+                                        <a href="#" onClick={handleLogout}>Sign out</a>
+                                        <Link to={`/user`}>My Post</Link>
+                                        <a href="#">Account Settings</a>
+                                    </div>
+                                </div>
                             ) : (
                                 <button className="btn-signin" onClick={handleLogin}>Sign in</button>
                             )}
@@ -95,7 +134,7 @@ const NavBar = ({ onTagSelect }) => {
                     </div>
                 </div>
             </nav>
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
         </>
     );
 };

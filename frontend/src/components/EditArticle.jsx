@@ -78,9 +78,9 @@ EditArticle.propTypes = {
 };
  
 export default EditArticle;
-*/import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+*/import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EditArticle = () => {
@@ -94,7 +94,14 @@ const EditArticle = () => {
     const fetchArticle = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/articles/${id}/`);
-        setArticle(response.data);
+        const fetchedArticle = response.data;
+
+        // Ensure tags are in the correct format (array of strings)
+        const tags = Array.isArray(fetchedArticle.tags)
+          ? fetchedArticle.tags.map(tag => (typeof tag === 'object' ? tag.name : tag))
+          : [];
+
+        setArticle({ ...fetchedArticle, tags });
       } catch (error) {
         console.error('Error fetching article:', error);
       }
@@ -236,6 +243,7 @@ const EditArticle = () => {
 };
 
 export default EditArticle;
+
 
 /* import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

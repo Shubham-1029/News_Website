@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom'; 
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { login } from '../api';
-import '../components/css/Login.css'
+import '../components/css/Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,9 +29,11 @@ const Login = () => {
     }
   };
 
-  if (loggedIn) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/');
+    }
+  }, [loggedIn, navigate]);
 
   return (
     <div className="login-container">

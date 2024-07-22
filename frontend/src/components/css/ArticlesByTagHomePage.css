@@ -28,6 +28,9 @@
     justify-content: space-between;
     margin-bottom: 1rem;
 }
+.article-card1:last-child{
+    border: none;
+}
 
 .article-card1 img {
     width: 100%;

@@ -14,7 +14,7 @@
 }
 
 .article-image {
-  width: 35vw; /* Adjusted width */
+  width: 31vw; /* Adjusted width */
   height: auto;
   margin-right: 10px; /* Reduced margin */
   margin-bottom: 30px;
@@ -50,6 +50,11 @@
   line-height: 1.1;
   color: #2A2A2A;
 }
+
+.article-link:hover{
+  color: rgba(89, 89, 89, 1);
+}
+
 .article-excerpt{
   font-family: 'Libre Franklin', sans-serif, Arial, Helvetica;
   color: rgba(89, 89, 89, 1);

@@ -60,7 +60,7 @@ const UserComponent = () => {
 
     return (
         <div className="user-component">
-            <h2>Welcome, {user.username}</h2>
+            <h2>Welcome  {user.username}</h2>
             <h3>Your Articles</h3>
             <ul className="user-articles">
                 {articles.map(article => (
@@ -70,7 +70,7 @@ const UserComponent = () => {
                         </Link>
                         <button onClick={() => handleDelete(article.id)}>Delete</button>
                         <Link to={`/articles/${article.id}/edit`}>Edit</Link>
-                        <button onClick={() => handleUpdateTags(article.id, prompt('Enter new tags'))}>Edit Tags</button>
+                        {/* <button onClick={() => handleUpdateTags(article.id, prompt('Enter new tags'))}>Edit Tags</button> */}
                     </li>
                 ))}
             </ul>
