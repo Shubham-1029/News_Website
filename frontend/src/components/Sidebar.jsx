@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <li><Link to="/categories/Investigations" onClick={handleLinkClick}>Investigations</Link></li>
                 <li><Link to="/categories/Climate" onClick={handleLinkClick}>Climate</Link></li>
                 <li><Link to="/categories/Recipes" onClick={handleLinkClick}>Recipes</Link></li>
-                <li><Link to="/categories/Wellbeing" onClick={handleLinkClick}>Well+Being</Link></li>
+                <li><Link to="/categories/Well%20Being" onClick={handleLinkClick}>Well+Being</Link></li>
                 <li><Link to="/categories/Tech" onClick={handleLinkClick}>Tech</Link></li>
                 <li><Link to="/categories/World" onClick={handleLinkClick}>World</Link></li>
                 <li><Link to="/categories/Dc" onClick={handleLinkClick}>D.C., Md. & Va.</Link></li>

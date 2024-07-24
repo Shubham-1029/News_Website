@@ -1,14 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+# views.py
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from django.contrib.auth import get_user_model, authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from django.contrib.auth import get_user_model, authenticate
+from django.db.models import Count
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.shortcuts import get_object_or_404
 from .models import Article, Category, Comment
 from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, CategorySerializer, CommentSerializer
-from django.db.models import Count
+from .permissions import IsAuthorOrReadOnly
 
 User = get_user_model()
 
@@ -28,7 +30,7 @@ class UserDetailView(APIView):
 class ArticleListView(generics.ListCreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -36,7 +38,7 @@ class ArticleListView(generics.ListCreateAPIView):
 class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
 
     def update(self, request, *args, **kwargs):
         article = self.get_object()
@@ -68,7 +70,7 @@ class UserArticlesView(generics.ListAPIView):
 class CommentListView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -99,21 +101,23 @@ class LoginView(APIView):
 class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def latest_articles(request):
     articles = Article.objects.order_by('-created_at')[:5]
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
-class UpdateCategoriesView(APIView):    
+class UpdateCategoriesView(APIView):
+    permission_classes = [IsAuthorOrReadOnly]
+
     def get(self, request):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
@@ -125,7 +129,7 @@ class UpdateCategoriesView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-    
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def popular_categories(request):
