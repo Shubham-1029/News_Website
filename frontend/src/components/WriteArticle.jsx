@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../components/css/WriteArticle.css'
+import '../components/css/WriteArticle.css';
 
 const API_URL = 'http://localhost:8000/api';
 
 const WriteArticle = () => {
-  const [formData, setFormData] = useState({ title: '', content: '', image: null, tags: '' });
+  const [formData, setFormData] = useState({ title: '', content: '', image: null, categories: [] });
+  const [allCategories, setAllCategories] = useState([]);
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/categories/`, {
+          headers: { Authorization: `Token ${token}` },
+        });
+        setAllCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, [token]);
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -14,6 +30,11 @@ const WriteArticle = () => {
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
+  };
+
+  const handleCategoryChange = (e) => {
+    const selectedCategories = Array.from(e.target.selectedOptions, (option) => option.value);
+    setFormData({ ...formData, categories: selectedCategories });
   };
 
   const handleSubmit = async (e) => {
@@ -24,7 +45,7 @@ const WriteArticle = () => {
     if (formData.image) {
       articleData.append('image', formData.image);
     }
-    articleData.append('tags', formData.tags);
+    articleData.append('categories', JSON.stringify(formData.categories));
 
     try {
       const response = await axios.post(`${API_URL}/articles/`, articleData, {
@@ -33,12 +54,10 @@ const WriteArticle = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Request headers:', response.config.headers);
-      console.log(response.data);
       alert('Article posted successfully!');
-      setFormData({ title: '', content: '', image: null, tags: '' });
+      setFormData({ title: '', content: '', image: null, categories: [] });
     } catch (error) {
-      console.error('Failed to post article', error);
+      console.error('Failed to post article', error.response ? error.response.data : error);
       alert('Failed to post article');
     }
   };
@@ -87,16 +106,21 @@ const WriteArticle = () => {
         </div>
         <hr />
         <div className="form-group mb-3">
-          <label htmlFor="tags" className="form-label">Tags</label>
-          <input
-            type="text"
-            name="tags"
-            id="tags"
+          <label htmlFor="categories" className="form-label">Categories</label>
+          <select
+            name="categories"
+            id="categories"
             className="form-control"
-            placeholder="Enter tags separated by commas"
-            value={formData.tags}
-            onChange={handleChange}
-          />
+            multiple
+            value={formData.categories}
+            onChange={handleCategoryChange}
+          >
+            {allCategories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit" className="btn btn-secondary w-100">Post Article</button>
       </form>

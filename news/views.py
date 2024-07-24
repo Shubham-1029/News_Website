@@ -6,10 +6,9 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Article, Tag, Comment
-from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, TagSerializer, CommentSerializer
+from .models import Article, Category, Comment
+from .serializers import UserSerializer, RegisterSerializer, ArticleSerializer, CategorySerializer, CommentSerializer
 from django.db.models import Count
-from rest_framework.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -18,10 +17,6 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-""" class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
- """
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -55,32 +50,6 @@ class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({'error': 'You do not have permission to delete this article.'}, status=status.HTTP_403_FORBIDDEN)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-""" class ArticleDetailView(APIView): 
-    def get_object(self,pk):
-        try:
-            return Article.objects.get(pk=pk)
-        except:
-            raise ValidationError({'msg':'Article Doesnot exist'})
-    
-    def get(self,request,pk):
-        article = self.get_object(pk)
-        serializer = ArticleSerializer(article)
-        return Response(serializer.data)
-    
-    def put(self,request,pk):
-        article = self.get_object(pk=pk)
-        serializer = ArticleSerializer(article,data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
-    
-    def delete(self,request,pk):
-        article = self.get_object(pk=pk)
-        article.delete()
-        return Response({"msg":"Article Deleted"})
-         """
 
 class UserArticlesView(generics.ListAPIView):
     serializer_class = ArticleSerializer
@@ -127,14 +96,14 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
-class TagListCreateView(generics.ListCreateAPIView):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-class TagDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 @api_view(['GET'])
@@ -144,55 +113,33 @@ def latest_articles(request):
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 
-""" class UpdateTagsView(APIView):    Not Working !!!!!!!!!!!!!!!!!!!
-    permission_classes = [IsAuthenticated]
-
-    def put(self, request, article_id):
-        try:
-            article = Article.objects.get(id=article_id)
-        except Article.DoesNotExist:
-            return Response({'error': 'Article not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        if article.user != request.user:
-            return Response({'error': 'You do not have permission to edit this article.'}, status=status.HTTP_403_FORBIDDEN)
-
-        tags = request.data.get('tags')
-        if tags is not None:
-            article.tags.clear()  # Clear existing tags
-            for tag_name in tags:
-                tag, created = Tag.objects.get_or_create(name=tag_name)
-                article.tags.add(tag)
-
-        return Response({'message': 'Tags updated successfully!'}, status=status.HTTP_200_OK) """
-"""Working"""
-class UpdateTagsView(APIView):    
+class UpdateCategoriesView(APIView):    
     def get(self, request):
-        queryset = Tag.objects.all()
-        serializer = TagSerializer(queryset, many=True)
-        return Response (serializer.data)
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
-        serializer = TagSerializer(data=request.data)
+        serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response (serializer.data)
-        return Response (serializer.errors)
+            return Response(serializer.data)
+        return Response(serializer.errors)
     
-    
-
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def popular_tags(request):
-    tags = Tag.objects.annotate(num_articles=Count('articles')).order_by('-num_articles')[:10]
-    serializer = TagSerializer(tags, many=True)
+def popular_categories(request):
+    categories = Category.objects.annotate(num_articles=Count('articles')).order_by('-num_articles')[:10]
+    serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def articles_by_tag(request):
-    tag_name = request.GET.get('tag')
-    if not tag_name:
-        return Response({"error": "Tag parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
-    tag = get_object_or_404(Tag, name=tag_name)
-    articles = Article.objects.filter(tags__in=[tag])
+def articles_by_category(request):
+    category_name = request.GET.get('category')
+    if not category_name:
+        return Response({"error": "Category parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+    category = get_object_or_404(Category, name=category_name)
+    articles = Article.objects.filter(categories__in=[category])
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)

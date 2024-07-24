@@ -19,6 +19,7 @@ const Login = () => {
       if (response && response.token) {
         localStorage.setItem('token', response.token);
         setLoggedIn(true);
+        navigate('/');
       } else {
         console.error('Token not found in response');
         alert('Invalid credentials');
@@ -29,11 +30,6 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (loggedIn) {
-      navigate('/');
-    }
-  }, [loggedIn, navigate]);
 
   return (
     <div className="login-container">

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Article, Tag, Comment
+from .models import Article, Category, Comment
 
 User = get_user_model()
 
@@ -19,16 +19,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
         return user
 
-class TagSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
+        model = Category
         fields = ['id', 'name']
 
 class ArticleSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    tags = TagSerializer(many=True, read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
     
-    tag_names = serializers.ListField(
+    category_names = serializers.ListField(
         child=serializers.CharField(max_length=50),
         write_only=True,
         required=False
@@ -36,29 +36,33 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'title', 'content', 'image', 'image_caption', 'user', 'created_at', 'updated_at', 'tags', 'tag_names']
+        fields = ['id', 'title', 'content', 'image', 'image_caption', 'user', 'created_at', 'updated_at', 'categories', 'category_names']
 
     def create(self, validated_data):
-        tag =self.initial_data['tags']
-        tagInstances =[]
-        for tags in tag:
-            tagInstances.append(Tag.objects.get(pk = tags['id']))
-        article =Article.objects.create(**validated_data)
-        article.tags.set(tagInstances)
+        category_names = validated_data.pop('category_names', [])
+        article = Article.objects.create(**validated_data)
+        
+        category_instances = []
+        for category_name in category_names:
+            category, created = Category.objects.get_or_create(name=category_name)
+            category_instances.append(category)
+        
+        article.categories.set(category_instances)
         return article
 
-
     def update(self, instance, validated_data):
-        try: # handling if not getting genre from frontend client
-            tag = self.initial_data['tags']
-            tagInstances = []
-            for tags in tag:
-                tagInstances.append(Tag.objects.get(pk = tags['id']))
-            instance.tag.set(tagInstances)
-        except:
-            pass
-        for k, v in validated_data.items():
-            setattr(instance, k, v)
+        category_names = validated_data.pop('category_names', None)
+        
+        if category_names is not None:
+            category_instances = []
+            for category_name in category_names:
+                category, created = Category.objects.get_or_create(name=category_name)
+                category_instances.append(category)
+            instance.categories.set(category_instances)
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
         instance.save()
         return instance
 

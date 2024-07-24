@@ -77,7 +77,6 @@ export const getUserDetails = async () => {
   }
 };
 
-
 // Get Latest Articles
 export const getLatestArticles = async (token) => {
   try {
@@ -90,74 +89,74 @@ export const getLatestArticles = async (token) => {
   }
 };
 
-// Get Tags
-export const getTags = async () => {
+// Get Categories
+export const getCategories = async () => {
   try {
     const token = localStorage.getItem('token');
     const headers = {
       'Authorization': `Token ${token}`,
     };
 
-    const response = await axios.get(`${API_URL}/tags/`, { headers });
+    const response = await axios.get(`${API_URL}/categories/`, { headers });
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error.response? error.response.data : error.message);
+    console.error('Error fetching categories:', error.response ? error.response.data : error.message);
     throw error;
   }
 };
 
-// Create Tag
-export const createTag = async (tagData, token) => {
+// Create Category
+export const createCategory = async (categoryData, token) => {
   try {
-    const response = await axios.post(`${API_URL}/tags/`, tagData, {
+    const response = await axios.post(`${API_URL}/categories/`, categoryData, {
       headers: { Authorization: `Token ${token}`, 'Content-Type': 'application/json' }
     });
     return response.data;
   } catch (error) {
-    console.error('Error creating tag:', error);
+    console.error('Error creating category:', error);
     throw error;
   }
 };
 
-// Update Tags for Article
-export const updateArticleTags = async (articleId, tags, token) => {
+// Update Categories for Article
+export const updateArticleCategories = async (articleId, categories, token) => {
   try {
-    const response = await axios.put(`${API_URL}/articles/${articleId}/tags/`, { tags }, {
+    const response = await axios.put(`${API_URL}/articles/${articleId}/categories/`, { categories }, {
       headers: { Authorization: `Token ${token}`, 'Content-Type': 'application/json' }
     });
     return response.data;
   } catch (error) {
-    console.error('Error updating tags for article:', error);
+    console.error('Error updating categories for article:', error);
     throw error;
   }
 };
 
-// Delete Tag
-export const deleteTag = async (tagId, token) => {
+// Delete Category
+export const deleteCategory = async (categoryId, token) => {
   try {
-    await axios.delete(`${API_URL}/tags/${tagId}/`, {
+    await axios.delete(`${API_URL}/categories/${categoryId}/`, {
       headers: { Authorization: `Token ${token}` }
     });
   } catch (error) {
-    console.error('Error deleting tag:', error);
+    console.error('Error deleting category:', error);
     throw error;
   }
 };
 
-export const getPopularTags = async () => {
-  const response = await axios.get(`${API_URL}/tags/popular/`);
+export const getPopularCategories = async () => {
+  const response = await axios.get(`${API_URL}/categories/popular/`);
   return response.data;
 };
 
-export const getArticlesByTag = async (tag) => {
+export const getArticlesByCategory = async (category) => {
   try {
     const token = localStorage.getItem('token'); // Replace with your actual token
-    const response = await axios.get(`${API_URL}/articles/by-tag/?tag=${tag}`, {
+    const response = await axios.get(`${API_URL}/articles/by-category/?category=${category}`, {
       headers: {
         Authorization: `Token ${token}`,
       },
     });
-    console.log(tag)
+    console.log(category)
     return response.data;
   } catch (error) {
     console.log('An error occurred:', error);
@@ -177,7 +176,7 @@ export const getUserArticles = async () => {
   }
 };
 
-// delete articles
+// Delete articles
 export const deleteArticle = async (articleId, token) => {
   const response = await axios.delete(`http://localhost:8000/api/articles/${articleId}/`, {
     headers: {

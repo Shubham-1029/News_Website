@@ -8,7 +8,7 @@
 
 // const Home = ({selectedTag}) => {
 //     const [articles, setArticles] = useState([]);
-//     const [tags, setTags] = useState([]);
+//     const [categories, setTags] = useState([]);
 //     /* const [selectedTag, setSelectedTag] = useState(''); */
 
 //     useEffect(() => {
@@ -30,7 +30,7 @@
 //                 const tagsData = await getTags();
 //                 setTags(tagsData);
 //             } catch (error) {
-//                 console.error('Error fetching tags:', error);
+//                 console.error('Error fetching categories:', error);
 //             }
 //         };
 
@@ -51,7 +51,7 @@
 //                         </div>
 //                     </div>
 //                     <div className="tagged-articles">
-//                         {selectedTag && <ArticlesByTagHomePage tag={selectedTag} />}
+//                         {selectedTag && <ArticlesByTagHomePage category={selectedTag} />}
 //                     </div>
 //                 </div>
 //             </main>
@@ -63,15 +63,15 @@
 import { useState, useEffect } from 'react';
 import ArticleList from '../ArticleList';
 import LatestArticle from '../LatestArticle';
-import ArticlesByTag from '../ArticlesByTag'; // Import the ArticlesByTag component
-import { getArticlesByTag, getArticles, getTags } from '../../api'; // Import getTags API
+import ArticlesByCategory from '../ArticlesByCategory'; // Import the ArticlesByTag component
+import { getArticlesByCategory, getArticles, getCategories } from '../../api'; // Import getTags API
 import './Home.css';
 import { assets } from '../../assets/asset';
-import ArticlesByTagHomePage from '../ArticlesByTagHomePage';
+import ArticlesByCategoryHomePage from '../ArticlesByCategoryHomePage';
 
 function Home() {
     const [articles, setArticles] = useState([]);
-    const [tags, setTags] = useState([]); // State to store tags
+    const [categories, setCategories] = useState([]); // State to store categories
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768); // State to track screen size
 
     useEffect(() => {
@@ -90,10 +90,10 @@ function Home() {
     useEffect(() => {
         const fetchTags = async () => {
             try {
-                const tagsData = await getTags();
-                setTags(tagsData);
+                const tagsData = await getCategories();
+                setCategories(tagsData);
             } catch (error) {
-                console.error('Error fetching tags:', error);
+                console.error('Error fetching categories:', error);
             }
         };
 
@@ -139,8 +139,8 @@ function Home() {
                         </div>
                     )}
                     <div className="tagged-articles">
-                        {tags.map(tag => (
-                            <ArticlesByTagHomePage key={tag.id} tag={tag.name} />
+                        {categories.map(category => (
+                            <ArticlesByCategoryHomePage key={category.id} category={category.name} />
                         ))}
                     </div>
                 </div>

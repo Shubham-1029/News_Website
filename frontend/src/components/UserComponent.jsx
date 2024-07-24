@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserDetails, getUserArticles, deleteArticle, updateArticleTags } from '../api';
+import { getUserDetails, getUserArticles, deleteArticle, updateArticleCategories } from '../api';
 import '../components/css/UserComponent.css'; // Import the CSS file
 
 const UserComponent = () => {
@@ -47,9 +47,9 @@ const UserComponent = () => {
         }
     };
 
-    const handleUpdateTags = async (articleId, tags) => {
+    const handleUpdateCategory = async (articleId, tags) => {
         try {
-            await updateArticleTags(articleId, tags);
+            await updateArticleCategories(articleId, tags);
             setArticles(articles.map(article => 
                 article.id === articleId ? { ...article, tags } : article
             ));
@@ -70,7 +70,6 @@ const UserComponent = () => {
                         </Link>
                         <button onClick={() => handleDelete(article.id)}>Delete</button>
                         <Link to={`/articles/${article.id}/edit`}>Edit</Link>
-                        {/* <button onClick={() => handleUpdateTags(article.id, prompt('Enter new tags'))}>Edit Tags</button> */}
                     </li>
                 ))}
             </ul>

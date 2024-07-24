@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getPopularTags, getUserDetails } from '../api';
+import { getPopularCategories, getUserDetails } from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar'; // Import the Sidebar component
 import '../components/css/NavBar.css';
 
-const NavBar = ({ onTagSelect }) => {
-    const [tags, setTags] = useState([]);
+const NavBar = ({ onCategorySelect }) => {
+    const [categories, setCategories] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar
     const [user, setUser] = useState(null);
@@ -16,10 +16,10 @@ const NavBar = ({ onTagSelect }) => {
     useEffect(() => {
         const fetchTags = async () => {
             try {
-                const popularTags = await getPopularTags();
-                setTags(popularTags);
+                const popularTags = await getPopularCategories();
+                setCategories(popularTags);
             } catch (error) {
-                console.error('Error fetching popular tags', error);
+                console.error('Error fetching popular categories', error);
             }
         };
         fetchTags();
@@ -57,10 +57,10 @@ const NavBar = ({ onTagSelect }) => {
         setUser(null);
     };
 
-    const handleTagClick = (tag) => {
-        onTagSelect(tag);
-        navigate(`/tags/${tag}`);
-        closeSidebar(); // Close the sidebar when a tag is clicked
+    const handleCategoryClick = (category) => {
+        onCategorySelect(category);
+        navigate(`/categories/${category}`);
+        closeSidebar(); // Close the sidebar when a category is clicked
     };
 
     const toggleSidebar = () => {
@@ -107,9 +107,9 @@ const NavBar = ({ onTagSelect }) => {
                     </div>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
-                            {tags.map(tag => (
-                                <li className="nav-item" key={tag.id}>
-                                    <button className="nav-link" onClick={() => handleTagClick(tag.name)}>{tag.name}</button>
+                            {categories.map(category => (
+                                <li className="nav-item" key={category.id}>
+                                    <button className="nav-link" onClick={() => handleCategoryClick(category.name)}>{category.name}</button>
                                 </li>
                             ))}
                         </ul>

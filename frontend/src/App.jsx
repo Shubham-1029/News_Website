@@ -17,13 +17,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Footer from './components/Footer';
 import ArticlePage from './components/Pages/ArticlePage';
 import LatestArticle from './components/LatestArticle';
-import ArticlesByTag from './components/ArticlesByTag';
 import ScrollToTop from './components/ScrollToTop';
+import ArticlesByCategory from './components/ArticlesByCategory';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const [articles, setArticles] = useState([]);
-    const [selectedTag, setSelectedTag] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -34,14 +34,14 @@ const App = () => {
         setIsLoggedIn(true);
     };
 
-    const handleTagSelect = (tag) => {
-        setSelectedTag(tag);
+    const handleCategorySelect = (tag) => {
+        setSelectedCategory(tag);
     };
 
     return (
         <Router>
             <ScrollToTop />
-            <NavBar onTagSelect={handleTagSelect} />
+            <NavBar onCategorySelect={handleCategorySelect} />
             <div className="container-fluid">
                 <div className="row h-100">
                     <Header />
@@ -49,14 +49,14 @@ const App = () => {
                         <Routes>
                             {isLoggedIn ? (
                                 <>
-                                    <Route path="/" element={<Home selectedTag={selectedTag} />} />
+                                    <Route path="/" element={<Home selectedTag={selectedCategory} />} />
                                     <Route path="/articles/:id/edit" element={<EditArticle />} />
                                     <Route path="/articles/:id" element={<ArticleDetail />} />
                                     <Route path="/write" element={<WriteArticle />} />
                                     <Route path="/user" element={<UserComponent />} />
                                     <Route path="/articles" element={<ArticleList articles={articles} />} />
                                     <Route path="/latest-articles" element={<LatestArticle articles={articles} />} />
-                                    <Route path="/tags/:tag" element={<ArticlesByTag />} />
+                                    <Route path="/categories/:category" element={<ArticlesByCategory />} />
                                 </>
                             ) : (
                                 <>

@@ -1,114 +1,51 @@
-/* import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-
-const EditArticle = () => {
-  const { id } = useParams(); // useParams hook to get the article id
-  const [article, setArticle] = useState({ title: '', content: '' });
-  const token= localStorage.getItem('token'); // Create a state variable for the token
-
-  useEffect(() => {
-    localStorage.setItem('token', token); // Update local storage when the token state changes
-  }, [token]);
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      console.log('Token:', token)
-      try {
-        const response = await axios.get(`http://localhost:8000/api/articles/${id}/`, {
-           headers: { Authorization: `Bearer ${token}` },  // Send token in headers
-        });
-        setArticle(response.data);
-      } catch (error) {
-        console.error('Error fetching article:', error);
-      }
-    };
-
-    fetchArticle();
-  }, [id, token]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setArticle((prevArticle) => ({
-      ...prevArticle,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(id)
-    try {
-      await axios.put(`http://localhost:8000/api/articles/${id}/`, article);
-    } catch (error) {
-      console.error('Error updating article:', error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Edit Article</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={article.title}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Content</label>
-          <textarea
-            name="content"
-            value={article.content}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Update Article</button>
-      </form>
-    </div>
-  );
-};
-
-EditArticle.propTypes = {
-  id: PropTypes.string,
-};
- 
-export default EditArticle;
-*/import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EditArticle = () => {
   const { id } = useParams();
-  const [article, setArticle] = useState({ title: '', content: '', image: null, tags: [] });
-  const [tagInput, setTagInput] = useState('');
+  const [article, setArticle] = useState({ title: '', content: '', image: null, categories: [] });
+  const [allCategories, setAllCategories] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/articles/${id}/`);
+        const response = await axios.get(`http://localhost:8000/api/articles/${id}/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
         const fetchedArticle = response.data;
 
-        // Ensure tags are in the correct format (array of strings)
-        const tags = Array.isArray(fetchedArticle.tags)
-          ? fetchedArticle.tags.map(tag => (typeof tag === 'object' ? tag.name : tag))
+        const categories = Array.isArray(fetchedArticle.categories)
+          ? fetchedArticle.categories.map(category => (typeof category === 'object' ? category.name : category))
           : [];
 
-        setArticle({ ...fetchedArticle, tags });
+        setArticle({ ...fetchedArticle, categories });
       } catch (error) {
         console.error('Error fetching article:', error);
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/categories/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        setAllCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
     fetchArticle();
-  }, [id]);
+    fetchCategories();
+  }, [id, token]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -125,25 +62,11 @@ const EditArticle = () => {
     }
   };
 
-  const handleTagChange = (e) => {
-    setTagInput(e.target.value);
-  };
-
-  const addTag = (e) => {
-    e.preventDefault();
-    if (tagInput.trim() !== '' && !article.tags.includes(tagInput.trim())) {
-      setArticle((prevArticle) => ({
-        ...prevArticle,
-        tags: [...prevArticle.tags, tagInput.trim()],
-      }));
-      setTagInput('');
-    }
-  };
-
-  const removeTag = (tagToRemove) => {
+  const handleCategoryChange = (e) => {
+    const selectedCategories = Array.from(e.target.selectedOptions, (option) => option.value);
     setArticle((prevArticle) => ({
       ...prevArticle,
-      tags: prevArticle.tags.filter((tag) => tag !== tagToRemove),
+      categories: selectedCategories,
     }));
   };
 
@@ -155,10 +78,12 @@ const EditArticle = () => {
     if (article.image) {
       formData.append('image', article.image);
     }
-    formData.append('tags', JSON.stringify(article.tags));
+    formData.append('categories', JSON.stringify(article.categories));
+
+    console.log('Form Data:', formData);
 
     try {
-      await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
+      const response = await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -168,6 +93,10 @@ const EditArticle = () => {
       navigate(`/articles/${id}`);
     } catch (error) {
       console.error('Error updating article:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        alert(`Error: ${error.response.data.detail || 'Failed to update article'}`);
+      }
     }
   };
 
@@ -214,25 +143,21 @@ const EditArticle = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="tags" className="form-label">Tags</label>
-              <div className="d-flex">
-                <input
-                  type="text"
-                  id="tags"
-                  value={tagInput}
-                  onChange={handleTagChange}
-                  className="form-control me-2"
-                  placeholder="Enter a tag"
-                />
-                <button className="btn btn-secondary" onClick={addTag}>Add Tag</button>
-              </div>
-              <div className="mt-2">
-                {article.tags.map((tag, index) => (
-                  <span key={index} className="badge bg-primary me-1">
-                    {tag} <button type="button" className="btn-close btn-close-white btn-sm ms-1" onClick={() => removeTag(tag)}></button>
-                  </span>
+              <label htmlFor="categories" className="form-label">Categories</label>
+              <select
+                multiple
+                id="categories"
+                name="categories"
+                value={article.categories}
+                onChange={handleCategoryChange}
+                className="form-control"
+              >
+                {allCategories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
             <button type="submit" className="btn btn-primary w-100">Update Article</button>
           </form>
@@ -243,83 +168,3 @@ const EditArticle = () => {
 };
 
 export default EditArticle;
-
-
-/* import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-
-const EditArticle = () => {
-  const { id } = useParams(); // useParams hook to get the article id
-  const [article, setArticle] = useState({ title: '', content: '' });
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      console.log('Token:', token)
-      try {
-        const response = await axios.get(`http://localhost:8000/api/articles/${id}/`, {
-          headers: { Authorization: `Bearer ${token}` }, // Send token in headers
-        });
-        setArticle(response.data);
-      } catch (error) {
-        console.error('Error fetching article:', error);
-      }
-    };
-
-    fetchArticle();
-  }, [id, token]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setArticle((prevArticle) => ({
-      ...prevArticle,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`http://localhost:8000/api/articles/${id}/`, article, {
-        headers: { Authorization: `Bearer ${token}` }, // Send token in headers
-      });
-      // Handle successful update (e.g., redirect to article detail page)
-    } catch (error) {
-      console.error('Error updating article:', error);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Edit Article</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={article.title}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Content</label>
-          <textarea
-            name="content"
-            value={article.content}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Update Article</button>
-      </form>
-    </div>
-  );
-};
-
-EditArticle.propTypes = {
-  id: PropTypes.string,
-};
-
-export default EditArticle; */

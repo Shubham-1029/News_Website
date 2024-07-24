@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getArticleDetail, updateArticleTags, deleteArticle } from '../api';
+import { getArticleDetail } from '../api';
 import '../components/css/ArticleDetail.css';
 import { assets } from '../assets/asset';
 
 const ArticleDetail = () => {
   const { id } = useParams(); // useParams hook to get the article id
   const [article, setArticle] = useState(null);
-  const [tags, setTags] = useState([]);
-  const [newTag, setNewTag] = useState('');
+  /* const [tags, setTags] = useState([]); */
+  /* const [newTag, setNewTag] = useState(''); */
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
@@ -17,14 +17,14 @@ const ArticleDetail = () => {
       try {
         const response = await getArticleDetail(id);
         setArticle(response.data);
-        setTags(response.data.tags.map(tag => tag.name) || []);
+        /* setTags(response.data.tags.map(tag => tag.name) || []); */
       } catch (error) {
         console.error('Failed to fetch article', error);
       }
     };
     fetchArticle();
   }, [id]);
-
+/* 
   const handleTagChange = (e) => {
     setNewTag(e.target.value);
   };
@@ -62,7 +62,7 @@ const ArticleDetail = () => {
       }
     }
   };
-
+ */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = {
