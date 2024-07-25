@@ -4,10 +4,7 @@ services:
     container_name: postgres_container
     image: postgres
     restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: test_db
+    env_file: ./dev.env
     ports:
       - "5432:5432"
     volumes:
@@ -17,19 +14,17 @@ services:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
     restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+    env_file: ./dev.env
     ports:
       - "5050:80"
     depends_on:
       - db
-
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    image: news_website_web
     volumes:
-      - .:/code
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
