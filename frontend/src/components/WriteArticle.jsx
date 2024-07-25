@@ -5,7 +5,7 @@ import '../components/css/WriteArticle.css';
 const API_URL = 'http://localhost:8000/api';
 
 const WriteArticle = () => {
-  const [formData, setFormData] = useState({ title: '', content: '', image: null, categories: [] });
+  const [formData, setFormData] = useState({ title: '', content: '', image: null, image_caption: [], categories: [] });
   const [allCategories, setAllCategories] = useState([]);
   const token = localStorage.getItem('token');
 
@@ -45,6 +45,7 @@ const WriteArticle = () => {
     if (formData.image) {
       articleData.append('image', formData.image);
     }
+    articleData.append('image-caption', formData.image_caption);
     articleData.append('categories', JSON.stringify(formData.categories));
 
     try {
@@ -55,7 +56,7 @@ const WriteArticle = () => {
         },
       });
       alert('Article posted successfully!');
-      setFormData({ title: '', content: '', image: null, categories: [] });
+      setFormData({ title: '', content: '', image: null, image_caption: '', categories: [] });
     } catch (error) {
       console.error('Failed to post article', error.response ? error.response.data : error);
       alert('Failed to post article');
@@ -63,9 +64,9 @@ const WriteArticle = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container-xxl mt-5">
       <h1 className="text-center mb-4">Write an Article</h1>
-      <form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow-sm">
+      <form onSubmit={handleSubmit} className="bg-light p-4 rounded">
         <div className="form-group mb-3">
           <label htmlFor="title" className="form-label">Title</label>
           <input
@@ -105,6 +106,18 @@ const WriteArticle = () => {
           />
         </div>
         <hr />
+        {/* <div className="form-group mb-3">
+          <label htmlFor="image-caption" className="form-label">Image-Caption</label>
+          <input
+            type="text"
+            name="image-caption"
+            id="image-caption"
+            className="form-control"
+            placeholder="Image-Caption"
+            value={formData.image_caption}
+            onChange={handleChange}
+          />
+        </div> */}
         <div className="form-group mb-3">
           <label htmlFor="categories" className="form-label">Categories</label>
           <select

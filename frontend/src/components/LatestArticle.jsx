@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getLatestArticles } from '../api';
+import axios from 'axios'; // Make sure axios is imported
 import '../components/css/LatestArticle.css'; // Import the CSS file
+import { getLatestArticles } from '../api';
+
+const API_URL = 'http://localhost:8000'; // Define your API base URL
 
 const LatestArticle = () => {
   const [articles, setArticles] = useState([]);
@@ -39,13 +42,8 @@ const LatestArticle = () => {
 
   useEffect(() => {
     const fetchLatestArticles = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('No token found');
-        return;
-      }
       try {
-        const response = await getLatestArticles(token);
+        const response = await getLatestArticles();
         setArticles(response);
       } catch (error) {
         console.error('Failed to fetch latest articles', error);
@@ -76,15 +74,4 @@ const LatestArticle = () => {
   );
 };
 
-export default LatestArticle
-/* const MainContent = () => {
-  return (
-    <div className="main-content">
-      <div className="latest-articles-right">
-        <LatestArticle />
-      </div>
-    </div>
-  );
-};
-
-export default MainContent; */
+export default LatestArticle;

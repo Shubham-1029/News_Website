@@ -2,10 +2,7 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
   }
   
   .login-container h2 {
@@ -30,15 +27,15 @@
     width: 100%;
     padding: 12px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #166dfc !important;
     border: none;
     border-radius: 4px;
-    color: #fff;
+    color: #fff!;
     cursor: pointer;
   }
   
   .btn-secondary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3 !important;
   }
   
   /* Responsive adjustments */

@@ -88,16 +88,16 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        const fetchTags = async () => {
+        const fetchCategories = async () => {
             try {
-                const tagsData = await getCategories();
-                setCategories(tagsData);
+                const categoriesData = await getCategories();
+                setCategories(categoriesData);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
 
-        fetchTags();
+        fetchCategories();
     }, []);
 
     useEffect(() => {
@@ -123,7 +123,7 @@ function Home() {
                                 <LatestArticle articles={articles} />
                             </div>
                             <div className="article-list">
-                                <h1 className="sidebar-title">Latest from the Post</h1>
+                                <h1 className="sidebar-title">Latest from the Post &gt;</h1>
                                 <ArticleList articles={articles} />
                             </div>
                         </div>
@@ -133,7 +133,7 @@ function Home() {
                                 <LatestArticle articles={articles} />
                             </div>
                             <div className="article-list col-md-3">
-                                <h1 className="sidebar-title">Latest from the Post</h1>
+                                <h1 className="sidebar-title">Latest from the Post &gt;</h1>
                                 <ArticleList articles={articles} />
                             </div>
                         </div>

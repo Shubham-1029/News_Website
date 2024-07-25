@@ -101,11 +101,11 @@ const EditArticle = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container-xxl mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
           <h2 className="text-center mb-4">Edit Article</h2>
-          <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm">
+          <form onSubmit={handleSubmit} className="p-4">
             <div className="mb-3">
               <label htmlFor="title" className="form-label">Title</label>
               <input

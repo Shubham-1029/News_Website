@@ -78,11 +78,9 @@ export const getUserDetails = async () => {
 };
 
 // Get Latest Articles
-export const getLatestArticles = async (token) => {
+export const getLatestArticles = async () => {
   try {
-    const response = await axios.get(`${API_URL}/latest-articles/`, {
-      headers: { Authorization: `Token ${token}` }
-    });
+    const response = await axios.get(`${API_URL}/latest-articles/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -92,12 +90,7 @@ export const getLatestArticles = async (token) => {
 // Get Categories
 export const getCategories = async () => {
   try {
-    const token = localStorage.getItem('token');
-    const headers = {
-      'Authorization': `Token ${token}`,
-    };
-
-    const response = await axios.get(`${API_URL}/categories/`, { headers });
+    const response = await axios.get(`${API_URL}/categories/`);
     return response.data;
   } catch (error) {
     console.error('Error fetching categories:', error.response ? error.response.data : error.message);
@@ -150,18 +143,14 @@ export const getPopularCategories = async () => {
 
 export const getArticlesByCategory = async (category) => {
   try {
-    const token = localStorage.getItem('token'); // Replace with your actual token
-    const response = await axios.get(`${API_URL}/articles/by-category/?category=${category}`, {
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    });
-    console.log(category)
+    const response = await axios.get(`${API_URL}/articles/by-category/?category=${category}`);
+    console.log(category);
     return response.data;
   } catch (error) {
     console.log('An error occurred:', error);
   }
 };
+
 
 export const getUserArticles = async () => {
   const token = localStorage.getItem('token');

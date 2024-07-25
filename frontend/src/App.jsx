@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import NavBar from './components/NavBar';
 import Header from './components/Header';
 import AuthForm from './components/Register';
@@ -15,14 +15,13 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Footer from './components/Footer';
-import ArticlePage from './components/Pages/ArticlePage';
 import LatestArticle from './components/LatestArticle';
 import ScrollToTop from './components/ScrollToTop';
 import ArticlesByCategory from './components/ArticlesByCategory';
+import { AuthProvider } from './components/context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-    const [articles, setArticles] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
 
     const handleLogout = () => {
@@ -37,40 +36,38 @@ const App = () => {
     const handleCategorySelect = (tag) => {
         setSelectedCategory(tag);
     };
-
     return (
-        <Router>
-            <ScrollToTop />
-            <NavBar onCategorySelect={handleCategorySelect} />
-            <div className="container-fluid">
-                <div className="row h-100">
-                    <Header />
-                    <div className="content col-12" style={{ background: "white" }}>
-                        <Routes>
-                            {isLoggedIn ? (
-                                <>
-                                    <Route path="/" element={<Home selectedTag={selectedCategory} />} />
+        <AuthProvider>
+            <Router>
+                <ScrollToTop />
+                <NavBar onCategorySelect={handleCategorySelect} />
+                <div className="container-fluid">
+                    <div className="row h-100">
+                        <Header />
+                        <div className="content col-12" style={{ background: "white" }}>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/latest-articles" element={<LatestArticle />} />
+                                <Route path="/articles" element={<ArticleList />} />
+                                <Route path="/categories/:category" element={<ArticlesByCategory />} />
+                                <Route path="/register" element={<AuthForm type="register" />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/articles/:id" element={<ArticleDetail />} />
+
+                                <Route element={<ProtectedRoute />}>
                                     <Route path="/articles/:id/edit" element={<EditArticle />} />
-                                    <Route path="/articles/:id" element={<ArticleDetail />} />
                                     <Route path="/write" element={<WriteArticle />} />
                                     <Route path="/user" element={<UserComponent />} />
-                                    <Route path="/articles" element={<ArticleList articles={articles} />} />
-                                    <Route path="/latest-articles" element={<LatestArticle articles={articles} />} />
-                                    <Route path="/categories/:category" element={<ArticlesByCategory />} />
-                                </>
-                            ) : (
-                                <>
-                                    <Route path="/register" element={<AuthForm type="register" />} />
-                                    <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                                    <Route path="*" element={<Navigate to="/login" />} />
-                                </>
-                            )}
-                        </Routes>
+                                </Route>
+
+                                <Route path="*" element={<Navigate to="/" />} />
+                            </Routes>
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </AuthProvider>
     );
 };
 
