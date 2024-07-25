@@ -96,9 +96,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'news',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost'
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'host.docker.internal'
     }
 }
 
