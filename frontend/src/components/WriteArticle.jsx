@@ -5,7 +5,7 @@ import '../components/css/WriteArticle.css';
 const API_URL = 'http://localhost:8000/api';
 
 const WriteArticle = () => {
-  const [formData, setFormData] = useState({ title: '', content: '', image: null, image_caption: [], categories: [] });
+  const [formData, setFormData] = useState({ title: '', content: '', image: null, image_caption: '', categories: [] });
   const [allCategories, setAllCategories] = useState([]);
   const token = localStorage.getItem('token');
 
@@ -46,8 +46,12 @@ const WriteArticle = () => {
       articleData.append('image', formData.image);
     }
     articleData.append('image-caption', formData.image_caption);
-    articleData.append('categories', JSON.stringify(formData.categories));
-
+  
+    // Send categories as a list
+    formData.categories.forEach(category => {
+      articleData.append('category_names', category);
+    });
+  
     try {
       const response = await axios.post(`${API_URL}/articles/`, articleData, {
         headers: {
@@ -62,7 +66,6 @@ const WriteArticle = () => {
       alert('Failed to post article');
     }
   };
-
   return (
     <div className="container-xxl mt-5">
       <h1 className="text-center mb-4">Write an Article</h1>
@@ -106,18 +109,19 @@ const WriteArticle = () => {
           />
         </div>
         <hr />
-        {/* <div className="form-group mb-3">
-          <label htmlFor="image-caption" className="form-label">Image-Caption</label>
+        <div className="form-group mb-3">
+          <label htmlFor="image-caption" className="form-label">Image Caption</label>
           <input
             type="text"
-            name="image-caption"
+            name="image_caption"
             id="image-caption"
             className="form-control"
-            placeholder="Image-Caption"
+            placeholder="Image Caption"
             value={formData.image_caption}
             onChange={handleChange}
           />
-        </div> */}
+        </div>
+        <hr />
         <div className="form-group mb-3">
           <label htmlFor="categories" className="form-label">Categories</label>
           <select

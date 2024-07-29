@@ -3,7 +3,7 @@ img {
 }
 .image-caption{
 	font-size:0.875rem;
-	font-family: Franklin, arial, sans-serif;
+	font-family: 'Libre Franklin', arial, sans-serif;
     line-height: 1.25;
 	color: rgba(89, 89, 89, 1);
 	text-align: left;
@@ -18,9 +18,17 @@ img {
 .article-detail-title {
   font-size: 3.5rem;
   font-family: 'Times New Roman', Times, serif;
-  margin-left: 15rem;
+  margin-top: 5rem;
 }
-
+.article-share{
+	margin-left: 17rem;
+	border-bottom: 2px solid black;
+    padding-bottom: 2rem;
+    width: 55vw;
+}
+.comment-button{
+	margin-left: 1rem;
+}
 .article-detail-author {
   font-size: 1rem;
   font-weight: 500;
@@ -47,12 +55,12 @@ img {
   display: block;
   width: 105vh;
   height: auto;
-  margin-left: 15rem;
+  /* margin-left: 15rem; */
 }
 
 .image-caption {
   margin-top: 8px; /* Space above the caption */
-  margin-left: 15rem;
+  /* margin-left: 15rem; */
   color: #555; /* Color of the caption text */
   font-size: 14px; /* Adjust the font size */
   text-align: left; /* Align text to the left */
@@ -63,13 +71,13 @@ img {
 
 
 .about-article{
-  margin-left: 18rem;
+  margin-left: 15rem;
 }
 .article-contents {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-right: auto;
-  margin-left: 20rem;
+  margin-left: 17rem;
   width: 50%;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: rgba(17, 17, 17, 1);
@@ -79,11 +87,9 @@ img {
 .article-contents{
   white-space:pre-wrap;
 }
-.ad-placeholder-side{
-  background-color:gray
-}
+
 .listen-button{
-  font-family: Franklin, Arial, Helvetica, sans-serif;
+  font-family: 'Libre Franklin', Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	font-style: normal;
 	font-variant: normal;
@@ -108,11 +114,6 @@ img {
 	/* Box */
 	height: 32px;
 	width: 67.875px;
-	border: 0px none rgb(0, 0, 0);
-	border-top: 0px none rgb(0, 0, 0);
-	border-right: 0px none rgb(0, 0, 0);
-	border-bottom: 0px none rgb(0, 0, 0);
-	border-left: 0px none rgb(0, 0, 0);
 	margin: 0px;
 	padding: 8px;
 	max-height: none;
@@ -204,6 +205,86 @@ img {
     display: flex;
   }
 
+  
+.wpds-c-dhzjXW-idKpyXE-css {
+    clear: left;
+}
+@media (min-width: calc(768px)) {
+    .wpds-c-dhzjXW-idKpyXE-css {
+        margin-bottom: 2rem;
+    }
+}
+
+.wpds-c-dhzjXW-idKpyXE-css {
+    margin-bottom: 1.5rem;
+}
+.wpds-c-dhzjXW {
+    display: flex;
+}
+.PJLV-iiaHaQH-css {
+    background-color: unset;
+    height: 2.5rem;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+.wpds-c-PJLV-dNrKMQ-placement-Shortcut {
+    background: black;
+    border: 0px;
+    color: white;
+    height: 2.5rem;
+}
+.wpds-c-UazGY {
+    display: flex;
+    align-items: center;
+}
+.wpds-c-fVfumU {
+    width: 1rem;
+    height: 1rem;
+    fill: black;
+}
+.wpds-c-jTgHe {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    line-height: 0;
+    margin-left: 0.5rem;
+}
+.wpds-c-kSOqLF {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    border-radius: 9999px;
+    cursor: pointer;
+    border: none;
+    appearance: none;
+    padding: 12px 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1rem;
+    gap: 0.5rem;
+    transition: background var(--wpds-transitions-fast) var(--wpds-transitions-inOut);
+}
+.wpds-c-kSOqLF-igqYgPb-css {
+    height: 2.5rem;
+}
+.comments {
+    background: white;
+    color: #111111;
+    border: 1px solid #d4d4d4;
+}
+.comments:hover{
+	background-color: rgba(233, 233, 233, 1);
+}
+.wpds-c-fBqPWp {
+    width: 1rem;
+    height: 1rem;
+    fill: currentcolor;
+}
+.align-article{
+	margin-left: 15rem;
+}
 @media(max-width:1600px){
 	.ad-placeholder-side{
 		display: none;

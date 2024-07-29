@@ -19,17 +19,17 @@ const EditArticle = () => {
           },
         });
         const fetchedArticle = response.data;
-
-        const categories = Array.isArray(fetchedArticle.categories)
-          ? fetchedArticle.categories.map(category => (typeof category === 'object' ? category.name : category))
+  
+        const categories = Array.isArray(fetchedArticle.category_names)
+          ? fetchedArticle.category_names
           : [];
-
+  
         setArticle({ ...fetchedArticle, categories });
       } catch (error) {
         console.error('Error fetching article:', error);
       }
     };
-
+  
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/categories/`, {
@@ -42,11 +42,11 @@ const EditArticle = () => {
         console.error('Error fetching categories:', error);
       }
     };
-
+  
     fetchArticle();
     fetchCategories();
   }, [id, token]);
-
+  
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'image') {
@@ -69,6 +69,7 @@ const EditArticle = () => {
       categories: selectedCategories,
     }));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,10 +79,14 @@ const EditArticle = () => {
     if (article.image) {
       formData.append('image', article.image);
     }
-    formData.append('categories', JSON.stringify(article.categories));
-
+  
+    // Append each category as a separate field in the form data
+    article.categories.forEach((category, index) => {
+      formData.append(`category_names[${index}]`, category);
+    });
+  
     console.log('Form Data:', formData);
-
+  
     try {
       const response = await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
         headers: {
@@ -99,7 +104,7 @@ const EditArticle = () => {
       }
     }
   };
-
+  
   return (
     <div className="container-xxl mt-5">
       <div className="row justify-content-center">

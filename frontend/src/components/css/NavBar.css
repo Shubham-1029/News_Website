@@ -97,6 +97,11 @@ body {
     margin-left: auto;
     flex: 1;
 }
+.washingtonpost{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
 
 .btn-subscribe {
     background-color: #166dfc;
@@ -198,11 +203,31 @@ body {
     transition: opacity 0.5s ease-in-out;
 }
 .nav-logo{
-    margin-left: 50rem;
+    margin-left: 40vw;
 }
 .navbar-image.show {
     display: block;
     opacity: 1;
+}
+.nav-second{
+    font-size: 0.8rem;
+    margin-right: 1rem;
+    font-family: georgia, 'Times New Roman', serif;
+    color: #595959;
+}
+.faded-background {
+    transition: background-color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity as needed */
+}
+
+.normal-background {
+    transition: background-color 0.3s ease;
+    background-color: transparent; /* Original background */
+}
+@media(max-width: 1000px){
+    .nav-logo{
+        margin-left: 20vw;
+    }
 }
 
 @media (max-width: 768px) {
