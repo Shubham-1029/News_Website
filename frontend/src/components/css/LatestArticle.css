@@ -12,7 +12,9 @@
   border-bottom: 1px solid black;
   margin-left: 20px;
 }
-
+.latest-article:last-child{
+  border: none;
+}
 .article-image {
   width: 31vw; /* Adjusted width */
   height: auto;

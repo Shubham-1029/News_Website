@@ -7,7 +7,6 @@ img {
     line-height: 1.25;
 	color: rgba(89, 89, 89, 1);
 	text-align: left;
-	margin-left: 5rem;
 }
 
 .article-detail {
@@ -19,7 +18,7 @@ img {
 .article-detail-title {
   font-size: 3.5rem;
   font-family: 'Times New Roman', Times, serif;
-  margin-left: 10rem;
+  margin-left: 15rem;
 }
 
 .article-detail-author {
@@ -48,12 +47,12 @@ img {
   display: block;
   width: 105vh;
   height: auto;
-  margin-left: 10rem;
+  margin-left: 15rem;
 }
 
 .image-caption {
   margin-top: 8px; /* Space above the caption */
-  margin-left: 10rem;
+  margin-left: 15rem;
   color: #555; /* Color of the caption text */
   font-size: 14px; /* Adjust the font size */
   text-align: left; /* Align text to the left */
@@ -64,13 +63,13 @@ img {
 
 
 .about-article{
-  margin-left: 9rem;
+  margin-left: 18rem;
 }
 .article-contents {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-right: auto;
-  margin-left: 11rem;
+  margin-left: 20rem;
   width: 50%;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: rgba(17, 17, 17, 1);
@@ -167,18 +166,18 @@ img {
   display: flex;
   justify-content: flex-start;
   padding-bottom: 2rem;
-  margin-left: 7rem;
+  margin-left: 11rem;
 }
 .article-actions-bar button{
   background: none;
   border: none;
 }
 .article-actions-bar button:hover{
-  background-color: gray;
+  background-color: rgba(233, 233, 233, 1);
   border-radius: 9999px;
 }
 .article-actions-bar svg{
-  height:1rem
+  height:1rem;
 }
 
 .listen-button{
@@ -205,6 +204,12 @@ img {
     display: flex;
   }
 
+@media(max-width:1600px){
+	.ad-placeholder-side{
+		display: none;
+	  }
+}
+
 @media(max-width:768px){
   .article-contents{
     margin-right: auto;
@@ -216,9 +221,7 @@ img {
     width: 100%;
 	margin-left: 0;
   }
-  .ad-placeholder-side{
-    display: none;
-  }
+ 
   .article-detail-title{
 	width: 100%;
 	margin: 0;

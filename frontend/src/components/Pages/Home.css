@@ -43,7 +43,8 @@
     text-transform: uppercase;
     text-align: left;
     padding-top: 0.5rem;
-    font-family: Franklin, Franklin-fallback, sans-serif;
+    font-family: Franklin,Arial,Helvetica,sans-serif;
+    letter-spacing: .1px;
 }
 
 .main-container{
@@ -58,4 +59,10 @@
     width: 60vw;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+@media(max-width: 940px){
+    .article-list{
+        width: 100% !important;
+    }
 }

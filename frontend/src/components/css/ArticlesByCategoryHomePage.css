@@ -18,7 +18,9 @@
     gap: 20px;
     flex-wrap: wrap;
 }
-
+.articles-by-category-homepage:last-child{
+    border-bottom: none;
+}
 .article-card1 {
     width: calc(25% - 20px);
     border-right: 1px solid #eee;

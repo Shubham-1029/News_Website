@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { login } from '../api';
-import '../components/css/Login.css';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api";
+import "../components/css/Login.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -17,19 +17,18 @@ const Login = () => {
     try {
       const response = await login(formData);
       if (response && response.token) {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem("token", response.token);
         setLoggedIn(true);
-        navigate('/');
+        navigate("/");
       } else {
-        console.error('Token not found in response');
-        alert('Invalid credentials');
+        console.error("Token not found in response");
+        alert("Invalid credentials");
       }
     } catch (error) {
-      console.error('Failed to login', error);
-      alert('Invalid credentials');
+      console.error("Failed to login", error);
+      alert("Invalid credentials");
     }
   };
-
 
   return (
     <div className="login-container">
@@ -61,7 +60,15 @@ const Login = () => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-secondary my-5 text-center">Login</button>
+        <button type="submit" className="btn btn-secondary my-5 text-center">
+          Login
+        </button>
+        <div className="sign-up-redirect">
+          <Link className="Sign-up" to={"/register/"}>
+            {" "}
+            Need an account? Sign Up{" "}
+          </Link>
+        </div>
       </form>
     </div>
   );

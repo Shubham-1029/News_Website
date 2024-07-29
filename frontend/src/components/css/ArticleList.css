@@ -6,7 +6,6 @@
   list-style: none;
   padding: 0;
   border-left: 1px solid rgb(248, 232, 232);
-  
 }
 
 .article-container {
@@ -31,10 +30,10 @@
 .article-title {
   margin: 0 0 10px 0;
   font-size: 1.25rem;
-  font-family: 'Playfair Display',Garamond, serif;
-  color: #000;
+  font-family: garamond, serif;
+  color: #2A2A2A;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.1;
 }
 
@@ -42,7 +41,7 @@
   border-top: 1px solid black;
   cursor: pointer;
 }
-.article-list h1:{
+.article-list h1:hover{
   color: gray;
 }
 

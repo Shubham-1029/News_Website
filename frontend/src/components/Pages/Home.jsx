@@ -1,65 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import ArticleList from '../ArticleList';
-// import LatestArticle from '../LatestArticle';
-// import ArticlesByTag from '../ArticlesByTag';
-// import { getArticles, getTags } from '../../api';
-// import './Home.css';
-// import ArticlesByTagHomePage from '../ArticlesByTagHomePage';
-
-// const Home = ({selectedTag}) => {
-//     const [articles, setArticles] = useState([]);
-//     const [categories, setTags] = useState([]);
-//     /* const [selectedTag, setSelectedTag] = useState(''); */
-
-//     useEffect(() => {
-//         const fetchArticles = async () => {
-//             try {
-//                 const articlesData = await getArticles();
-//                 setArticles(articlesData);
-//             } catch (error) {
-//                 console.error('Error fetching articles:', error);
-//             }
-//         };
-
-//         fetchArticles();
-//     }, []);
-
-//     useEffect(() => {
-//         const fetchTags = async () => {
-//             try {
-//                 const tagsData = await getTags();
-//                 setTags(tagsData);
-//             } catch (error) {
-//                 console.error('Error fetching categories:', error);
-//             }
-//         };
-
-//         fetchTags();
-//     }, []);
-
-//     return (
-//         <div className="home">
-//             <main className="main-content">
-//                 <div className="container-xxl content">
-//                     <div className="row main-container">
-//                         <div className="latest-articles col-md-9">
-//                             <LatestArticle articles={articles} />
-//                         </div>
-//                         <div className="article-list col-md-3">
-//                             <h1 className="sidebar-title">Latest from the Post</h1>
-//                             <ArticleList articles={articles} />
-//                         </div>
-//                     </div>
-//                     <div className="tagged-articles">
-//                         {selectedTag && <ArticlesByTagHomePage category={selectedTag} />}
-//                     </div>
-//                 </div>
-//             </main>
-//         </div>
-//     );
-// };
-
-// export default Home;
 import { useState, useEffect } from 'react';
 import ArticleList from '../ArticleList';
 import LatestArticle from '../LatestArticle';
@@ -68,13 +6,15 @@ import { getArticlesByCategory, getArticles, getCategories } from '../../api'; /
 import './Home.css';
 import { assets } from '../../assets/asset';
 import ArticlesByCategoryHomePage from '../ArticlesByCategoryHomePage';
+import TrendingBar from '../TrendingBar';
+import Header from '../Header';
 
 function Home() {
     const [articles, setArticles] = useState([]);
     const [categories, setCategories] = useState([]); // State to store categories
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768); // State to track screen size
 
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchArticles = async () => {
             try {
                 const articlesData = await getArticles();
@@ -85,7 +25,7 @@ function Home() {
         };
 
         fetchArticles();
-    }, []);
+    }, []); */
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -112,10 +52,8 @@ function Home() {
     return (
         <div className="home">
             <main className="main-content">
-                {/* <div className="ad-placeholder">
-                    <img className="ad-placeholder-img" src={assets.image6} alt="Ad gif" />
-                </div> */}
-                
+            <Header />
+                <TrendingBar/>
                 <div className={`container-xxl content ${isSmallScreen ? '' : 'container-class'}`}>
                     {isSmallScreen ? (
                         <div className="main-container">

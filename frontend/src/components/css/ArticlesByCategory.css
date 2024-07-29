@@ -61,7 +61,7 @@
     font-weight: 700;
 }
 .article-link2 h3:hover{
-    color: #595959 !important;
+    color: #5560b3 !important;
 }
 
 .article-excerpt2 {
@@ -82,8 +82,23 @@
 .article-by-category-title {
     text-align: center;
     padding-bottom: 1rem;
+    margin-top: 4rem;
 }
 
+.article-meta2 {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: #6c757d;
+    padding-bottom: 24px;
+  }
+  
+  .article-author2::after {
+    content: ' • ';
+    margin: 0 5px;
+  }
+  
+  
 @media (max-width: 768px) {
     .articles-container {
         flex-direction: column;

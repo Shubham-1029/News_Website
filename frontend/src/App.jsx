@@ -43,7 +43,6 @@ const App = () => {
                 <NavBar onCategorySelect={handleCategorySelect} />
                 <div className="container-fluid">
                     <div className="row h-100">
-                        <Header />
                         <div className="content col-12" style={{ background: "white" }}>
                             <Routes>
                                 <Route path="/" element={<Home />} />

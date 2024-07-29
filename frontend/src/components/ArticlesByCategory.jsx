@@ -24,6 +24,11 @@ const ArticlesByCategory = () => {
 
   const IMG_BASE_URL = `http://localhost:8000`;
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
   return (
     <div className="articles-by-category container-xxl">
       <div className="article-by-category-title">
@@ -47,8 +52,10 @@ const ArticlesByCategory = () => {
                     <h3>{article.title}</h3>
                   </Link>
                   <p className="article-excerpt2">{article.excerpt || article.content.substring(0, 200) + '...'}</p>
-                  <p className="article-author2">By {article.user}</p>
-                  <p className="article-time2">{new Date(article.updated_at).toLocaleDateString()}</p>
+                  <div className="article-meta2">
+                    <span className="article-author2">By {article.user}</span>
+                    <span className="article-time2">{formatDate(article.updated_at)}</span>
+                  </div>
                 </div>
               </div>
             ))}
