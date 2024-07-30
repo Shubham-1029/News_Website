@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize';
+import 'quill/dist/quill.snow.css';
 import '../components/css/WriteArticle.css';
 
 const API_URL = 'http://localhost:8000/api';
@@ -8,6 +11,7 @@ const WriteArticle = () => {
   const [formData, setFormData] = useState({ title: '', content: '', image: null, image_caption: '', categories: [] });
   const [allCategories, setAllCategories] = useState([]);
   const token = localStorage.getItem('token');
+  const quillRef = useRef(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -20,9 +24,37 @@ const WriteArticle = () => {
         console.error('Error fetching categories:', error);
       }
     };
-
+  
     fetchCategories();
+  
+    // Register Quill modules
+    Quill.register('modules/imageResize', ImageResize);
+  
+    if (quillRef.current) {
+      const quill = new Quill(quillRef.current, {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ size: [] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'],
+            ['clean']
+          ],
+          imageResize: {
+            modules: ['Resize', 'DisplaySize', 'Toolbar']
+          }
+        },
+        placeholder: 'Write the content of your article here...',
+      });
+  
+      quill.on('text-change', () => {
+        setFormData((prevData) => ({ ...prevData, content: quill.root.innerHTML }));
+      });
+    }
   }, [token]);
+  
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -45,9 +77,8 @@ const WriteArticle = () => {
     if (formData.image) {
       articleData.append('image', formData.image);
     }
-    articleData.append('image-caption', formData.image_caption);
+    articleData.append('image_caption', formData.image_caption);
   
-    // Send categories as a list
     formData.categories.forEach(category => {
       articleData.append('category_names', category);
     });
@@ -62,10 +93,11 @@ const WriteArticle = () => {
       alert('Article posted successfully!');
       setFormData({ title: '', content: '', image: null, image_caption: '', categories: [] });
     } catch (error) {
-      console.error('Failed to post article', error.response ? error.response.data : error);
-      alert('Failed to post article');
+      console.error('Failed to post article:', error.response ? error.response.data : error.message);
+      alert('Failed to post article. Please try again later.');
     }
   };
+  
   return (
     <div className="container-xxl mt-5">
       <h1 className="text-center mb-4">Write an Article</h1>
@@ -86,16 +118,7 @@ const WriteArticle = () => {
         <hr />
         <div className="form-group mb-3">
           <label htmlFor="content" className="form-label">Content</label>
-          <textarea
-            name="content"
-            id="content"
-            className="form-control"
-            placeholder="Content"
-            value={formData.content}
-            onChange={handleChange}
-            rows="10"
-            required
-          ></textarea>
+          <div ref={quillRef} style={{ height: '400px' }} />
         </div>
         <hr />
         <div className="form-group mb-3">

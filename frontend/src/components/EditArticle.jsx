@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 const EditArticle = () => {
   const { id } = useParams();
@@ -9,6 +11,7 @@ const EditArticle = () => {
   const [allCategories, setAllCategories] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const quillRef = useRef(null);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -19,17 +22,21 @@ const EditArticle = () => {
           },
         });
         const fetchedArticle = response.data;
-  
         const categories = Array.isArray(fetchedArticle.category_names)
           ? fetchedArticle.category_names
           : [];
-  
         setArticle({ ...fetchedArticle, categories });
+
+        // Initialize Quill with the fetched content
+        if (quillRef.current) {
+          const quill = quillRef.current;
+          quill.root.innerHTML = fetchedArticle.content;
+        }
       } catch (error) {
         console.error('Error fetching article:', error);
       }
     };
-  
+
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/categories/`, {
@@ -42,11 +49,27 @@ const EditArticle = () => {
         console.error('Error fetching categories:', error);
       }
     };
-  
+
     fetchArticle();
     fetchCategories();
+
+    // Initialize Quill editor
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+          [{ size: [] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
+          ['link', 'image', 'video'],
+          ['clean']
+        ],
+      },
+    });
+    quillRef.current = quill;
   }, [id, token]);
-  
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'image') {
@@ -69,24 +92,23 @@ const EditArticle = () => {
       categories: selectedCategories,
     }));
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', article.title);
-    formData.append('content', article.content);
+    formData.append('content', quillRef.current.root.innerHTML);
     if (article.image) {
       formData.append('image', article.image);
     }
-  
+
     // Append each category as a separate field in the form data
     article.categories.forEach((category, index) => {
       formData.append(`category_names[${index}]`, category);
     });
-  
+
     console.log('Form Data:', formData);
-  
+
     try {
       const response = await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
         headers: {
@@ -104,7 +126,7 @@ const EditArticle = () => {
       }
     }
   };
-  
+
   return (
     <div className="container-xxl mt-5">
       <div className="row justify-content-center">
@@ -126,16 +148,7 @@ const EditArticle = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="content" className="form-label">Content</label>
-              <textarea
-                id="content"
-                name="content"
-                value={article.content}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Enter article content"
-                rows="10"
-                required
-              />
+              <div id="editor" className="form-control" style={{ minHeight: '200px' }}></div>
             </div>
             <div className="mb-3">
               <label htmlFor="image" className="form-label">Image</label>

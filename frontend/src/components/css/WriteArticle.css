@@ -63,3 +63,7 @@
   .btn-primary:hover {
     background-color: #23527c;
   }
+  .ql-editor img {
+    max-width: 50px;
+    height: auto;
+  }

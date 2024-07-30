@@ -1,6 +1,6 @@
-img {
+/* img {
   height: 400vh;
-}
+} */
 .image-caption{
 	font-size:0.875rem;
 	font-family: 'Libre Franklin', arial, sans-serif;
@@ -285,6 +285,19 @@ img {
 .align-article{
 	margin-left: 15rem;
 }
+
+.more-from-post p:first-child{
+	font-family: 'Libre Franklin', arial, sans-serif;
+	letter-spacing: 0.32px;
+	text-transform: uppercase;
+	font-weight: 700;
+	line-height: 1.25;
+}
+/* .article-image-list{
+	width: 211px;
+	height: 140px;
+} */
+
 @media(max-width:1600px){
 	.ad-placeholder-side{
 		display: none;

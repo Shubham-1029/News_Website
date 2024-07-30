@@ -48,10 +48,10 @@ const ArticlesByCategory = () => {
                   </Link>
                 )}
                 <div className="article-content2">
-                  <Link to={`/articles/${article.id}`} className="article-link article-link2">
+                  <Link to={`/articles/${article.id}`} className="article-link article-link2">  
                     <h3>{article.title}</h3>
                   </Link>
-                  <p className="article-excerpt2">{article.excerpt || article.content.substring(0, 200) + '...'}</p>
+                  <p className="article-excerpt2" dangerouslySetInnerHTML={{__html:article.excerpt || article.content.substring(0, 200) + '...'}}></p>
                   <div className="article-meta2">
                     <span className="article-author2">By {article.user}</span>
                     <span className="article-time2">{formatDate(article.updated_at)}</span>

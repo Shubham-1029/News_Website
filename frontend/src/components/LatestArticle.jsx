@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'; // Make sure axios is imported
 import '../components/css/LatestArticle.css'; // Import the CSS file
 import { getLatestArticles } from '../api';
+import HTMLContent from './HtmlContent';
 
 const API_URL = 'http://localhost:8000'; // Define your API base URL
 
@@ -63,7 +64,9 @@ const LatestArticle = () => {
           )}
           <div className="article-content">
             <Link to={`/articles/${article.id}`} className="article-link"><span>{article.title}</span></Link>
-            <p className="article-excerpt">{article.excerpt || truncateText(article.content, 100)}</p>
+            <div className="article-excerpt">
+              <HTMLContent content ={article.excerpt || truncateText(article.content, 100)}/>
+            </div>
             <p className='article-author'>By {article.user}</p>
             <p className='article-time'>{timeSince(article.updated_at)}</p> {/* Display the time since updated */}
             <br />

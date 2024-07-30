@@ -4,66 +4,33 @@ import { getArticleDetail } from "../api";
 import "../components/css/ArticleDetail.css";
 import { assets } from "../assets/asset";
 import ArticleList from "./ArticleList";
+import HTMLContent from "./HtmlContent";
 
-const ArticleDetail = () => {
+const ArticleDetail = ({content}) => {
   const { id } = useParams(); // useParams hook to get the article id
   const [article, setArticle] = useState(null);
-  /* const [tags, setTags] = useState([]); */
-  /* const [newTag, setNewTag] = useState(''); */
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const stripHtmlTags = (html) => {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+  const plainTextContent = stripHtmlTags(content);
+  
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
         const response = await getArticleDetail(id);
         setArticle(response.data);
-        /* setTags(response.data.tags.map(tag => tag.name) || []); */
       } catch (error) {
         console.error("Failed to fetch article", error);
       }
     };
     fetchArticle();
   }, [id]);
-  /* 
-  const handleTagChange = (e) => {
-    setNewTag(e.target.value);
-  };
 
-  const handleAddTag = async () => {
-    if (!newTag.trim()) return;
-
-    const updatedTags = [...tags, newTag.trim()];
-    try {
-      await updateArticleTags(id, { tags: updatedTags }, token);
-      setTags(updatedTags);
-      setNewTag('');
-    } catch (error) {
-      console.error('Failed to update tags', error);
-    }
-  };
-
-  const handleRemoveTag = async (tagToRemove) => {
-    const updatedTags = tags.filter(tag => tag !== tagToRemove);
-    try {
-      await updateArticleTags(id, { tags: updatedTags }, token);
-      setTags(updatedTags);
-    } catch (error) {
-      console.error('Failed to update tags', error);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this article?')) {
-      try {
-        await deleteArticle(id, token);
-        navigate('/'); // Use navigate instead of history.push
-      } catch (error) {
-        console.error('Failed to delete article', error);
-      }
-    }
-  };
- */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = {
@@ -206,16 +173,18 @@ const ArticleDetail = () => {
         </div>
         <div className="ad-placeholder-side col-3"></div>
       </div>
-      <p className="article-contents">{article.content}</p>
+      <div className="article-contents">
+        <HTMLContent content= {article.content}/>
+      </div>
       <div className="article-share wpds-c-dhzjXW wpds-c-dhzjXW-idKpyXE-css overrideStyles test"><div id="gift-share-end" data-testid="gift-share-end" className="PJLV PJLV-iiaHaQH-css hide-for-print"><button type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r1:" data-state="closed" aria-label="Share this article" id="gift-share-popover-control-end" data-testid="gift-share-popover-control-end" className="wpds-c-kSOqLF wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-PJLV wpds-c-PJLV-dNrKMQ-placement-Shortcut focus-highlight"><div className="wpds-c-UazGY" id="gift-share-shortcut" data-testid="gift-share-shortcut"><svg xmlns="http://www.w3.org/2000/svg" fill="var(--wpds-colors-primary)" viewBox="0 0 16 16" aria-hidden="true" focusable="false" role="img" className="wpds-c-fVfumU "><path fill="currentColor" d="M8 .6v3.8h.1c-4.4 0-7.3 4.5-6.9 8.8.1.8.2 1.2.2 1.2l.2 1 .4-1.3c.8-2 2-4 6.2-3.9H8v4l7-6.9zm1 11.3V9.3h-.9c-3 0-4.8.5-6.2 2.9.5-3.3 2.7-6.8 6.2-6.8H9V3l4.5 4.4z"></path></svg><div className="PJLV wpds-c-jTgHe">Share</div></div></button></div><div className="wpds-c-hcekgi"><div className="" data-qa="comments-btn-div"><button aria-label="Scroll to the comments section" data-qa="comments-btn" className="wpds-c-kSOqLF comment-button wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-kSOqLF-igqYgPb-css comments hide-for-print"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" role="img" className="wpds-c-fBqPWp "><path d="M14 14V2H2v9.47h8.18L12.43 13ZM3 10.52V3h10v9.23l-2.5-1.66Z"></path></svg><span></span>Comments</button></div></div></div>
       <div className="row"> 
         <div className="col-2"></div>
-        <div className="col-7">
-          <h3>More From the Post</h3>
+        <div className="col-6 more-from-post">
+          <p>More From the Post</p>
           <ArticleList/>
         </div>
         <div className="col-3">
-          Ad
+          
         </div>
       </div>
       

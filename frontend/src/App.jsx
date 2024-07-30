@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
 import Header from './components/Header';
 import AuthForm from './components/Register';
@@ -23,7 +23,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [username, setUsername] = useState('Loading...');
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
@@ -32,9 +33,33 @@ const App = () => {
     const handleLogin = () => {
         setIsLoggedIn(true);
     };
+    const token = localStorage.getItem('token');
 
-    const handleCategorySelect = (tag) => {
-        setSelectedCategory(tag);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/user/', {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        const data = await response.json();
+        setUsername(data.username);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        setUsername('Error loading user');
+      }
+    };
+
+    if (token) {
+      fetchUser();
+    } else {
+      setUsername('Guest');
+    }
+  }, [token]);
+
+    const handleCategorySelect = (category) => {
+        setSelectedCategory(category);
     };
     return (
         <AuthProvider>
