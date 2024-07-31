@@ -24,7 +24,7 @@
 }
 
 .user-component {
-    font-family: 'Playfair Display',Garamond, serif;
+    font-family: 'EB Garamond', serif;
     padding: 20px;
     background-color: white;
     margin-left: 10rem;
@@ -36,7 +36,7 @@
     font-weight: bold;
     color: #222;
     margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
     text-align: center;
 }
 

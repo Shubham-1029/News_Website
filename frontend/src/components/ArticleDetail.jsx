@@ -6,18 +6,11 @@ import { assets } from "../assets/asset";
 import ArticleList from "./ArticleList";
 import HTMLContent from "./HtmlContent";
 
-const ArticleDetail = ({content}) => {
-  const { id } = useParams(); // useParams hook to get the article id
+const ArticleDetail = ({ content }) => {
+  const { id } = useParams();
   const [article, setArticle] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const stripHtmlTags = (html) => {
-    const tmp = document.createElement("div");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
-  };
-  const plainTextContent = stripHtmlTags(content);
-  
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -50,8 +43,11 @@ const ArticleDetail = ({content}) => {
   return (
     <div className="container-xxl article-detail">
       <div className="row">
-        <div className="col-9">
-          <h1 className="article-detail-title my-5 align-article">{article.title}</h1>
+        <div className="col-2"></div>
+        <div className="col-7">
+          <h1 className="article-detail-title my-5 align-article">
+            {article.title}
+          </h1>
           <div className="article-actions-bar">
             <div className="listen-article">
               <div role="button" tabIndex="0" className="listen-button">
@@ -153,7 +149,9 @@ const ArticleDetail = ({content}) => {
                   src={article.image}
                   alt={article.title}
                 />
-                <p className="image-caption align-article">{article.image_caption}</p>
+                <p className="image-caption align-article">
+                  {article.image_caption}
+                </p>
               </div>
             )}
           </div>
@@ -170,24 +168,83 @@ const ArticleDetail = ({content}) => {
               </p>
             </div>
           </div>
+          <div className="article-contents">
+            <HTMLContent content={article.content} />
+          </div>
+          <div className="article-share wpds-c-dhzjXW wpds-c-dhzjXW-idKpyXE-css overrideStyles test">
+            <div
+              id="gift-share-end"
+              data-testid="gift-share-end"
+              className="PJLV PJLV-iiaHaQH-css hide-for-print"
+            >
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="radix-:r1:"
+                data-state="closed"
+                aria-label="Share this article"
+                id="gift-share-popover-control-end"
+                data-testid="gift-share-popover-control-end"
+                className="wpds-c-kSOqLF wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-PJLV wpds-c-PJLV-dNrKMQ-placement-Shortcut focus-highlight"
+              >
+                <div
+                  className="wpds-c-UazGY"
+                  id="gift-share-shortcut"
+                  data-testid="gift-share-shortcut"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="var(--wpds-colors-primary)"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    focusable="false"
+                    role="img"
+                    className="wpds-c-fVfumU "
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M8 .6v3.8h.1c-4.4 0-7.3 4.5-6.9 8.8.1.8.2 1.2.2 1.2l.2 1 .4-1.3c.8-2 2-4 6.2-3.9H8v4l7-6.9zm1 11.3V9.3h-.9c-3 0-4.8.5-6.2 2.9.5-3.3 2.7-6.8 6.2-6.8H9V3l4.5 4.4z"
+                    ></path>
+                  </svg>
+                  <div className="PJLV wpds-c-jTgHe">Share</div>
+                </div>
+              </button>
+            </div>
+            <div className="wpds-c-hcekgi">
+              <div className="" data-qa="comments-btn-div">
+                <button
+                  aria-label="Scroll to the comments section"
+                  data-qa="comments-btn"
+                  className="wpds-c-kSOqLF comment-button wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-kSOqLF-igqYgPb-css comments hide-for-print"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    focusable="false"
+                    role="img"
+                    className="wpds-c-fBqPWp "
+                  >
+                    <path d="M14 14V2H2v9.47h8.18L12.43 13ZM3 10.52V3h10v9.23l-2.5-1.66Z"></path>
+                  </svg>
+                  <span></span>Comments
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="ad-placeholder-side col-3"></div>
       </div>
-      <div className="article-contents">
-        <HTMLContent content= {article.content}/>
-      </div>
-      <div className="article-share wpds-c-dhzjXW wpds-c-dhzjXW-idKpyXE-css overrideStyles test"><div id="gift-share-end" data-testid="gift-share-end" className="PJLV PJLV-iiaHaQH-css hide-for-print"><button type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r1:" data-state="closed" aria-label="Share this article" id="gift-share-popover-control-end" data-testid="gift-share-popover-control-end" className="wpds-c-kSOqLF wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-PJLV wpds-c-PJLV-dNrKMQ-placement-Shortcut focus-highlight"><div className="wpds-c-UazGY" id="gift-share-shortcut" data-testid="gift-share-shortcut"><svg xmlns="http://www.w3.org/2000/svg" fill="var(--wpds-colors-primary)" viewBox="0 0 16 16" aria-hidden="true" focusable="false" role="img" className="wpds-c-fVfumU "><path fill="currentColor" d="M8 .6v3.8h.1c-4.4 0-7.3 4.5-6.9 8.8.1.8.2 1.2.2 1.2l.2 1 .4-1.3c.8-2 2-4 6.2-3.9H8v4l7-6.9zm1 11.3V9.3h-.9c-3 0-4.8.5-6.2 2.9.5-3.3 2.7-6.8 6.2-6.8H9V3l4.5 4.4z"></path></svg><div className="PJLV wpds-c-jTgHe">Share</div></div></button></div><div className="wpds-c-hcekgi"><div className="" data-qa="comments-btn-div"><button aria-label="Scroll to the comments section" data-qa="comments-btn" className="wpds-c-kSOqLF comment-button wpds-c-kSOqLF-cWZnsQ-variant-secondary wpds-c-kSOqLF-eHdizY-density-default wpds-c-kSOqLF-ejCoEP-icon-left wpds-c-kSOqLF-igqYgPb-css comments hide-for-print"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" role="img" className="wpds-c-fBqPWp "><path d="M14 14V2H2v9.47h8.18L12.43 13ZM3 10.52V3h10v9.23l-2.5-1.66Z"></path></svg><span></span>Comments</button></div></div></div>
-      <div className="row"> 
-        <div className="col-2"></div>
+      <div className="row">
+        <div className="col-3"></div>
         <div className="col-6 more-from-post">
           <p>More From the Post</p>
-          <ArticleList/>
+          <ArticleList />
         </div>
-        <div className="col-3">
-          
-        </div>
+        <div className="col-3"></div>
       </div>
-      
     </div>
   );
 };

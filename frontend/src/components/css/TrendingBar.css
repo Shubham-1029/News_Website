@@ -68,3 +68,9 @@
 .wpds-c-bxxqXp-hsqqbW-type-live {
     color: rgba(234, 0, 23, 1);
 }
+
+@media(max-width:1040px){
+    .wpds-c-lfMEPF {
+        display: none;
+    }
+}

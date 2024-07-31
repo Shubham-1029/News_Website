@@ -18,13 +18,13 @@
 .article-detail-title {
   font-size: 3.5rem;
   font-family: 'Times New Roman', Times, serif;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 .article-share{
-	margin-left: 17rem;
+	margin-left: 2rem;
 	border-bottom: 2px solid black;
-    padding-bottom: 2rem;
-    width: 55vw;
+  padding-bottom: 2rem;
+  width: 55vw;
 }
 .comment-button{
 	margin-left: 1rem;
@@ -55,7 +55,6 @@
   display: block;
   width: 105vh;
   height: auto;
-  /* margin-left: 15rem; */
 }
 
 .image-caption {
@@ -69,15 +68,14 @@
   box-sizing: border-box; /* Ensure padding and border do not affect the width */
 }
 
-
 .about-article{
-  margin-left: 15rem;
+  margin-left: 2rem;
 }
 .article-contents {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-right: auto;
-  margin-left: 17rem;
+  margin-left: 4rem;
   width: 50%;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: rgba(17, 17, 17, 1);
@@ -167,7 +165,6 @@
   display: flex;
   justify-content: flex-start;
   padding-bottom: 2rem;
-  margin-left: 11rem;
 }
 .article-actions-bar button{
   background: none;
@@ -205,14 +202,23 @@
     display: flex;
   }
 
+.article-share button:first-child{
+  margin-left: 2rem;
+}
   
 .wpds-c-dhzjXW-idKpyXE-css {
     clear: left;
 }
+
 @media (min-width: calc(768px)) {
     .wpds-c-dhzjXW-idKpyXE-css {
         margin-bottom: 2rem;
     }
+}
+@media(max-width:600px){
+  .article-share button:first-child{
+    margin-left: 1rem;
+  }
 }
 
 .wpds-c-dhzjXW-idKpyXE-css {
@@ -283,7 +289,7 @@
     fill: currentcolor;
 }
 .align-article{
-	margin-left: 15rem;
+	margin-left: 2rem;
 }
 
 .more-from-post p:first-child{

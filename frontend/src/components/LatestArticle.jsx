@@ -68,7 +68,7 @@ const LatestArticle = () => {
               <HTMLContent content ={article.excerpt || truncateText(article.content, 100)}/>
             </div>
             <p className='article-author'>By {article.user}</p>
-            <p className='article-time'>{timeSince(article.updated_at)}</p> {/* Display the time since updated */}
+            <p className='article-time latest-article-time'>{timeSince(article.updated_at)}</p> {/* Display the time since updated */}
             <br />
           </div>
         </div>

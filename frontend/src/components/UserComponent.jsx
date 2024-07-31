@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getUserDetails, getUserArticles, deleteArticle, updateArticleCategories } from '../api';
-import '../components/css/UserComponent.css'; // Import the CSS file
+import '../components/css/UserComponent.css'; 
 
 const UserComponent = () => {
     const [user, setUser] = useState({});
-    const [articles, setArticles] = useState([]); // Ensure initial state is an empty array
+    const [articles, setArticles] = useState([]); 
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -22,9 +22,9 @@ const UserComponent = () => {
             try {
                 const userArticles = await getUserArticles();
                 if (userArticles.articles && Array.isArray(userArticles.articles)) {
-                    setArticles(userArticles.articles); // Ensure articles are set to the correct array
+                    setArticles(userArticles.articles); 
                 } else {
-                    setArticles([]); // Fallback to an empty array
+                    setArticles([]); 
                     console.error('Expected an array of articles but got:', userArticles);
                 }
             } catch (error) {
@@ -40,7 +40,7 @@ const UserComponent = () => {
         if (window.confirm('Are you sure you want to delete this article?')) {
             try {
                 await deleteArticle(articleId, token);
-                setArticles(articles.filter(article => article.id !== articleId)); // Update state to remove deleted article
+                setArticles(articles.filter(article => article.id !== articleId)); 
             } catch (error) {
                 console.error('Failed to delete article', error);
             }

@@ -1,14 +1,13 @@
-/* Sidebar.css */
 .sidebar {
   position: fixed;
-  top: 56px; /* Adjust based on your navbar height */
+  top: 56px; 
   left: 0;
-  width: 320px;
-  height: calc(100% - 56px); /* Adjust based on your navbar height */
+  width: 285px;
+  height: calc(100% - 56px); 
   background-color: white;
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
@@ -16,67 +15,67 @@
   transform: translateX(0);
 }
 
-.sub-btn{
+.sub-btn {
   display: flex;
   justify-content: center;
   font-family: Franklin, arial, sans-serif;
-	font-size: 16px;
-	font-weight: 700;
-	line-height: 16px;
-	text-decoration: none solid rgb(255, 255, 255);
-	text-align: center;
-	vertical-align: baseline;
-	white-space: nowrap;
-	word-spacing: 0px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+  word-spacing: 0px;
   padding-block-start: 1rem;
   padding-block-end: 1rem;
-  padding-inline-start: 1.5rem;                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-	/* Color & Background */
-	background-attachment: scroll;
-	background-color: #166DFC;
-	background-repeat: repeat;
-	color: rgb(255, 255, 255);
+  padding-inline-start: 1.5rem;
+  /* Color & Background */
+  background-attachment: scroll;
+  background-color: #166dfc;
+  background-repeat: repeat;
+  color: rgb(255, 255, 255);
 
-	/* Box */
-	height: 32px;
-	width: 256px;
-	margin: 0px;
-	padding: 8px 16px;
-	
-	/* Positioning */
-	position: static;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	display: flex;
-	z-index: auto;
+  /* Box */
+  height: 32px;
+  width: 256px;
+  margin: 0px;
+  padding: 8px 16px;
 
-	/* List */
-	list-style-type: disc;
-	list-style-position: outside;
+  /* Positioning */
+  position: static;
+  top: auto;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  display: flex;
+  z-index: auto;
 
-	/* Table */
-	border-collapse: separate;
-	caption-side: top;
-	empty-cells: show;
-	table-layout: auto;
+  /* List */
+  list-style-type: disc;
+  list-style-position: outside;
 
-	/* Miscellaneous */
-	overflow: hidden;
-	cursor: pointer;
-	visibility: visible;
+  /* Table */
+  border-collapse: separate;
+  caption-side: top;
+  empty-cells: show;
+  table-layout: auto;
 
-	/* Effects */
-	transform: none;
-	transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-	box-sizing: border-box;
-	border: none;
-	text-overflow: ellipsis;
-	border-top-left-radius: 9999px;
-	border-top-right-radius: 9999px;
-	border-bottom-left-radius: 9999px;
-	border-bottom-right-radius: 9999px;
+  /* Miscellaneous */
+  overflow: hidden;
+  cursor: pointer;
+  visibility: visible;
+
+  /* Effects */
+  transform: none;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  box-sizing: border-box;
+  border: none;
+  text-overflow: ellipsis;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+  border-bottom-right-radius: 9999px;
 }
 
 .sidebar-content {
@@ -110,17 +109,17 @@
   text-decoration: none;
 }
 
-.sidebar-menu li a{
+.sidebar-menu li a {
   color: black;
   font-weight: 700;
 }
-.search-container{
+.search-container {
   text-align: center;
 }
-.search-container input{
-  padding:10px 10px
+.search-container input {
+  padding: 10px 10px;
 }
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: space-around;
   margin-bottom: 1rem;

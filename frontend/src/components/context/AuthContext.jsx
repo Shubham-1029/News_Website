@@ -1,19 +1,26 @@
-
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { getUserDetails } from '../../api';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
+        const fetchUser = async () => {
+            try {
+                const userDetails = await getUserDetails();
+                setUser(userDetails);
+            } catch (error) {
+                console.error('Error fetching user', error);
+            }
+        };
+
+        if (isLoggedIn) {
+            fetchUser();
         }
-    }, []);
+    }, [isLoggedIn]);
 
     const handleLogin = (token) => {
         localStorage.setItem('token', token);
@@ -23,15 +30,14 @@ export const AuthProvider = ({ children }) => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
+        setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>
+        <AuthContext.Provider value={{ isLoggedIn, user, handleLogin, handleLogout }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-export default AuthContext;

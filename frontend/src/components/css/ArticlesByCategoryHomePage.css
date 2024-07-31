@@ -2,10 +2,16 @@
     margin: 20px;
     border-bottom: 1px solid black;
 }
+.articles-by-category-homepage:first-child{
+    border-top: 1px solid black;
+}
 
 .articles-by-category-homepage h2 {
     font-size: 24px;
     font-weight: bold;
+}
+.articles-by-category-homepage h2:first-child{
+    padding-top: 1rem;
 }
 
 .articles-by-category-homepage p {
@@ -52,7 +58,7 @@
 }
 
 .article-author1 {
-    font-family: Franklin,Arial,Helvetica,sans-serif;
+    font-family: 'Libre Franklin',Arial,Helvetica,sans-serif;
     font-size: 14px;
     color: #595959;
 }

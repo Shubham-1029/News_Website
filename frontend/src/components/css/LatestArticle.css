@@ -97,4 +97,7 @@
     align-items: center; /* Center items horizontally */
     border: none;
   }
+  .latest-article-time{
+    justify-content: center;
+  }
 }
