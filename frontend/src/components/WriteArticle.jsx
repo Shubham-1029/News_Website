@@ -8,7 +8,7 @@ import '../components/css/WriteArticle.css';
 const API_URL = 'http://localhost:8000/api';
 
 const WriteArticle = () => {
-  const [formData, setFormData] = useState({ title: '', content: '', image: null, image_caption: '', categories: [] });
+  const [formData, setFormData] = useState({ title: '', subheading: '', content: '', image: null, image_caption: '', categories: [] });
   const [allCategories, setAllCategories] = useState([]);
   const token = localStorage.getItem('token');
   const quillRef = useRef(null);
@@ -54,7 +54,6 @@ const WriteArticle = () => {
       });
     }
   }, [token]);
-  
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -73,6 +72,7 @@ const WriteArticle = () => {
     e.preventDefault();
     const articleData = new FormData();
     articleData.append('title', formData.title);
+    articleData.append('subheading', formData.subheading); // Add subheading
     articleData.append('content', formData.content);
     if (formData.image) {
       articleData.append('image', formData.image);
@@ -91,7 +91,7 @@ const WriteArticle = () => {
         },
       });
       alert('Article posted successfully!');
-      setFormData({ title: '', content: '', image: null, image_caption: '', categories: [] });
+      setFormData({ title: '', subheading: '', content: '', image: null, image_caption: '', categories: [] });
     } catch (error) {
       console.error('Failed to post article:', error.response ? error.response.data : error.message);
       alert('Failed to post article. Please try again later.');
@@ -113,6 +113,18 @@ const WriteArticle = () => {
             value={formData.title}
             onChange={handleChange}
             required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="subheading" className="form-label">Subheading</label>
+          <input
+            type="text"
+            name="subheading"
+            id="subheading"
+            className="form-control"
+            placeholder="Subheading"
+            value={formData.subheading}
+            onChange={handleChange}
           />
         </div>
         <hr />

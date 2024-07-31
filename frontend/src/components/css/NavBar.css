@@ -228,6 +228,10 @@ body {
     content-visibility: auto;
 }
 
+.fading {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
 .normal-background {
     transition: background-color 0.3s ease;

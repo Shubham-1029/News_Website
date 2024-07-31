@@ -13,6 +13,7 @@ const NavBar = ({ onCategorySelect }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showImage, setShowImage] = useState(false);
     const [isBackgroundFaded, setIsBackgroundFaded] = useState(false);
+    const [isFading, setisFading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,9 +44,12 @@ const NavBar = ({ onCategorySelect }) => {
 
         const handleScroll = () => {
             if (window.scrollY > 50) {
+                setisFading(true)
                 setShowImage(true);
             } else {
+                setisFading(false)
                 setShowImage(false);
+                
             }
         };
 

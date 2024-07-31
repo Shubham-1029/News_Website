@@ -4,7 +4,7 @@
 .image-caption{
 	font-size:0.875rem;
 	font-family: 'Libre Franklin', arial, sans-serif;
-    line-height: 1.25;
+  line-height: 1.25;
 	color: rgba(89, 89, 89, 1);
 	text-align: left;
 }
@@ -17,12 +17,13 @@
 
 .article-detail-title {
   font-size: 3.5rem;
-  font-family: 'Times New Roman', Times, serif;
-  margin-top: 2rem;
+  font-family: 'EB Garamond' , serif;
+  margin-top: 4rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 1);
 }
 .article-share{
 	margin-left: 2rem;
-	border-bottom: 2px solid black;
   padding-bottom: 2rem;
   width: 55vw;
 }
@@ -58,25 +59,25 @@
 }
 
 .image-caption {
-  margin-top: 8px; /* Space above the caption */
-  /* margin-left: 15rem; */
-  color: #555; /* Color of the caption text */
-  font-size: 14px; /* Adjust the font size */
-  text-align: left; /* Align text to the left */
-  font-family: Arial, sans-serif; /* Adjust font family as needed */
-  width: 100%; /* Make sure caption takes the full width of the image */
-  box-sizing: border-box; /* Ensure padding and border do not affect the width */
+  margin-top: 8px; 
+  color: #555; 
+  font-size: 14px; 
+  text-align: left; 
+  font-family: 'Libre Franklin', sans-serif; 
+  width: 100%; 
+  box-sizing: border-box; 
 }
 
 .about-article{
-  margin-left: 2rem;
+  margin-left: 8rem;
 }
 .article-contents {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-right: auto;
-  margin-left: 4rem;
-  width: 50%;
+  margin-left: 10rem;
+  width: 100%;
+  max-width: 630px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: rgba(17, 17, 17, 1);
   line-height: 1.6;
@@ -84,6 +85,13 @@
 }
 .article-contents{
   white-space:pre-wrap;
+}
+.article-detail-subheading{
+  font-size: 1.25rem;
+  font-family: 'Libre Franklin', sans-serif;
+  font-weight: 300;
+  line-height: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .listen-button{
@@ -178,10 +186,13 @@
   height:1rem;
 }
 
+.htmldetail{
+  max-width: 640px;
+  width: 100%;
+}
 .listen-button{
   display: flex;
   justify-content: flex-end;
-  margin-left: 1rem;
 }
 
 .listen-article{
@@ -202,9 +213,9 @@
     display: flex;
   }
 
-.article-share button:first-child{
-  margin-left: 2rem;
-}
+#gift-share-end button:first-child{
+  margin-left: 8rem;
+} 
   
 .wpds-c-dhzjXW-idKpyXE-css {
     clear: left;
@@ -270,7 +281,6 @@
     font-size: 1rem;
     line-height: 1rem;
     gap: 0.5rem;
-    transition: background var(--wpds-transitions-fast) var(--wpds-transitions-inOut);
 }
 .wpds-c-kSOqLF-igqYgPb-css {
     height: 2.5rem;
@@ -299,10 +309,10 @@
 	font-weight: 700;
 	line-height: 1.25;
 }
-/* .article-image-list{
-	width: 211px;
-	height: 140px;
-} */
+.more-from-post{
+  padding-top: 1rem;
+  border-top: 2px solid black;
+}
 
 @media(max-width:1600px){
 	.ad-placeholder-side{
@@ -317,11 +327,19 @@
     text-align: center;
     width: 100%;
   }
+  .extra-column{
+    display: none;
+  }
+  .more-from-post{
+    width: 100% !important;
+  }
   .about-article{
     width: 100%;
-	margin-left: 0;
+	  margin-left: 0;
   }
- 
+  #gift-share-end button:first-child{
+    margin-left: 4rem;
+  } 
   .article-detail-title{
 	width: 100%;
 	margin: 0;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getArticlesByCategory } from '../api';
 import '../components/css/ArticlesByCategory.css'; // Import the CSS file
+import Header from './Header';
 
 const ArticlesByCategory = () => {
   const { category } = useParams();
@@ -31,6 +32,7 @@ const ArticlesByCategory = () => {
 
   return (
     <div className="articles-by-category container-xxl">
+      <Header/>
       <div className="article-by-category-title">
         <span className="article-category2">{category}</span>
       </div>

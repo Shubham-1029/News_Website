@@ -17,6 +17,7 @@ class Category(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
+    subheading = models.CharField(max_length=255, null=True, blank=True)  
     content = models.TextField()
     image = models.ImageField(upload_to='articles/', null=True, blank=True)
     image_caption = models.CharField(max_length=255, null=True, blank=True)
@@ -32,6 +33,3 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     content = models.TextField()
-
-
-# Create your models here.

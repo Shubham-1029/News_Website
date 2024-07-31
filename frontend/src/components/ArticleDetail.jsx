@@ -5,6 +5,7 @@ import "../components/css/ArticleDetail.css";
 import { assets } from "../assets/asset";
 import ArticleList from "./ArticleList";
 import HTMLContent from "./HtmlContent";
+import Header from "./Header";
 
 const ArticleDetail = ({ content }) => {
   const { id } = useParams();
@@ -42,12 +43,18 @@ const ArticleDetail = ({ content }) => {
 
   return (
     <div className="container-xxl article-detail">
+      <Header/>
       <div className="row">
         <div className="col-2"></div>
         <div className="col-7">
-          <h1 className="article-detail-title my-5 align-article">
+          <h1 className="article-detail-title align-article">
             {article.title}
           </h1>
+          {article.subheading && (
+            <h2 className="article-detail-subheading my-3 align-article">
+              {article.subheading}
+            </h2>)}
+          
           <div className="article-actions-bar">
             <div className="listen-article">
               <div role="button" tabIndex="0" className="listen-button">
@@ -169,7 +176,7 @@ const ArticleDetail = ({ content }) => {
             </div>
           </div>
           <div className="article-contents">
-            <HTMLContent content={article.content} />
+            <HTMLContent content={article.content} className="htmldetail" />
           </div>
           <div className="article-share wpds-c-dhzjXW wpds-c-dhzjXW-idKpyXE-css overrideStyles test">
             <div
@@ -235,15 +242,16 @@ const ArticleDetail = ({ content }) => {
             </div>
           </div>
         </div>
-        <div className="ad-placeholder-side col-3"></div>
+        <div className="ad-placeholder-side col-3">
+        </div>
       </div>
       <div className="row">
-        <div className="col-3"></div>
-        <div className="col-6 more-from-post">
-          <p>More From the Post</p>
+        <div className="extra-column col-3"></div>
+        <div className="col-4 more-from-post">
+          <p>More From the Post &gt;</p>
           <ArticleList />
         </div>
-        <div className="col-3"></div>
+        <div className="extra-column col-5"></div>
       </div>
     </div>
   );

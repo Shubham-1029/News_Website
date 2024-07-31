@@ -4,10 +4,11 @@ import { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import '../components/css/EditArticle.css';
 
 const EditArticle = () => {
   const { id } = useParams();
-  const [article, setArticle] = useState({ title: '', content: '', image: null, categories: [] });
+  const [article, setArticle] = useState({ title: '', subheading: '', content: '', image: null, categories: [] });
   const [allCategories, setAllCategories] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -97,6 +98,7 @@ const EditArticle = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', article.title);
+    formData.append('subheading', article.subheading); // Add subheading
     formData.append('content', quillRef.current.root.innerHTML);
     if (article.image) {
       formData.append('image', article.image);
@@ -106,8 +108,6 @@ const EditArticle = () => {
     article.categories.forEach((category, index) => {
       formData.append(`category_names[${index}]`, category);
     });
-
-    console.log('Form Data:', formData);
 
     try {
       const response = await axios.put(`http://localhost:8000/api/articles/${id}/`, formData, {
@@ -131,7 +131,7 @@ const EditArticle = () => {
     <div className="container-xxl mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <h2 className="text-center mb-4">Edit Article</h2>
+          <h2 className="edit-title text-center mb-4">Edit Article</h2>
           <form onSubmit={handleSubmit} className="p-4">
             <div className="mb-3">
               <label htmlFor="title" className="form-label">Title</label>
@@ -144,6 +144,18 @@ const EditArticle = () => {
                 className="form-control"
                 placeholder="Enter article title"
                 required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="subheading" className="form-label">Subheading</label>
+              <input
+                type="text"
+                id="subheading"
+                name="subheading"
+                value={article.subheading}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Enter article subheading"
               />
             </div>
             <div className="mb-3">

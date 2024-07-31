@@ -36,7 +36,10 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'title', 'content', 'image', 'image_caption', 'user', 'created_at', 'updated_at', 'categories', 'category_names']
+        fields = ['id', 'title', 'subheading', 'content', 'image', 'image_caption', 'user', 'created_at', 'updated_at', 'categories', 'category_names']
+        extra_kwargs = {
+            'image': {'required': False}  # Ensure image is not required
+        }
 
     def create(self, validated_data):
         category_names = validated_data.pop('category_names', [])
@@ -60,6 +63,10 @@ class ArticleSerializer(serializers.ModelSerializer):
                 category_instances.append(category)
             instance.categories.set(category_instances)
         
+        # Handle the image field separately
+        if 'image' not in validated_data:
+            validated_data['image'] = instance.image
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         
