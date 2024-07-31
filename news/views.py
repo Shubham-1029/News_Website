@@ -31,6 +31,9 @@ class ArticleListView(generics.ListCreateAPIView):
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthorOrReadOnly]
 
+    def get_queryset(self):
+        return Article.objects.all().order_by('-created_at')[:5]
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -110,7 +113,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def latest_articles(request):
-    articles = Article.objects.order_by('-created_at')[:5]
+    articles = Article.objects.order_by('-updated_at')[:5]
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
 

@@ -141,6 +141,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = ''
 MEDIA_ROOT = BASE_DIR /'articles'
 AUTH_USER_MODEL = 'news.User'
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
 
 
 # Default primary key field type
