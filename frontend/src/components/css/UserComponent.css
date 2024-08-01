@@ -51,6 +51,8 @@
 .user-articles {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .user-article {
@@ -87,3 +89,6 @@
     align-items: center;
 }
 
+@media(max-width:768px){
+    
+}

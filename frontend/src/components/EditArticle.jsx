@@ -5,11 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import '../components/css/EditArticle.css';
+import Header from './Header';
 
 const EditArticle = () => {
   const { id } = useParams();
   const [article, setArticle] = useState({ title: '', subheading: '', content: '', image: null, categories: [] });
   const [allCategories, setAllCategories] = useState([]);
+  const [imageURL, setImageURL] = useState('');
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const quillRef = useRef(null);
@@ -28,10 +31,25 @@ const EditArticle = () => {
           : [];
         setArticle({ ...fetchedArticle, categories });
 
+        setImageURL(fetchedArticle.image);
+
         // Initialize Quill with the fetched content
         if (quillRef.current) {
           const quill = quillRef.current;
           quill.root.innerHTML = fetchedArticle.content;
+        }
+
+        if (fetchedArticle.image) {
+          const imageResponse = await fetch(fetchedArticle.image);
+          const imageBlob = await imageResponse.blob();
+          const imageFile = new File([imageBlob], fetchedArticle.image.split('/').pop(), { type: imageBlob.type });
+          setArticle((prevArticle) => ({
+            ...prevArticle,
+            image: imageFile,
+          }));
+          if (fileInputRef.current) {
+            fileInputRef.current.files = createFileList(imageFile);
+          }
         }
       } catch (error) {
         console.error('Error fetching article:', error);
@@ -71,6 +89,12 @@ const EditArticle = () => {
     quillRef.current = quill;
   }, [id, token]);
 
+  const createFileList = (file) => {
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    return dataTransfer.files;
+  };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'image') {
@@ -78,6 +102,7 @@ const EditArticle = () => {
         ...prevArticle,
         image: files[0],
       }));
+      setImageURL(URL.createObjectURL(files[0]));
     } else {
       setArticle((prevArticle) => ({
         ...prevArticle,
@@ -98,13 +123,14 @@ const EditArticle = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', article.title);
-    formData.append('subheading', article.subheading); // Add subheading
+    if(article.subheading){
+      formData.append('subheading', article.subheading); 
+    }
     formData.append('content', quillRef.current.root.innerHTML);
     if (article.image) {
       formData.append('image', article.image);
     }
 
-    // Append each category as a separate field in the form data
     article.categories.forEach((category, index) => {
       formData.append(`category_names[${index}]`, category);
     });
@@ -129,6 +155,7 @@ const EditArticle = () => {
 
   return (
     <div className="container-xxl mt-5">
+      <Header/>
       <div className="row justify-content-center">
         <div className="col-md-8">
           <h2 className="edit-title text-center mb-4">Edit Article</h2>
@@ -170,7 +197,13 @@ const EditArticle = () => {
                 name="image"
                 onChange={handleChange}
                 className="form-control"
+                ref={fileInputRef}
               />
+              {imageURL && (
+                <div className="mt-2">
+                  <img src={imageURL} alt="Article Thumbnail" style={{ width: '25%', maxHeight: '200px', objectFit: 'cover' }} />
+                </div>
+              )}
             </div>
             <div className="mb-3">
               <label htmlFor="categories" className="form-label">Categories</label>

@@ -333,6 +333,9 @@
   .more-from-post{
     width: 100% !important;
   }
+  .article-items{
+    width: 100% !important;
+  }
   .about-article{
     width: 100%;
 	  margin-left: 0;

@@ -45,8 +45,8 @@ const ArticleDetail = ({ content }) => {
     <div className="container-xxl article-detail">
       <Header/>
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-7">
+        <div className="col-2 extra-column"></div>
+        <div className="col-7 article-items">
           <h1 className="article-detail-title align-article">
             {article.title}
           </h1>
@@ -242,7 +242,7 @@ const ArticleDetail = ({ content }) => {
             </div>
           </div>
         </div>
-        <div className="ad-placeholder-side col-3">
+        <div className="ad-placeholder-side col-3 extra-column">
         </div>
       </div>
       <div className="row">

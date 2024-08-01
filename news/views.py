@@ -135,7 +135,7 @@ class UpdateCategoriesView(APIView):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def popular_categories(request):
-    categories = Category.objects.annotate(num_articles=Count('articles')).order_by('-num_articles')[:10]
+    categories = Category.objects.annotate(num_articles=Count('articles')).order_by('-num_articles')[:8]
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
 

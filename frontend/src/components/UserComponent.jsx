@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getUserDetails, getUserArticles, deleteArticle, updateArticleCategories } from '../api';
 import '../components/css/UserComponent.css'; 
+import Header from './Header';
 
 const UserComponent = () => {
     const [user, setUser] = useState({});
@@ -60,6 +61,7 @@ const UserComponent = () => {
 
     return (
         <div className="user-component">
+            <Header/>
             <h2>Welcome  {user.username}</h2>
             <h3>Your Articles</h3>
             <ul className="user-articles">

@@ -35,7 +35,7 @@ const App = () => {
     };
     const token = localStorage.getItem('token');
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/user/', {
@@ -56,7 +56,7 @@ const App = () => {
     } else {
       setUsername('Guest');
     }
-  }, [token]);
+  }, [token]); */
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
