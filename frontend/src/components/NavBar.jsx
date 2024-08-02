@@ -215,7 +215,7 @@ const NavBar = ({ onCategorySelect }) => {
                     onClick={closeDropdown}
                   >
                     <Link to={`/write`}>Write</Link>
-                    <a href="#" onClick={handleLogout}>
+                    <a href="/" onClick={handleLogout}>
                       Sign out
                     </a>
                     <Link to={`/user`}>My Post</Link>

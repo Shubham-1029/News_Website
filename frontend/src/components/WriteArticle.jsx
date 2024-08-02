@@ -59,7 +59,7 @@ const WriteArticle = () => {
   const handleChange = (e) => {
     if (e.target.name === 'image') {
       setFormData({ ...formData, image: e.target.files[0] });
-      setImageURL(URL.createObjectURL(e.target.files[0]));  // Update the image URL for preview
+      setImageURL(URL.createObjectURL(e.target.files[0]));  
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }

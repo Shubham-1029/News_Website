@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserDetails, getUserArticles, deleteArticle, updateArticleCategories } from '../api';
+import { getUserDetails, getUserArticles, deleteArticle } from '../api';
 import '../components/css/UserComponent.css'; 
 import Header from './Header';
 
@@ -48,7 +48,7 @@ const UserComponent = () => {
         }
     };
 
-    const handleUpdateCategory = async (articleId, tags) => {
+   /*  const handleUpdateCategory = async (articleId, tags) => {
         try {
             await updateArticleCategories(articleId, tags);
             setArticles(articles.map(article => 
@@ -58,7 +58,7 @@ const UserComponent = () => {
             console.error('Error updating article tags:', error);
         }
     };
-
+ */
     return (
         <div className="user-component">
             <Header/>

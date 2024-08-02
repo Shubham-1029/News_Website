@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react';
-import { getUserDetails } from '../../api';
+import { getUserDetails } from '../../api'; 
 
 const AuthContext = createContext();
 
@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
     const handleLogin = (token) => {
         localStorage.setItem('token', token);
         setIsLoggedIn(true);
-        /* window.location.reload(); */
     };
 
     const handleLogout = () => {

@@ -11,7 +11,7 @@ const ArticlesByCategoryHomePage = ({ category }) => {
         const fetchArticles = async () => {
             try {
                 const response = await getArticlesByCategory(category);
-                setArticles(response.slice(0, 4)); // Display only the first 4 articles
+                setArticles(response.slice(0, 4)); 
             } catch (error) {
                 console.error(`Failed to fetch articles for category ${category}`, error);
             }

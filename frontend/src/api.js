@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api';  // Adjust the URL as per your backend setup
+const API_URL = 'http://localhost:8000/api';  
 
 // Register
 export const register = async (formData) => {
@@ -12,10 +12,11 @@ export const register = async (formData) => {
     });
     return response.data;
   } catch (error) {
-    throw error; // Ensure error is thrown for proper handling in Register.jsx
+    throw error; 
   }
 };
 
+// Login
 function login(formData) {
   return axios.post(`${API_URL}/login/`, formData).then(response => response.data).catch(error => {
     throw error;
@@ -136,11 +137,13 @@ export const deleteCategory = async (categoryId, token) => {
   }
 };
 
+//Get Popular Categories
 export const getPopularCategories = async () => {
   const response = await axios.get(`${API_URL}/categories/popular/`);
   return response.data;
 };
 
+//Get Articles By Category
 export const getArticlesByCategory = async (category) => {
   try {
     const response = await axios.get(`${API_URL}/articles/by-category/?category=${category}`);
@@ -151,7 +154,7 @@ export const getArticlesByCategory = async (category) => {
   }
 };
 
-
+//Get user Articles
 export const getUserArticles = async () => {
   const token = localStorage.getItem('token');
   try {
